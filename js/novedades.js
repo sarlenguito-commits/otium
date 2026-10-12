@@ -3,9 +3,16 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=ceaa36c8f6";
+import { VERSION, PREFIJO } from "./config.js?v=c366a4baa6";
 
 export const NOVEDADES = [
+    {
+        version: "0.12.2",
+        fecha: "12/10/2026",
+        cambios: [
+            "En \"Privacidad y términos\" ahora hay un mail de contacto (además de \"Contale a Esteban\").",
+        ],
+    },
     {
         version: "0.12.1",
         fecha: "12/10/2026",

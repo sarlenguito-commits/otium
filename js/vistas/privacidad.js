@@ -4,20 +4,23 @@
 // Hechos chequeados el 12/10/2026: servidor (servidor/src/index.js: cupo 3 días, comentarios 180 días, no guarda los
 // pedidos a la IA) y condiciones de Google para el plan gratis (vigentes desde el 23/03/2026).
 // ============================================
-import { NOMBRE_APP } from "../config.js?v=ceaa36c8f6";
-import { esc } from "../ui.js?v=ceaa36c8f6";
+import { NOMBRE_APP } from "../config.js?v=c366a4baa6";
+import { esc } from "../ui.js?v=c366a4baa6";
 
 const ACTUALIZADA = "12/10/2026";
 const CONDICIONES_GOOGLE = "https://ai.google.dev/gemini-api/terms";
 const AAIP = "https://www.argentina.gob.ar/aaip";
+const MAIL = "sazzo.contacto@gmail.com"; // lo eligió Esteban (12/10/2026); está en herramientas\palabras-permitidas.txt
 
 const afuera = (url, texto) => `<a href="${esc(url)}" target="_blank" rel="noopener noreferrer">${esc(texto)} ↗</a>`;
+const mail = `<a href="mailto:${esc(MAIL)}">${esc(MAIL)}</a>`;
 
 export function vistaPrivacidad(cont) {
     cont.className = "privacidad";
     cont.innerHTML = `
         <h1>Privacidad y términos</h1>
-        <p class="ayuda">${esc(NOMBRE_APP)} es un proyecto personal de Esteban, en prueba y gratis. Última actualización: ${ACTUALIZADA}.</p>
+        <p class="ayuda">${esc(NOMBRE_APP)} es un proyecto personal de Esteban, en prueba y gratis. Contacto: ${mail} o
+           <a href="#contale">Contale a Esteban</a>. Última actualización: ${ACTUALIZADA}.</p>
 
         <div class="tarjeta privacidad__corto">
             <h2>Lo importante, en corto</h2>
@@ -77,13 +80,13 @@ export function vistaPrivacidad(cont) {
                 (mapas, fichas, escritos, neuronas y libros); en <a href="#ajustes">Ajustes</a>, "Desconectar" (el token).
                 O borrá los datos de este sitio desde la configuración del navegador: se va todo de una. Si lo querés
                 guardar, antes bajá una copia en Ajustes → Tus datos.</li>
-            <li><strong>Tus comentarios en el servidor:</strong> pedíselo a Esteban con <a href="#contale">Contale a Esteban</a> y los borra.</li>
+            <li><strong>Tus comentarios en el servidor:</strong> pedíselo a Esteban (${mail} o <a href="#contale">Contale a Esteban</a>) y los borra.</li>
             <li><strong>Lo que ya se mandó a Google</strong> no se puede borrar desde ${esc(NOMBRE_APP)}.</li>
         </ul>
 
         <h2>Tus derechos</h2>
         <p>Por la Ley 25.326 de Protección de Datos Personales podés pedir ver, corregir o borrar tus datos personales.
-           Pedilo con <a href="#contale">Contale a Esteban</a>. La Agencia de Acceso a la Información Pública, órgano de
+           Pedilo a ${mail} o con <a href="#contale">Contale a Esteban</a>. La Agencia de Acceso a la Información Pública, órgano de
            control de esa ley, atiende las denuncias y reclamos por incumplimientos. ${afuera(AAIP, "AAIP")}</p>
 
         <h2>Términos de uso</h2>

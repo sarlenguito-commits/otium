@@ -2,7 +2,7 @@
 // La cuenta del temporizador, sin pantalla (así se prueba con horas fijas): empezar, calcular, paso, pausar,
 // seguir y minutosAlCortar. La pantalla está en temporizador.js.
 // ============================================
-import { TEMPORIZADORES } from "./config.js?v=ceaa36c8f6";
+import { TEMPORIZADORES } from "./config.js?v=c366a4baa6";
 
 const MIN = 60 * 1000;
 

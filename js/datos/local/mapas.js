@@ -3,15 +3,15 @@
 // Cada función que guarda: quién es, exigir() su permiso, limpiar con reglas.js, guardar, dejar historial.
 // Nada se borra: un mapa se archiva, y queda cuándo y por qué.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=ceaa36c8f6";
-import { usuarioActual } from "./sesion.js?v=ceaa36c8f6";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=c366a4baa6";
+import { usuarioActual } from "./sesion.js?v=c366a4baa6";
 import {
     limpiarTema, limpiarModo, limpiarRama, limpiarEstado, limpiarFicha, limpiarMensaje, limpiarHablante, limpiarMotivo, limpiarEscalon,
-} from "../reglas.js?v=ceaa36c8f6";
-import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=ceaa36c8f6";
-import { TOPES } from "../../config.js?v=ceaa36c8f6";
-import { fechaLocalISO } from "../../fechas.js?v=ceaa36c8f6";
-import { sumarTarjetas, anotarDia } from "./repaso.js?v=ceaa36c8f6";
+} from "../reglas.js?v=c366a4baa6";
+import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=c366a4baa6";
+import { TOPES } from "../../config.js?v=c366a4baa6";
+import { fechaLocalISO } from "../../fechas.js?v=c366a4baa6";
+import { sumarTarjetas, anotarDia } from "./repaso.js?v=c366a4baa6";
 
 function quien(permiso = puedeEstudiar) {
     const u = usuarioActual();
