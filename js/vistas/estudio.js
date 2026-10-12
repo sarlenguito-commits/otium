@@ -3,14 +3,14 @@
 // Dirección: #estudio?m=<mapa>&c=<concepto>&v=<pestaña del celu>
 // La IA arma ramas y fichas (acciones-ia.js); el chat todavía solo guarda lo que escribís (la charla llega con el
 // modo libre). Arriba, la barrita del cupo de IA del día.
-import * as d from "../datos.js?v=d337193a0e";
-import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=d337193a0e";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=d337193a0e";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=d337193a0e";
-import * as ia from "../ia.js?v=d337193a0e";
-import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=d337193a0e";
-import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=d337193a0e";
-import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=d337193a0e";
+import * as d from "../datos.js?v=0c5d6339d6";
+import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=0c5d6339d6";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=0c5d6339d6";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=0c5d6339d6";
+import * as ia from "../ia.js?v=0c5d6339d6";
+import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=0c5d6339d6";
+import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=0c5d6339d6";
+import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=0c5d6339d6";
 
 // Fichas con el formulario "Esto está mal" abierto (mientras la página esté abierta)
 const malAbierto = new Set();

@@ -5,5 +5,5 @@
 // (receta firebase.md de Visual Script). Las pantallas no se enteran.
 // ============================================
 
-export * from "./datos/local/index.js?v=d337193a0e";
+export * from "./datos/local/index.js?v=0c5d6339d6";
 export const modo = "local";

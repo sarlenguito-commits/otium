@@ -2,19 +2,19 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=d337193a0e";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=d337193a0e";
-import { $, esc } from "./ui.js?v=d337193a0e";
-import { vistaInicio } from "./vistas/inicio.js?v=d337193a0e";
-import { vistaAcerca } from "./vistas/acerca.js?v=d337193a0e";
-import { vistaEstudio } from "./vistas/estudio.js?v=d337193a0e";
-import { vistaRepaso } from "./vistas/repaso.js?v=d337193a0e";
-import { vistaAjustes } from "./vistas/ajustes.js?v=d337193a0e";
-import { puedeEstudiar } from "./permisos.js?v=d337193a0e";
-import { dibujarTemporizador } from "./temporizador.js?v=d337193a0e";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=d337193a0e";
-import { vistaGuia } from "./vistas/guia.js?v=d337193a0e";
-import { vistaContale } from "./vistas/contale.js?v=d337193a0e";
+import * as d from "./datos.js?v=0c5d6339d6";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=0c5d6339d6";
+import { $, esc } from "./ui.js?v=0c5d6339d6";
+import { vistaInicio } from "./vistas/inicio.js?v=0c5d6339d6";
+import { vistaAcerca } from "./vistas/acerca.js?v=0c5d6339d6";
+import { vistaEstudio } from "./vistas/estudio.js?v=0c5d6339d6";
+import { vistaRepaso } from "./vistas/repaso.js?v=0c5d6339d6";
+import { vistaAjustes } from "./vistas/ajustes.js?v=0c5d6339d6";
+import { puedeEstudiar } from "./permisos.js?v=0c5d6339d6";
+import { dibujarTemporizador } from "./temporizador.js?v=0c5d6339d6";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=0c5d6339d6";
+import { vistaGuia } from "./vistas/guia.js?v=0c5d6339d6";
+import { vistaContale } from "./vistas/contale.js?v=0c5d6339d6";
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));
