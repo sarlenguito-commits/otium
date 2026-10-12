@@ -1,14 +1,16 @@
 // Pantalla de inicio: repasos de hoy, la racha de la semana, seguir donde quedaste, "aprender algo nuevo" y tus mapas.
-import * as d from "../datos.js?v=367750287f";
-import { MODOS, TOPES, FUNCIONES } from "../config.js?v=367750287f";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=367750287f";
-import * as ia from "../ia.js?v=367750287f";
-import { armarRamas } from "../acciones-ia.js?v=367750287f";
-import { resumenCupo } from "../recomendacion.js?v=367750287f";
-import { guiaVista } from "./guia.js?v=367750287f";
-import { leerEpub } from "../epub.js?v=367750287f";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=367750287f";
-import { textoRacha } from "./repaso.js?v=367750287f";
+import * as d from "../datos.js?v=4ff97d5a37";
+import { MODOS, TOPES, FUNCIONES } from "../config.js?v=4ff97d5a37";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=4ff97d5a37";
+import * as ia from "../ia.js?v=4ff97d5a37";
+import { armarRamas } from "../acciones-ia.js?v=4ff97d5a37";
+import { resumenCupo } from "../recomendacion.js?v=4ff97d5a37";
+import { guiaVista } from "./guia.js?v=4ff97d5a37";
+import { leerEpub } from "../epub.js?v=4ff97d5a37";
+import { hayNovedades } from "../novedades.js?v=4ff97d5a37";
+import { VERSION } from "../config.js?v=4ff97d5a37";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=4ff97d5a37";
+import { textoRacha } from "./repaso.js?v=4ff97d5a37";
 
 const aEstudio = (id) => `#estudio?m=${encodeURIComponent(id)}`;
 
@@ -21,6 +23,7 @@ export function vistaInicio(cont, { usuario }) {
     cont.innerHTML = `
         <h1>Hola${usuario.nombre ? `, ${esc(usuario.nombre)}` : ""}</h1>
         ${guiaVista() ? "" : `<p class="aviso-guia">¿Primera vez? <a href="#guia">Mirá la guía de 2 minutos</a> para sacarle el jugo.</p>`}
+        ${hayNovedades() ? `<p class="aviso-guia">✨ Hay novedades en OTIUM (versión ${esc(VERSION)}). <a href="#novedades">Mirá qué cambió</a>.</p>` : ""}
         <div class="tarjeta hoy">
             <p class="hoy__repasos">${pendientes
                 ? `Repasos de hoy: <strong>${pendientes}</strong> <a class="boton" href="#repaso">Repasar</a>`
@@ -71,7 +74,7 @@ export function vistaInicio(cont, { usuario }) {
                     </a>
                 </li>`).join("")}</ul>`
             : vacio("Primeros pasos", "Todavía no hay mapas. Escribí arriba qué querés aprender.")}
-        <p class="pie-inicio"><a href="#guia">Guía de 2 minutos</a> · <a href="#contale">💬 Contale a Esteban</a></p>`;
+        <p class="pie-inicio"><a href="#guia">Guía de 2 minutos</a> · <a href="#novedades">Novedades</a> · <a href="#contale">💬 Contale a Esteban</a> · versión ${esc(VERSION)}</p>`;
 
     // El cupo de hoy se pregunta siempre al entrar a Inicio (no gasta nada): así el porcentaje está al día
     if (ia.conectada()) {

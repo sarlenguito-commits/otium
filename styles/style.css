@@ -965,3 +965,14 @@ mark {
 .esto-esta-mal {
   margin-top: 1rem;
 }
+
+.novedad ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+.novedad li {
+  margin-bottom: 0.35rem;
+}
+.novedad--actual {
+  border-color: var(--acento);
+}

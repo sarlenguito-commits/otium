@@ -1,7 +1,7 @@
 // Leer un capítulo de un libro (el texto está en este navegador). Dirección: #leer?m=<mapa>&c=<concepto del capítulo>
 // Abajo: capítulo anterior / siguiente y volver a la ficha. Si se llega desde el buscador, marca el párrafo (&p=<n>).
-import * as d from "../datos.js?v=367750287f";
-import { esc, vacio } from "../ui.js?v=367750287f";
+import * as d from "../datos.js?v=4ff97d5a37";
+import { esc, vacio } from "../ui.js?v=4ff97d5a37";
 
 export function vistaLeer(cont) {
     const p = new URLSearchParams(location.hash.split("?")[1] ?? "");

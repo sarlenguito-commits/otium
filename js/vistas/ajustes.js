@@ -1,9 +1,9 @@
 // Ajustes: la conexión con la IA (dirección del servidor y token), la meta semanal, el tope de repasos y el tipo de
 // temporizador. Abajo, "Acerca de".
-import * as d from "../datos.js?v=367750287f";
-import * as ia from "../ia.js?v=367750287f";
-import { TOPES, TEMPORIZADORES } from "../config.js?v=367750287f";
-import { esc, intentar, aviso } from "../ui.js?v=367750287f";
+import * as d from "../datos.js?v=4ff97d5a37";
+import * as ia from "../ia.js?v=4ff97d5a37";
+import { TOPES, TEMPORIZADORES } from "../config.js?v=4ff97d5a37";
+import { esc, intentar, aviso } from "../ui.js?v=4ff97d5a37";
 
 export function vistaAjustes(cont, { redibujar }) {
     const a = d.leerAjustes();
@@ -47,7 +47,7 @@ export function vistaAjustes(cont, { redibujar }) {
             <p class="ayuda">El temporizador es opcional: lo prendés desde Estudio. Sirve para no agotarte; no hace aprender más por sí solo.</p>
             <button class="boton" type="submit">Guardar</button>
         </form>
-        <p><a href="#guia">Guía de 2 minutos</a> · <a href="#contale">💬 Contale a Esteban</a> · <a href="#acerca">Acerca de la app y errores anotados</a></p>`;
+        <p><a href="#guia">Guía de 2 minutos</a> · <a href="#novedades">Novedades</a> · <a href="#contale">💬 Contale a Esteban</a> · <a href="#acerca">Acerca de la app y errores anotados</a></p>`;
 
     cont.addEventListener("submit", async (e) => {
         e.preventDefault();

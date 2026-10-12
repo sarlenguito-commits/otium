@@ -6,7 +6,7 @@
 // Si el libro tiene DRM (META-INF/encryption.xml con contenido cifrado), se rechaza: no se intenta sacarlo.
 // Devuelve { titulo, autor, capitulos: [{ titulo, parrafos: [texto] }] }.
 // ============================================
-import { TOPES } from "./config.js?v=367750287f";
+import { TOPES } from "./config.js?v=4ff97d5a37";
 
 const texto = new TextDecoder("utf-8");
 
