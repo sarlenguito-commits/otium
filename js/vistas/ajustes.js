@@ -1,11 +1,11 @@
 // Ajustes: la conexión con la IA (dirección del servidor y token), la meta semanal, el tope de repasos y el tipo de
 // temporizador; "Tus datos" (bajar una copia, importarla y pedirle al navegador que no los borre solo). Abajo, "Acerca de".
-import * as d from "../datos.js?v=67446a5e85";
-import * as ia from "../ia.js?v=67446a5e85";
-import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=67446a5e85";
-import { esc, intentar, aviso } from "../ui.js?v=67446a5e85";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=67446a5e85";
-import { instalada, sePuedeInstalar, instalar } from "../instalar.js?v=67446a5e85";
+import * as d from "../datos.js?v=3f84cb5f35";
+import * as ia from "../ia.js?v=3f84cb5f35";
+import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=3f84cb5f35";
+import { esc, intentar, aviso } from "../ui.js?v=3f84cb5f35";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=3f84cb5f35";
+import { instalada, sePuedeInstalar, instalar } from "../instalar.js?v=3f84cb5f35";
 
 export function vistaAjustes(cont, { redibujar }) {
     const a = d.leerAjustes();
@@ -19,7 +19,8 @@ export function vistaAjustes(cont, { redibujar }) {
         <form class="tarjeta formulario" data-conexion>
             <p class="ayuda">${conexion.token
                 ? `Conectada${cupo?.plan ? ` · plan ${esc(cupo.plan.nombre)}` : ""}${cupo ? ` · hoy usaste ${cupo.usado} de ${cupo.total} del cupo` : ""}.`
-                : "Sin conectar: la app anda igual (mapas, fichas guardadas y repaso), pero la IA no arma ramas ni fichas."}</p>
+                : "Sin conectar: la app anda igual (mapas, fichas guardadas y repaso), pero la IA no arma ramas ni fichas."}
+                ${conexion.token ? ` <a href="#uso">(!) Uso</a>` : ""}</p>
             <label>Dirección del servidor
                 <input name="servidor" value="${esc(conexion.servidor)}" required>
             </label>

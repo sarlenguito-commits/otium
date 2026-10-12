@@ -797,6 +797,13 @@ textarea {
 .cupo-ia:empty {
   display: none;
 }
+.cupo-ia__texto {
+  color: inherit;
+  text-decoration: none;
+}
+.cupo-ia__texto:hover {
+  text-decoration: underline;
+}
 .cupo-ia__barra {
   width: 5rem;
   height: 0.4rem;
@@ -1397,6 +1404,17 @@ mark {
   padding: 0.6rem 0.9rem;
   border-radius: 10px;
   border: 1px dashed var(--acento);
+}
+
+.uso__alcanza {
+  padding: 0.6rem 0.8rem;
+  border-left: 4px solid var(--acento);
+  background: var(--fondo);
+  border-radius: 10px;
+}
+
+.uso__costos {
+  columns: 2 16rem;
 }
 
 .tu-ia__titulo {

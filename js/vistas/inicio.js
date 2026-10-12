@@ -1,16 +1,17 @@
 // Pantalla de inicio: repasos de hoy, la racha de la semana, seguir donde quedaste, "aprender algo nuevo" y tus mapas.
-import * as d from "../datos.js?v=67446a5e85";
-import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=67446a5e85";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=67446a5e85";
-import * as ia from "../ia.js?v=67446a5e85";
-import { armarRamas } from "../acciones-ia.js?v=67446a5e85";
-import { resumenCupo } from "../recomendacion.js?v=67446a5e85";
-import { guiaVista } from "./guia.js?v=67446a5e85";
-import { leerEpub } from "../epub.js?v=67446a5e85";
-import { hayNovedades } from "../novedades.js?v=67446a5e85";
-import { VERSION } from "../config.js?v=67446a5e85";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=67446a5e85";
-import { textoRacha } from "./repaso.js?v=67446a5e85";
+import * as d from "../datos.js?v=3f84cb5f35";
+import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=3f84cb5f35";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=3f84cb5f35";
+import * as ia from "../ia.js?v=3f84cb5f35";
+import { armarRamas } from "../acciones-ia.js?v=3f84cb5f35";
+import { resumenCupo } from "../recomendacion.js?v=3f84cb5f35";
+import { guiaVista } from "./guia.js?v=3f84cb5f35";
+import { leerEpub } from "../epub.js?v=3f84cb5f35";
+import { hayNovedades } from "../novedades.js?v=3f84cb5f35";
+import { VERSION } from "../config.js?v=3f84cb5f35";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=3f84cb5f35";
+import { textoRacha } from "./repaso.js?v=3f84cb5f35";
+import { usoVisto } from "./uso.js?v=3f84cb5f35";
 
 const aEstudio = (id) => `#estudio?m=${encodeURIComponent(id)}`;
 
@@ -59,6 +60,7 @@ export function vistaInicio(cont, { usuario }) {
         <h1>Hola${usuario.nombre ? `, ${esc(usuario.nombre)}` : ""}</h1>
         ${guiaVista() ? "" : `<p class="aviso-guia">¿Primera vez? <a href="#guia">Mirá la guía de 2 minutos</a> para sacarle el jugo.</p>`}
         ${hayNovedades() ? `<p class="aviso-guia">✨ Hay novedades en OTIUM (versión ${esc(VERSION)}). <a href="#novedades">Mirá qué cambió</a>.</p>` : ""}
+        ${ia.conectada() && !usoVisto() ? `<p class="aviso-guia"><strong>(!) Uso</strong>: mirá cuánta IA te queda hoy, para cuánto alcanza y de dónde salen los límites. <a href="#uso">Ver el uso</a>.</p>` : ""}
         <div class="tarjeta hoy">
             <p class="hoy__repasos">${pendientes
                 ? `Repasos de hoy: <strong>${pendientes}</strong> <a class="boton" href="#repaso">Repasar</a>`
@@ -212,5 +214,6 @@ function tarjetaIA() {
             <p class="tu-ia__titulo"><strong>Tu IA de hoy</strong>${r.plan ? ` · plan ${esc(r.plan)}` : ""} · ${r.usado} de ${r.total} (${r.pct} %)</p>
             <progress class="progreso" max="${r.total || 1}" value="${r.usado}" aria-hidden="true"></progress>
             <p class="ayuda">${esc(r.texto)}</p>
+            <p><a href="#uso">(!) Uso: cuánto queda hoy, para cuánto alcanza y de dónde salen los límites</a></p>
         </div>`;
 }

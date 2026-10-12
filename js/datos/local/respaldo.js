@@ -4,10 +4,10 @@
 // neuronas, resaltados) y el texto de los libros. NO lleva el token ni la conexión con la IA (eso es de cada navegador).
 // Importar REEMPLAZA todo lo de este navegador por lo del archivo. Si no entra (sin lugar), vuelve todo como estaba.
 // ============================================
-import { leerTodo, guardarTodo, leerAparte, guardarAparte, nombresAparte, exigir } from "./nucleo.js?v=67446a5e85";
-import { usuarioActual } from "./sesion.js?v=67446a5e85";
-import { puedeEstudiar } from "../../permisos.js?v=67446a5e85";
-import { NOMBRE_APP, VERSION, VERSION_DATOS } from "../../config.js?v=67446a5e85";
+import { leerTodo, guardarTodo, leerAparte, guardarAparte, nombresAparte, exigir } from "./nucleo.js?v=3f84cb5f35";
+import { usuarioActual } from "./sesion.js?v=3f84cb5f35";
+import { puedeEstudiar } from "../../permisos.js?v=3f84cb5f35";
+import { NOMBRE_APP, VERSION, VERSION_DATOS } from "../../config.js?v=3f84cb5f35";
 
 const TIPO = "respaldo";
 const LIBRO = "libro-";

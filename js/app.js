@@ -2,26 +2,27 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=67446a5e85";
-import * as ia from "./ia.js?v=67446a5e85";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=67446a5e85";
-import { $, esc } from "./ui.js?v=67446a5e85";
-import { vistaInicio } from "./vistas/inicio.js?v=67446a5e85";
-import { vistaAcerca } from "./vistas/acerca.js?v=67446a5e85";
-import { vistaEstudio } from "./vistas/estudio.js?v=67446a5e85";
-import { vistaRepaso } from "./vistas/repaso.js?v=67446a5e85";
-import { vistaAjustes } from "./vistas/ajustes.js?v=67446a5e85";
-import { puedeEstudiar } from "./permisos.js?v=67446a5e85";
-import { dibujarTemporizador } from "./temporizador.js?v=67446a5e85";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=67446a5e85";
-import { vistaGuia } from "./vistas/guia.js?v=67446a5e85";
-import { vistaContale } from "./vistas/contale.js?v=67446a5e85";
-import { vistaLeer } from "./vistas/leer.js?v=67446a5e85";
-import { vistaEscribir } from "./vistas/escribir.js?v=67446a5e85";
-import { vistaCerebro } from "./vistas/cerebro.js?v=67446a5e85";
-import { vistaNovedades } from "./vistas/novedades.js?v=67446a5e85";
-import { vistaPrivacidad } from "./vistas/privacidad.js?v=67446a5e85";
-import { prepararInstalacion } from "./instalar.js?v=67446a5e85";
+import * as d from "./datos.js?v=3f84cb5f35";
+import * as ia from "./ia.js?v=3f84cb5f35";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=3f84cb5f35";
+import { $, esc } from "./ui.js?v=3f84cb5f35";
+import { vistaInicio } from "./vistas/inicio.js?v=3f84cb5f35";
+import { vistaAcerca } from "./vistas/acerca.js?v=3f84cb5f35";
+import { vistaEstudio } from "./vistas/estudio.js?v=3f84cb5f35";
+import { vistaRepaso } from "./vistas/repaso.js?v=3f84cb5f35";
+import { vistaAjustes } from "./vistas/ajustes.js?v=3f84cb5f35";
+import { puedeEstudiar } from "./permisos.js?v=3f84cb5f35";
+import { dibujarTemporizador } from "./temporizador.js?v=3f84cb5f35";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=3f84cb5f35";
+import { vistaGuia } from "./vistas/guia.js?v=3f84cb5f35";
+import { vistaContale } from "./vistas/contale.js?v=3f84cb5f35";
+import { vistaLeer } from "./vistas/leer.js?v=3f84cb5f35";
+import { vistaEscribir } from "./vistas/escribir.js?v=3f84cb5f35";
+import { vistaCerebro } from "./vistas/cerebro.js?v=3f84cb5f35";
+import { vistaNovedades } from "./vistas/novedades.js?v=3f84cb5f35";
+import { vistaPrivacidad } from "./vistas/privacidad.js?v=3f84cb5f35";
+import { vistaUso } from "./vistas/uso.js?v=3f84cb5f35";
+import { prepararInstalacion } from "./instalar.js?v=3f84cb5f35";
 
 // Instalable: service worker y el aviso del navegador (antes que nada: el aviso puede llegar enseguida)
 prepararInstalacion();
@@ -63,6 +64,7 @@ const RUTAS = {
     contale: { titulo: "Contale a Esteban", vista: vistaContale },
     novedades: { titulo: "Novedades", vista: vistaNovedades },
     privacidad: { titulo: "Privacidad y términos", vista: vistaPrivacidad },
+    uso: { titulo: "(!) Uso de la IA", vista: vistaUso, puede: puedeEstudiar },
 };
 
 // Lo que se puede ver antes de completar la bienvenida (la privacidad hay que poder leerla antes de aceptar)

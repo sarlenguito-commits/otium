@@ -6,11 +6,11 @@
 //     ficha va (sus "Notas personales" en Estudio).
 // montarLector(cont, lugar, opciones) pinta los párrafos en `lugar` y escucha en `cont`. Devuelve { pintar }.
 // ============================================
-import * as d from "../datos.js?v=67446a5e85";
-import * as ia from "../ia.js?v=67446a5e85";
-import { buscarPalabra } from "../diccionario.js?v=67446a5e85";
-import { COLORES_RESALTADO, COSTOS_IA, TOPES } from "../config.js?v=67446a5e85";
-import { esc, aviso } from "../ui.js?v=67446a5e85";
+import * as d from "../datos.js?v=3f84cb5f35";
+import * as ia from "../ia.js?v=3f84cb5f35";
+import { buscarPalabra } from "../diccionario.js?v=3f84cb5f35";
+import { COLORES_RESALTADO, COSTOS_IA, TOPES } from "../config.js?v=3f84cb5f35";
+import { esc, aviso } from "../ui.js?v=3f84cb5f35";
 
 /**
  * @param {HTMLElement} cont   la pantalla (ahí se agregan el menú y la hoja, y se escuchan los clics)

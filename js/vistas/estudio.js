@@ -3,17 +3,17 @@
 // Dirección: #estudio?m=<mapa>&c=<concepto>&v=<pestaña del celu>
 // La IA arma ramas y fichas (acciones-ia.js); el chat todavía solo guarda lo que escribís (la charla llega con el
 // modo libre). Arriba, la barrita del cupo de IA del día.
-import * as d from "../datos.js?v=67446a5e85";
-import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=67446a5e85";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=67446a5e85";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=67446a5e85";
-import * as ia from "../ia.js?v=67446a5e85";
-import { armarRamas, armarFicha, armarPrevios, charlar } from "../acciones-ia.js?v=67446a5e85";
-import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=67446a5e85";
-import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=67446a5e85";
-import { seccionNeuronas } from "./cerebro.js?v=67446a5e85";
-import { seccionMapas, manejarMapas, guardarPlegado } from "./mapas-lateral.js?v=67446a5e85";
-import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=67446a5e85";
+import * as d from "../datos.js?v=3f84cb5f35";
+import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=3f84cb5f35";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=3f84cb5f35";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=3f84cb5f35";
+import * as ia from "../ia.js?v=3f84cb5f35";
+import { armarRamas, armarFicha, armarPrevios, charlar } from "../acciones-ia.js?v=3f84cb5f35";
+import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=3f84cb5f35";
+import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=3f84cb5f35";
+import { seccionNeuronas } from "./cerebro.js?v=3f84cb5f35";
+import { seccionMapas, manejarMapas, guardarPlegado } from "./mapas-lateral.js?v=3f84cb5f35";
+import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=3f84cb5f35";
 
 // Fichas con el formulario "Esto está mal" abierto (mientras la página esté abierta)
 const malAbierto = new Set();
@@ -392,9 +392,9 @@ function botonesIA(x, ramas) {
 function textoCupo() {
     if (!ia.conectada()) return "";
     const c = ia.ultimoCupo();
-    if (!c || c.dia !== fechaLocalISO()) return `<span class="cupo-ia__texto">IA de hoy: …</span>`;
+    if (!c || c.dia !== fechaLocalISO()) return `<a class="cupo-ia__texto" href="#uso">IA de hoy: …</a>`;
     const pct = Math.min(100, Math.round((c.usado / c.total) * 100));
-    return `<span class="cupo-ia__texto">IA de hoy: ${pct} % usado</span><progress class="cupo-ia__barra" max="${c.total}" value="${c.usado}" aria-hidden="true"></progress>`;
+    return `<a class="cupo-ia__texto" href="#uso" title="(!) Uso de la IA">IA de hoy: ${pct} % usado (!)</a><progress class="cupo-ia__barra" max="${c.total}" value="${c.usado}" aria-hidden="true"></progress>`;
 }
 
 // ---------- Escalón de abajo ----------

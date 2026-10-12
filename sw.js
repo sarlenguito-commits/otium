@@ -2,9 +2,9 @@
 // Service worker: lo que permite instalar OTIUM y abrirla sin internet.
 // Primero la red (con internet, siempre lo último publicado); si no hay red, lo último que se guardó.
 // Solo guarda archivos de la misma app (nada de la IA, Wikcionario ni otros sitios).
-// armar-sitio.ps1 cambia 67446a5e85 por la huella de cada publicación: así el navegador toma el nuevo y borra lo viejo.
+// armar-sitio.ps1 cambia 3f84cb5f35 por la huella de cada publicación: así el navegador toma el nuevo y borra lo viejo.
 // ============================================
-const CACHE = "otium-67446a5e85";
+const CACHE = "otium-3f84cb5f35";
 const INICIO = "./";
 
 self.addEventListener("install", (e) => {

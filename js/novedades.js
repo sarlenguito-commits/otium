@@ -3,9 +3,17 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=67446a5e85";
+import { VERSION, PREFIJO } from "./config.js?v=3f84cb5f35";
 
 export const NOVEDADES = [
+    {
+        version: "0.14.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "(!) Uso: pantalla nueva con cuánta IA te queda hoy (tuya, entre todos y de Google), para cuánto alcanza (fichas, mensajes, sesiones), cuánto gasta cada cosa y de dónde salen los límites. Está en Inicio, en la barrita de Estudio y en Ajustes.",
+            "El límite de verdad ahora se mide exacto: OTIUM cuenta los pedidos reales a Google y usa como mucho el 70 % de lo que permite su plan gratis por día.",
+        ],
+    },
     {
         version: "0.13.2",
         fecha: "12/10/2026",
