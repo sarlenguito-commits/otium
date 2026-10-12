@@ -1,7 +1,7 @@
 // Guía de 2 minutos: cómo sacarle el jugo a OTIUM, para alguien que la abre por primera vez.
 // Se basa en lo que está mejor probado para aprender: recordar sin mirar y repasar espaciado.
-import { COSTOS_IA } from "../config.js?v=91f4100bf5";
-import { PREFIJO } from "../config.js?v=91f4100bf5";
+import { COSTOS_IA } from "../config.js?v=9aef454a4b";
+import { PREFIJO } from "../config.js?v=9aef454a4b";
 
 const CLAVE = `${PREFIJO}-guia`;
 
@@ -63,7 +63,9 @@ export function vistaGuia(cont) {
             <p>Mientras leés (pestaña Leer), seleccioná una palabra u oración: la buscás en el diccionario, la resaltás en
                azul, rojo o verde, pedís que te la expliquen con otras palabras (usa 1) o le dejás una nota. Tocando un
                resaltado ves su explicación y tu nota, le ponés un título y elegís a qué ficha va: en la ficha (Estudio)
-               aparece en "Notas personales", junto a "Tu desarrollo", donde armás el capítulo paso a paso con tus palabras.
+               aparece en "Notas personales", junto a "Tu desarrollo", donde armás el capítulo paso a paso con tus palabras.</p>
+            <p>En la pestaña Escribir escribís con tus palabras lo que vas aprendiendo (suelto o de un mapa). En "Marcar"
+               tenés lo mismo que al leer: diccionario, resaltar, Explicar y notas.
                Libros gratis y legales: <a href="https://www.gutenberg.org/browse/languages/es" target="_blank" rel="noopener noreferrer">Project Gutenberg ↗</a>.</p>
         </div>
 

@@ -1,16 +1,16 @@
 // Pantalla de inicio: repasos de hoy, la racha de la semana, seguir donde quedaste, "aprender algo nuevo" y tus mapas.
-import * as d from "../datos.js?v=91f4100bf5";
-import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=91f4100bf5";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=91f4100bf5";
-import * as ia from "../ia.js?v=91f4100bf5";
-import { armarRamas } from "../acciones-ia.js?v=91f4100bf5";
-import { resumenCupo } from "../recomendacion.js?v=91f4100bf5";
-import { guiaVista } from "./guia.js?v=91f4100bf5";
-import { leerEpub } from "../epub.js?v=91f4100bf5";
-import { hayNovedades } from "../novedades.js?v=91f4100bf5";
-import { VERSION } from "../config.js?v=91f4100bf5";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=91f4100bf5";
-import { textoRacha } from "./repaso.js?v=91f4100bf5";
+import * as d from "../datos.js?v=9aef454a4b";
+import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=9aef454a4b";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=9aef454a4b";
+import * as ia from "../ia.js?v=9aef454a4b";
+import { armarRamas } from "../acciones-ia.js?v=9aef454a4b";
+import { resumenCupo } from "../recomendacion.js?v=9aef454a4b";
+import { guiaVista } from "./guia.js?v=9aef454a4b";
+import { leerEpub } from "../epub.js?v=9aef454a4b";
+import { hayNovedades } from "../novedades.js?v=9aef454a4b";
+import { VERSION } from "../config.js?v=9aef454a4b";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=9aef454a4b";
+import { textoRacha } from "./repaso.js?v=9aef454a4b";
 
 const aEstudio = (id) => `#estudio?m=${encodeURIComponent(id)}`;
 

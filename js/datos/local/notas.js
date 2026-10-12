@@ -4,11 +4,11 @@
 //   - "Tu desarrollo": notas sueltas que escribís en la ficha, en orden (para armar el capítulo o el tema paso a paso).
 // Todo se puede renombrar, editar y quitar; las notas sueltas también se reordenan.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=91f4100bf5";
-import { usuarioActual } from "./sesion.js?v=91f4100bf5";
-import { limpiarNota } from "../reglas.js?v=91f4100bf5";
-import { puedeEstudiar } from "../../permisos.js?v=91f4100bf5";
-import { TOPES } from "../../config.js?v=91f4100bf5";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=9aef454a4b";
+import { usuarioActual } from "./sesion.js?v=9aef454a4b";
+import { limpiarNota } from "../reglas.js?v=9aef454a4b";
+import { puedeEstudiar } from "../../permisos.js?v=9aef454a4b";
+import { TOPES } from "../../config.js?v=9aef454a4b";
 
 function quien() {
     const u = usuarioActual();
@@ -27,8 +27,8 @@ export function notasDe(conceptoId) {
     const capitulo = (id) => datos.conceptos.find((c) => c.id === id)?.capitulo ?? 0;
     return {
         resaltados: datos.resaltados
-            .filter((r) => r.concepto && fichaDe(r) === conceptoId)
-            .sort((a, b) => capitulo(a.concepto) - capitulo(b.concepto) || a.parrafo - b.parrafo || a.inicio - b.inicio),
+            .filter((r) => fichaDe(r) === conceptoId)
+            .sort((a, b) => !!a.escrito - !!b.escrito || capitulo(a.concepto) - capitulo(b.concepto) || a.parrafo - b.parrafo || a.inicio - b.inicio),
         sueltas: datos.notas.filter((n) => n.concepto === conceptoId),
     };
 }

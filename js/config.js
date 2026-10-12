@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.5.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.6.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -116,6 +116,9 @@ export const TOPES = {
     explicacionIA: 500, // la explicación breve de la IA
     contextoExplicar: 1500, // letras del párrafo que acompañan a la oración que se explica
     resaltadosTotal: 3000,
+    escritosTotal: 300, // escritura libre
+    tituloEscrito: 120,
+    textoEscrito: 50_000, // letras de un escrito (≈ 25 páginas)
     notasTotal: 2000, // notas sueltas ("Tu desarrollo" en las fichas)
     parrafoMaximo: 5000, // número de párrafo más alto que se acepta (un capítulo no tiene más)
     letraMaxima: 100_000, // posición más alta dentro de un párrafo

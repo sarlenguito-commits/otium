@@ -2,7 +2,7 @@
 // Reglas de los datos: limpian y controlan cada campo con su tope. Si algo no cumple, tiran un Error con un
 // mensaje para mostrarle a la persona. Las usa la capa de datos (y, el día de mañana, la nube).
 // ============================================
-import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO } from "../config.js?v=91f4100bf5";
+import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO } from "../config.js?v=9aef454a4b";
 
 function texto(valor, { nombre, tope, obligatorio = false }) {
     if (valor !== null && valor !== undefined && typeof valor !== "string" && typeof valor !== "number") {
@@ -96,6 +96,20 @@ export function limpiarResaltado(r = {}) {
         explicacion: r.explicacion ? texto(r.explicacion, { nombre: "la explicación", tope: TOPES.explicacionIA }) : null,
         vinculo: r.vinculo ? texto(r.vinculo, { nombre: "el vínculo", tope: 40 }) : null,
     };
+}
+
+/** Un escrito propio (escritura libre). El texto NO se recorta (los espacios y renglones son de quien escribe). */
+export function limpiarEscrito(e = {}, { parcial = false } = {}) {
+    const limpio = {};
+    if (!parcial || e.titulo !== undefined) limpio.titulo = texto(e.titulo, { nombre: "el título", tope: TOPES.tituloEscrito }) || "Sin título";
+    if (!parcial || e.texto !== undefined) {
+        if (e.texto !== undefined && e.texto !== null && typeof e.texto !== "string") throw new Error("El escrito tiene que ser un texto.");
+        const t = String(e.texto ?? "").replace(/\r\n?/g, "\n");
+        if (t.length > TOPES.textoEscrito) throw new Error(`El escrito: hasta ${TOPES.textoEscrito} letras (tiene ${t.length}).`);
+        limpio.texto = t;
+    }
+    if (!parcial || e.mapa !== undefined) limpio.mapa = e.mapa ? texto(e.mapa, { nombre: "el mapa", tope: 40 }) : null;
+    return limpio;
 }
 
 /** Una nota suelta de una ficha ("Tu desarrollo"): título y texto (al menos uno de los dos). */

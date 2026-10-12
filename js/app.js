@@ -2,21 +2,22 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=91f4100bf5";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=91f4100bf5";
-import { $, esc } from "./ui.js?v=91f4100bf5";
-import { vistaInicio } from "./vistas/inicio.js?v=91f4100bf5";
-import { vistaAcerca } from "./vistas/acerca.js?v=91f4100bf5";
-import { vistaEstudio } from "./vistas/estudio.js?v=91f4100bf5";
-import { vistaRepaso } from "./vistas/repaso.js?v=91f4100bf5";
-import { vistaAjustes } from "./vistas/ajustes.js?v=91f4100bf5";
-import { puedeEstudiar } from "./permisos.js?v=91f4100bf5";
-import { dibujarTemporizador } from "./temporizador.js?v=91f4100bf5";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=91f4100bf5";
-import { vistaGuia } from "./vistas/guia.js?v=91f4100bf5";
-import { vistaContale } from "./vistas/contale.js?v=91f4100bf5";
-import { vistaLeer } from "./vistas/leer.js?v=91f4100bf5";
-import { vistaNovedades } from "./vistas/novedades.js?v=91f4100bf5";
+import * as d from "./datos.js?v=9aef454a4b";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=9aef454a4b";
+import { $, esc } from "./ui.js?v=9aef454a4b";
+import { vistaInicio } from "./vistas/inicio.js?v=9aef454a4b";
+import { vistaAcerca } from "./vistas/acerca.js?v=9aef454a4b";
+import { vistaEstudio } from "./vistas/estudio.js?v=9aef454a4b";
+import { vistaRepaso } from "./vistas/repaso.js?v=9aef454a4b";
+import { vistaAjustes } from "./vistas/ajustes.js?v=9aef454a4b";
+import { puedeEstudiar } from "./permisos.js?v=9aef454a4b";
+import { dibujarTemporizador } from "./temporizador.js?v=9aef454a4b";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=9aef454a4b";
+import { vistaGuia } from "./vistas/guia.js?v=9aef454a4b";
+import { vistaContale } from "./vistas/contale.js?v=9aef454a4b";
+import { vistaLeer } from "./vistas/leer.js?v=9aef454a4b";
+import { vistaEscribir } from "./vistas/escribir.js?v=9aef454a4b";
+import { vistaNovedades } from "./vistas/novedades.js?v=9aef454a4b";
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));
@@ -32,6 +33,7 @@ const RUTAS = {
     inicio: { titulo: "Inicio", vista: vistaInicio, menu: true },
     estudio: { titulo: "Estudio", vista: vistaEstudio, menu: true, puede: puedeEstudiar, ancho: "completo" },
     leer: { titulo: "Leer", vista: vistaLeer, menu: true, puede: puedeEstudiar },
+    escribir: { titulo: "Escribir", vista: vistaEscribir, menu: true, puede: puedeEstudiar, ancho: "completo" },
     repaso: { titulo: "Repaso", vista: vistaRepaso, menu: true, puede: puedeEstudiar },
     // Ajustes: la ruedita de arriba (el menú de abajo queda para lo de todos los días)
     ajustes: { titulo: "Ajustes", vista: vistaAjustes, puede: puedeEstudiar },
@@ -70,7 +72,19 @@ function dibujarCabecera(usuario, nombreRuta) {
     dibujarTemporizador();
 }
 
+// Lo que la pantalla anterior pidió hacer antes de irse (por ejemplo, Escribir guarda lo último que se tipeó)
+let alSalirDeLaPantalla = null;
+
 async function dibujar() {
+    if (alSalirDeLaPantalla) {
+        const salir = alSalirDeLaPantalla;
+        alSalirDeLaPantalla = null;
+        try {
+            salir();
+        } catch (e) {
+            d.anotarError(e.message);
+        }
+    }
     const usuario = d.usuarioActual();
     if (!usuario) return dibujarSinUsuario();
     // La primera vez, la bienvenida (y vuelve ahí hasta completarla)
@@ -87,7 +101,7 @@ async function dibujar() {
     const hoja = document.createElement("div");
     principal.replaceChildren(hoja);
     try {
-        await ruta.vista(hoja, { usuario, redibujar: dibujar });
+        await ruta.vista(hoja, { usuario, redibujar: dibujar, alSalir: (fn) => (alSalirDeLaPantalla = fn) });
     } catch (e) {
         d.anotarError(e.message);
         principal.innerHTML = `<p class="error">Algo falló al mostrar esta pantalla: ${esc(e.message)}</p>`;

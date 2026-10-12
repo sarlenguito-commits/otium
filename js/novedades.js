@@ -3,9 +3,19 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=91f4100bf5";
+import { VERSION, PREFIJO } from "./config.js?v=9aef454a4b";
 
 export const NOVEDADES = [
+    {
+        version: "0.6.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "Nueva pestaña Escribir: tu escritura libre, con la lista de tus escritos a la izquierda (en el celu, arriba y plegable).",
+            "Cada escrito puede ser suelto o de un mapa, y se guarda solo mientras escribís.",
+            "Modo Marcar: en tus escritos tenés lo mismo que al leer (diccionario, resaltar, Explicar y nota). Si el escrito es de un mapa, lo que resaltás puede ir a las Notas personales de una ficha.",
+            "Si cambiás el texto, los resaltados se mueven con él; si borraste esa parte, quedan aparte con su nota (no se pierden).",
+        ],
+    },
     {
         version: "0.5.0",
         fecha: "12/10/2026",

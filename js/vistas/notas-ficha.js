@@ -5,14 +5,16 @@
 //   - Tu desarrollo: notas sueltas, numeradas, para armar el capítulo (o el tema) paso a paso con tus palabras.
 // Todo se renombra, se edita y se quita; las del desarrollo también se reordenan (↑ ↓).
 // ============================================
-import * as d from "../datos.js?v=91f4100bf5";
-import { TOPES } from "../config.js?v=91f4100bf5";
-import { esc, aviso } from "../ui.js?v=91f4100bf5";
+import * as d from "../datos.js?v=9aef454a4b";
+import { TOPES } from "../config.js?v=9aef454a4b";
+import { esc, aviso } from "../ui.js?v=9aef454a4b";
 
 // Qué notas tienen el formulario de edición abierto ("r:<id>" o "n:<id>"), mientras la página esté abierta
 const editando = new Set();
 
-const dirLeer = (r) => `#leer?m=${encodeURIComponent(r.mapa)}&c=${encodeURIComponent(r.concepto)}&p=${r.parrafo}`;
+const dirLeer = (r) => (r.escrito
+    ? `#escribir?e=${encodeURIComponent(r.escrito)}&modo=marcar&p=${r.parrafo}`
+    : `#leer?m=${encodeURIComponent(r.mapa)}&c=${encodeURIComponent(r.concepto)}&p=${r.parrafo}`);
 const recorte = (t, n = 50) => (t.length > n ? `${t.slice(0, n).trimEnd()}…` : t);
 
 export function seccionNotas(x, porId) {
@@ -21,7 +23,7 @@ export function seccionNotas(x, porId) {
         <section class="notas" aria-label="Notas personales">
             <h3>📝 Notas personales</h3>
             ${resaltados.length ? `
-            <h4>De tu lectura</h4>
+            <h4>De lo que leíste y escribiste</h4>
             <ul class="notas__lista">${resaltados.map((r) => notaResaltado(r, x, porId)).join("")}</ul>` : ""}
             <h4>Tu desarrollo</h4>
             ${sueltas.length
@@ -36,7 +38,7 @@ export function seccionNotas(x, porId) {
 }
 
 function notaResaltado(r, x, porId) {
-    const otroCapitulo = r.concepto !== x.id ? porId.get(r.concepto)?.titulo : "";
+    const otroCapitulo = r.escrito ? "tu escrito" : r.concepto !== x.id ? porId.get(r.concepto)?.titulo : "";
     if (editando.has(`r:${r.id}`)) {
         return `
             <li class="nota">

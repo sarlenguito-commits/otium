@@ -1032,6 +1032,105 @@ mark {
   font-size: 0.9rem;
 }
 
+.escribir {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .escribir {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+@media (min-width: 768px) {
+  .escribir__lado {
+    position: sticky;
+    top: 1rem;
+  }
+}
+.escribir__principal {
+  min-width: 0;
+  max-width: 46rem;
+}
+.escribir__aviso {
+  margin-top: 0;
+}
+
+.escritos {
+  padding: 0.6rem 0.8rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+}
+.escritos summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.escritos__nuevo {
+  margin: 0.6rem 0;
+}
+.escritos__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.3rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.escritos__lista a {
+  display: grid;
+  padding: 0.4rem 0.5rem;
+  border-radius: 10px;
+  color: var(--texto);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.escritos__lista a:hover, .escritos__lista a[aria-current=page] {
+  background: var(--fondo);
+}
+.escritos__lista a[aria-current=page] {
+  box-shadow: inset 3px 0 0 var(--acento);
+}
+
+.escrito__datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: end;
+  margin-bottom: 0.75rem;
+}
+.escrito__titulo {
+  flex: 1 1 14rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.escrito__mapa {
+  flex: 0 1 14rem;
+  font-size: 0.9rem;
+}
+.escrito__texto {
+  width: 100%;
+  min-height: 55vh;
+  margin-top: 0.75rem;
+  padding: 0.8rem;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  resize: vertical;
+}
+.escrito__marcar {
+  margin-top: 0.5rem;
+}
+.escrito__marcar p:empty::before {
+  content: " ";
+}
+.escrito__sueltos ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
 .hoy p {
   margin: 0 0 0.4rem;
 }
