@@ -2,7 +2,7 @@
 // Reglas de los datos: limpian y controlan cada campo con su tope. Si algo no cumple, tiran un Error con un
 // mensaje para mostrarle a la persona. Las usa la capa de datos (y, el día de mañana, la nube).
 // ============================================
-import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO } from "../config.js?v=9ea66e9344";
+import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO, ABARCAMIENTO } from "../config.js?v=43661a5cb5";
 
 function texto(valor, { nombre, tope, obligatorio = false }) {
     if (valor !== null && valor !== undefined && typeof valor !== "string" && typeof valor !== "number") {
@@ -78,17 +78,18 @@ export function limpiarEscalon(e = {}) {
     };
 }
 
-/** Un resaltado nuevo: dónde (capítulo o escrito, párrafo, desde-hasta), qué texto y de qué color. */
+/** Un resaltado nuevo: dónde (capítulo, escrito o neurona; párrafo, desde-hasta), qué texto y de qué color. */
 export function limpiarResaltado(r = {}) {
     const concepto = r.concepto ? texto(r.concepto, { nombre: "el capítulo", tope: 40 }) : null;
     const escrito = r.escrito ? texto(r.escrito, { nombre: "el escrito", tope: 40 }) : null;
-    if (!concepto === !escrito) throw new Error("El resaltado tiene que estar en un capítulo o en un escrito.");
+    const neurona = r.neurona ? texto(r.neurona, { nombre: "la neurona", tope: 40 }) : null;
+    if ([concepto, escrito, neurona].filter(Boolean).length !== 1) throw new Error("El resaltado tiene que estar en un capítulo, un escrito o una neurona.");
     const parrafo = entero(r.parrafo, { nombre: "El párrafo", min: 0, max: TOPES.parrafoMaximo });
     const inicio = entero(r.inicio, { nombre: "El comienzo", min: 0, max: TOPES.letraMaxima });
     const fin = entero(r.fin, { nombre: "El final", min: 1, max: TOPES.letraMaxima });
     if (fin <= inicio) throw new Error("El resaltado no puede estar vacío.");
     return {
-        concepto, escrito, parrafo, inicio, fin,
+        concepto, escrito, neurona, parrafo, inicio, fin,
         texto: texto(r.texto, { nombre: "el texto resaltado", tope: TOPES.resaltadoTexto, obligatorio: true }),
         color: deLista(r.color ?? "azul", COLORES_RESALTADO, "el color"),
         nota: texto(r.nota, { nombre: "la nota", tope: TOPES.nota }),
@@ -119,6 +120,36 @@ export function limpiarNota(n = {}) {
         texto: texto(n.texto, { nombre: "la nota", tope: TOPES.nota }),
     };
     if (!limpio.titulo && !limpio.texto) throw new Error("La nota está vacía: escribí un título o el texto.");
+    return limpio;
+}
+
+/** Un vínculo de una neurona a un Mapa o a un concepto (Ficha o Rama). */
+function vinculoNeurona(v) {
+    if (typeof v !== "object" || v === null) throw new Error("El vínculo tiene que ser un objeto.");
+    return {
+        tipo: deLista(v.tipo, { mapa: 1, concepto: 1 }, "el tipo de vínculo"),
+        id: texto(v.id, { nombre: "el vínculo", tope: 40, obligatorio: true }),
+    };
+}
+
+/** Una neurona (Cerebro 🧠): título, descripción breve, texto editable, nivel de abarcamiento y sus vínculos. */
+export function limpiarNeurona(n = {}, { parcial = false } = {}) {
+    const limpio = {};
+    if (!parcial || n.titulo !== undefined) limpio.titulo = texto(n.titulo, { nombre: "el título", tope: TOPES.tituloNeurona }) || "Sin título";
+    if (!parcial || n.descripcion !== undefined) limpio.descripcion = texto(n.descripcion, { nombre: "la descripción", tope: TOPES.descripcionNeurona });
+    if (!parcial || n.texto !== undefined) {
+        if (n.texto !== undefined && n.texto !== null && typeof n.texto !== "string") throw new Error("La neurona tiene que ser un texto.");
+        const t = String(n.texto ?? "").replace(/\r\n?/g, "\n");
+        if (t.length > TOPES.textoNeurona) throw new Error(`La neurona: hasta ${TOPES.textoNeurona} letras (tiene ${t.length}).`);
+        limpio.texto = t;
+    }
+    if (!parcial || n.abarcamiento !== undefined) {
+        limpio.abarcamiento = n.abarcamiento === null || n.abarcamiento === undefined ? null : deLista(String(n.abarcamiento), ABARCAMIENTO, "el abarcamiento");
+        if (limpio.abarcamiento !== null) limpio.abarcamiento = Number(limpio.abarcamiento);
+    }
+    if (!parcial || n.vinculos !== undefined) {
+        limpio.vinculos = lista(n.vinculos, { nombre: "los vínculos", tope: TOPES.vinculosPorNeurona }).map(vinculoNeurona);
+    }
     return limpio;
 }
 

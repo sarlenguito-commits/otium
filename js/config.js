@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.7.1"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.8.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -37,6 +37,9 @@ export const PLANES = {
 
 // Feynman: a quién se lo explicás.
 export const PERSONAJES = { chico: "un chico de 7 años", abuela: "una abuela de 80" };
+
+// Cerebro 🧠: qué tan general o específica es una neurona (1 a 5). La pone la persona; no depende de lo que sepa.
+export const ABARCAMIENTO = { 1: "Muy general", 2: "General", 3: "Media", 4: "Específica", 5: "Muy específica" };
 
 // Roles: la app es de una sola persona (Esteban). Lo que puede está en permisos.js.
 export const ROLES = {
@@ -128,6 +131,12 @@ export const TOPES = {
     instruccionReescribir: 200, // "Más formal, para mandar por mail"
     textoReescribir: 8000, // letras que se mandan a reescribir de una vez (más largo: de a párrafos)
     reescritura: 12000, // letras de lo que devuelve la IA // notas sueltas ("Tu desarrollo" en las fichas)
+    // Cerebro 🧠 (neuronas)
+    tituloNeurona: 80,
+    descripcionNeurona: 200, // la idea en una línea
+    textoNeurona: 20_000,
+    neuronasTotal: 1000,
+    vinculosPorNeurona: 20, // a cuántos Mapas, Fichas o Ramas se puede enlazar una neurona
     parrafoMaximo: 5000, // número de párrafo más alto que se acepta (un capítulo no tiene más)
     letraMaxima: 100_000, // posición más alta dentro de un párrafo
     terminoVerificar: 60,

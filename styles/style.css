@@ -1303,3 +1303,173 @@ mark {
 .novedad--actual {
   border-color: var(--acento);
 }
+
+.cerebro {
+  display: grid;
+  gap: 1rem;
+}
+@media (min-width: 768px) {
+  .cerebro {
+    grid-template-columns: 16rem minmax(0, 1fr);
+    align-items: start;
+  }
+}
+@media (min-width: 768px) {
+  .cerebro__lado {
+    position: sticky;
+    top: 1rem;
+  }
+}
+.cerebro__principal {
+  min-width: 0;
+  max-width: 46rem;
+}
+.cerebro__abiertas {
+  grid-column: 1/-1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: -0.25rem;
+}
+.cerebro__pestana {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.3rem 0.3rem 0.6rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  font-size: 0.85rem;
+}
+.cerebro__pestana a {
+  color: var(--texto);
+  text-decoration: none;
+}
+.cerebro__pestana--actual {
+  box-shadow: inset 0 0 0 1px var(--acento);
+}
+.cerebro__pestana-cerrar {
+  border: none;
+  background: none;
+  color: var(--texto-suave);
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.1rem 0.2rem;
+}
+.cerebro__pestana-cerrar:hover {
+  color: var(--peligro);
+}
+
+.neuronas {
+  padding: 0.6rem 0.8rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+}
+.neuronas summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.neuronas__nuevo {
+  margin: 0.6rem 0;
+}
+.neuronas__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.3rem;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+.neuronas__lista a {
+  display: grid;
+  padding: 0.4rem 0.5rem;
+  border-radius: 10px;
+  color: var(--texto);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.neuronas__lista a:hover, .neuronas__lista a[aria-current=page] {
+  background: var(--fondo);
+}
+.neuronas__lista a[aria-current=page] {
+  box-shadow: inset 3px 0 0 var(--acento);
+}
+
+.neurona__datos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  align-items: end;
+  margin-bottom: 0.5rem;
+}
+.neurona__titulo {
+  flex: 1 1 14rem;
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.neurona__descripcion {
+  flex: 1 1 100%;
+  font-size: 0.95rem;
+  color: var(--texto-suave);
+}
+.neurona__abarcamiento {
+  flex: 1 1 100%;
+}
+.neurona__vinculos {
+  margin-bottom: 0.75rem;
+}
+.neurona__vinculos select {
+  max-width: 100%;
+}
+.neurona__vinculos-lista {
+  list-style: none;
+  margin: 0 0 0.4rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.neurona__vinculos-lista li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.2rem 0.2rem 0.2rem 0.6rem;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+.neurona__vinculos-lista a {
+  color: var(--texto);
+  text-decoration: none;
+}
+.neurona__texto {
+  width: 100%;
+  min-height: 50vh;
+  margin-top: 0.75rem;
+  padding: 0.8rem;
+  font: inherit;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  resize: vertical;
+}
+.neurona__marcar {
+  margin-top: 0.5rem;
+}
+.neurona__marcar p:empty::before {
+  content: " ";
+}
+.neurona__sueltos ul {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+
+.neuronas-de-ficha {
+  margin-top: 1rem;
+}
+.neuronas-de-ficha h3 {
+  margin-bottom: 0.3rem;
+}

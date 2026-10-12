@@ -4,11 +4,11 @@
 // personal opcional, la explicación de la IA (si la pidió) y, opcionalmente, un título y un vínculo a una ficha.
 // No se pisan: en un mismo párrafo, dos resaltados no pueden ocupar las mismas letras.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=9ea66e9344";
-import { usuarioActual } from "./sesion.js?v=9ea66e9344";
-import { limpiarResaltado, limpiarEdicionResaltado } from "../reglas.js?v=9ea66e9344";
-import { puedeEstudiar } from "../../permisos.js?v=9ea66e9344";
-import { TOPES } from "../../config.js?v=9ea66e9344";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=43661a5cb5";
+import { usuarioActual } from "./sesion.js?v=43661a5cb5";
+import { limpiarResaltado, limpiarEdicionResaltado } from "../reglas.js?v=43661a5cb5";
+import { puedeEstudiar } from "../../permisos.js?v=43661a5cb5";
+import { TOPES } from "../../config.js?v=43661a5cb5";
 
 function quien() {
     const u = usuarioActual();
@@ -17,10 +17,10 @@ function quien() {
     return u;
 }
 
-const delMismoLugar = (a, b) => a.concepto === b.concepto && a.escrito === b.escrito && a.parrafo === b.parrafo;
+const delMismoLugar = (a, b) => a.concepto === b.concepto && a.escrito === b.escrito && a.neurona === b.neurona && a.parrafo === b.parrafo;
 export const sePisan = (a, b) => delMismoLugar(a, b) && a.inicio < b.fin && b.inicio < a.fin;
 
-/** Marca un pedazo de texto. donde = { concepto } (un capítulo) o { escrito } (un escrito propio, más adelante). */
+/** Marca un pedazo de texto. donde = { concepto } (un capítulo), { escrito } o { neurona } (su propio texto). */
 export function crearResaltado(campos) {
     quien();
     const r = limpiarResaltado(campos);
@@ -30,17 +30,24 @@ export function crearResaltado(campos) {
         const c = datos.conceptos.find((x) => x.id === r.concepto);
         exigir(c && Number.isInteger(c.capitulo), "Solo se puede resaltar en un capítulo de un libro.");
         r.mapa = c.mapa;
-    } else {
+    } else if (r.escrito) {
         const e = datos.escritos.find((x) => x.id === r.escrito);
         exigir(e, "No existe ese escrito.");
         r.mapa = e.mapa ?? null;
         const parrafos = e.texto.split("\n");
         exigir(parrafos[r.parrafo]?.slice(r.inicio, r.fin) === r.texto, "Eso ya no está así en el escrito: volvé a seleccionarlo.");
         enEscrito = (x) => parrafos[x.parrafo]?.slice(x.inicio, x.fin) === x.texto;
+    } else {
+        const n = datos.neuronas.find((x) => x.id === r.neurona);
+        exigir(n, "No existe esa neurona.");
+        r.mapa = null;
+        const parrafos = n.texto.split("\n");
+        exigir(parrafos[r.parrafo]?.slice(r.inicio, r.fin) === r.texto, "Eso ya no está así en la neurona: volvé a seleccionarlo.");
+        enEscrito = (x) => parrafos[x.parrafo]?.slice(x.inicio, x.fin) === x.texto;
     }
     exigir(datos.resaltados.length < TOPES.resaltadosTotal, `Se llegó al máximo de ${TOPES.resaltadosTotal} resaltados.`);
-    // En un escrito, los resaltados "sueltos" (lo que marcaban ya no está) no ocupan lugar
-    const pisado = datos.resaltados.find((x) => sePisan(x, r) && (!x.escrito || enEscrito(x)));
+    // En un escrito o una neurona, los resaltados "sueltos" (lo que marcaban ya no está) no ocupan lugar
+    const pisado = datos.resaltados.find((x) => sePisan(x, r) && (!(x.escrito || x.neurona) || enEscrito(x)));
     exigir(!pisado, "Ya hay un resaltado ahí: tocalo para cambiarle el color o la nota.");
     const ahora = Date.now();
     const nuevo = { id: idNuevo("r"), ...r, creado: ahora, editado: ahora };
@@ -56,11 +63,11 @@ export function leerResaltado(id) {
     return r;
 }
 
-/** Los resaltados de un capítulo (o de un escrito), en el orden del texto. */
-export function resaltadosDe({ concepto = null, escrito = null }) {
+/** Los resaltados de un capítulo, un escrito o una neurona, en el orden del texto. */
+export function resaltadosDe({ concepto = null, escrito = null, neurona = null }) {
     quien();
     return leerTodo().resaltados
-        .filter((r) => (concepto ? r.concepto === concepto : r.escrito === escrito))
+        .filter((r) => (concepto ? r.concepto === concepto : escrito ? r.escrito === escrito : r.neurona === neurona))
         .sort((a, b) => a.parrafo - b.parrafo || a.inicio - b.inicio);
 }
 

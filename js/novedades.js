@@ -3,9 +3,19 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=9ea66e9344";
+import { VERSION, PREFIJO } from "./config.js?v=43661a5cb5";
 
 export const NOVEDADES = [
+    {
+        version: "0.8.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "Pestaña nueva: Cerebro 🧠. Creá neuronas (una idea con título, descripción y texto propio) y vinculalas a un Mapa, una Ficha o una Rama, de ida y de vuelta.",
+            "El texto de una neurona se resalta igual que en Leer o Escribir, con diccionario, explicar con IA y notas.",
+            "Nivel de abarcamiento (1 muy general a 5 muy específico) para cada neurona, y una tira de \"Abiertas\" con lo último que viste.",
+            "Es el primer paso de Cerebro: todavía no está el grafo (eso viene en la fase 2).",
+        ],
+    },
     {
         version: "0.7.1",
         fecha: "12/10/2026",
