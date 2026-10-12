@@ -3,9 +3,16 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=7ecc487c43";
+import { VERSION, PREFIJO } from "./config.js?v=ee9afa6f58";
 
 export const NOVEDADES = [
+    {
+        version: "0.13.1",
+        fecha: "12/10/2026",
+        cambios: [
+            "OTIUM ahora lleva números de uso (cuántos pedidos de cada tipo, fallas de la IA, comentarios), solo números y sin nada de lo que escribís, para que Esteban vea cómo se usa y la mejore. Está explicado en \"Privacidad y términos\".",
+        ],
+    },
     {
         version: "0.13.0",
         fecha: "12/10/2026",

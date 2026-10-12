@@ -2,26 +2,26 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=7ecc487c43";
-import * as ia from "./ia.js?v=7ecc487c43";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=7ecc487c43";
-import { $, esc } from "./ui.js?v=7ecc487c43";
-import { vistaInicio } from "./vistas/inicio.js?v=7ecc487c43";
-import { vistaAcerca } from "./vistas/acerca.js?v=7ecc487c43";
-import { vistaEstudio } from "./vistas/estudio.js?v=7ecc487c43";
-import { vistaRepaso } from "./vistas/repaso.js?v=7ecc487c43";
-import { vistaAjustes } from "./vistas/ajustes.js?v=7ecc487c43";
-import { puedeEstudiar } from "./permisos.js?v=7ecc487c43";
-import { dibujarTemporizador } from "./temporizador.js?v=7ecc487c43";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=7ecc487c43";
-import { vistaGuia } from "./vistas/guia.js?v=7ecc487c43";
-import { vistaContale } from "./vistas/contale.js?v=7ecc487c43";
-import { vistaLeer } from "./vistas/leer.js?v=7ecc487c43";
-import { vistaEscribir } from "./vistas/escribir.js?v=7ecc487c43";
-import { vistaCerebro } from "./vistas/cerebro.js?v=7ecc487c43";
-import { vistaNovedades } from "./vistas/novedades.js?v=7ecc487c43";
-import { vistaPrivacidad } from "./vistas/privacidad.js?v=7ecc487c43";
-import { prepararInstalacion } from "./instalar.js?v=7ecc487c43";
+import * as d from "./datos.js?v=ee9afa6f58";
+import * as ia from "./ia.js?v=ee9afa6f58";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=ee9afa6f58";
+import { $, esc } from "./ui.js?v=ee9afa6f58";
+import { vistaInicio } from "./vistas/inicio.js?v=ee9afa6f58";
+import { vistaAcerca } from "./vistas/acerca.js?v=ee9afa6f58";
+import { vistaEstudio } from "./vistas/estudio.js?v=ee9afa6f58";
+import { vistaRepaso } from "./vistas/repaso.js?v=ee9afa6f58";
+import { vistaAjustes } from "./vistas/ajustes.js?v=ee9afa6f58";
+import { puedeEstudiar } from "./permisos.js?v=ee9afa6f58";
+import { dibujarTemporizador } from "./temporizador.js?v=ee9afa6f58";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=ee9afa6f58";
+import { vistaGuia } from "./vistas/guia.js?v=ee9afa6f58";
+import { vistaContale } from "./vistas/contale.js?v=ee9afa6f58";
+import { vistaLeer } from "./vistas/leer.js?v=ee9afa6f58";
+import { vistaEscribir } from "./vistas/escribir.js?v=ee9afa6f58";
+import { vistaCerebro } from "./vistas/cerebro.js?v=ee9afa6f58";
+import { vistaNovedades } from "./vistas/novedades.js?v=ee9afa6f58";
+import { vistaPrivacidad } from "./vistas/privacidad.js?v=ee9afa6f58";
+import { prepararInstalacion } from "./instalar.js?v=ee9afa6f58";
 
 // Instalable: service worker y el aviso del navegador (antes que nada: el aviso puede llegar enseguida)
 prepararInstalacion();

@@ -1,11 +1,11 @@
 // ============================================
 // Privacidad y términos: qué se guarda, dónde, cuánto tiempo, cómo se borra, qué va a Google (Gemini, plan gratis) y
 // las reglas de uso. Se puede leer antes de la bienvenida. Si cambia algo de fondo, se avisa en Novedades.
-// Hechos chequeados el 12/10/2026: servidor (servidor/src/index.js: cupo 3 días, comentarios 180 días, no guarda los
-// pedidos a la IA) y condiciones de Google para el plan gratis (vigentes desde el 23/03/2026).
+// Hechos chequeados el 12/10/2026: servidor (servidor/src/index.js: cupo 3 días, estadísticas solo numéricas 40 días,
+// comentarios 180 días, no guarda los pedidos a la IA) y condiciones de Google para el plan gratis (desde el 23/03/2026).
 // ============================================
-import { NOMBRE_APP } from "../config.js?v=7ecc487c43";
-import { esc } from "../ui.js?v=7ecc487c43";
+import { NOMBRE_APP } from "../config.js?v=ee9afa6f58";
+import { esc } from "../ui.js?v=ee9afa6f58";
 
 const ACTUALIZADA = "12/10/2026";
 const CONDICIONES_GOOGLE = "https://ai.google.dev/gemini-api/terms";
@@ -42,6 +42,9 @@ export function vistaPrivacidad(cont) {
             <h3>En el servidor de ${esc(NOMBRE_APP)} (Cloudflare)</h3>
             <ul>
                 <li>Cuánta IA se usó cada día con tu acceso, para el cupo. Se borra solo a los 3 días.</li>
+                <li>Números de uso por bloques de 8 horas: cuántos pedidos de cada tipo, cuánto "pesaron" (tokens), cuántas
+                    veces falló la IA, cuánto usó cada acceso y cuántos comentarios llegaron. <strong>Solo números, nada de
+                    lo que escribís.</strong> Con eso Esteban recibe un resumen para mejorar la app. Se borran solos a los 40 días.</li>
                 <li>Los comentarios que mandás con "Contale a Esteban" o "Esto está mal": el texto, el tema y la ficha donde
                     estabas, y el nombre de tu acceso. Los lee Esteban para mejorar la app. Se borran solos a los 180 días.</li>
                 <li>Lo que le pedís a la IA pasa por el servidor, pero <strong>no se guarda ahí</strong>: se manda a Google y vuelve.</li>
@@ -73,7 +76,8 @@ export function vistaPrivacidad(cont) {
         </div>
 
         <h2>Para qué se usa</h2>
-        <p>Solo para que la app funcione, para controlar el cupo de IA de cada día y para leer tus comentarios y mejorarla.
+        <p>Solo para que la app funcione, para controlar el cupo de IA de cada día, para ver cuánto se usa y para leer tus
+           comentarios y mejorarla.
            No se vende ni se comparte con nadie más.</p>
 
         <h2>Cómo borrarlo</h2>

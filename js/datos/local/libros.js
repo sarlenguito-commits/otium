@@ -3,9 +3,9 @@
 // datos de siempre no se vuelven pesados. El libro se convierte en un mapa: la raíz es el libro y cada capítulo es una
 // rama. A la IA va solo el capítulo que se pide, recortado (TOPES.textoCapituloIA).
 // ============================================
-import { leerAparte, guardarAparte, exigir } from "./nucleo.js?v=7ecc487c43";
-import { crearMapaConCapitulos, leerConcepto } from "./mapas.js?v=7ecc487c43";
-import { TOPES } from "../../config.js?v=7ecc487c43";
+import { leerAparte, guardarAparte, exigir } from "./nucleo.js?v=ee9afa6f58";
+import { crearMapaConCapitulos, leerConcepto } from "./mapas.js?v=ee9afa6f58";
+import { TOPES } from "../../config.js?v=ee9afa6f58";
 
 const clave = (mapaId) => `libro-${mapaId}`;
 

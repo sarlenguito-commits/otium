@@ -7,13 +7,13 @@
 //     Si el escrito es de un mapa, un resaltado puede ir a las "Notas personales" de una ficha de ese mapa.
 // Dirección: #escribir?e=<escrito>&modo=marcar[&p=<párrafo>]
 // ============================================
-import * as d from "../datos.js?v=7ecc487c43";
-import { TOPES, COSTO_REESCRIBIR } from "../config.js?v=7ecc487c43";
-import { esc, vacio, aviso } from "../ui.js?v=7ecc487c43";
-import { cuandoFue } from "../fechas.js?v=7ecc487c43";
-import { montarLector } from "./lector.js?v=7ecc487c43";
-import * as ia from "../ia.js?v=7ecc487c43";
-import { ALCANCES, MAS_IDEAS, pedidosRapidos, anotarUso, rango, reemplazar, agregarAbajo } from "../reescribir.js?v=7ecc487c43";
+import * as d from "../datos.js?v=ee9afa6f58";
+import { TOPES, COSTO_REESCRIBIR } from "../config.js?v=ee9afa6f58";
+import { esc, vacio, aviso } from "../ui.js?v=ee9afa6f58";
+import { cuandoFue } from "../fechas.js?v=ee9afa6f58";
+import { montarLector } from "./lector.js?v=ee9afa6f58";
+import * as ia from "../ia.js?v=ee9afa6f58";
+import { ALCANCES, MAS_IDEAS, pedidosRapidos, anotarUso, rango, reemplazar, agregarAbajo } from "../reescribir.js?v=ee9afa6f58";
 
 const MODOS_ESCRITO = { escribir: "✏️ Escribir", marcar: "🖍 Marcar" };
 const dir = (id, modo = "escribir") => `#escribir?e=${encodeURIComponent(id)}${modo === "marcar" ? "&modo=marcar" : ""}`;
