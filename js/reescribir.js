@@ -4,7 +4,7 @@
 //   - Pedidos rápidos: las 3 instrucciones que más usaste; mientras no haya 3, se completan con las de base.
 //     Se recuerdan solo en este navegador (es una comodidad, no un dato importante).
 // ============================================
-import { PREFIJO, TOPES } from "./config.js?v=c366a4baa6";
+import { PREFIJO, TOPES } from "./config.js?v=7ecc487c43";
 
 export const PEDIDOS_BASE = ["Más claro y simple", "Técnico y preciso", "Formal, para mandar por mail"];
 export const MAS_IDEAS = ["Más artístico", "Como un poema", "Más corto, sin perder ideas", "Para un chico de 12 años", "Como un tuit"];

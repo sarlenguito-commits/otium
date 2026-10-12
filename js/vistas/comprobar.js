@@ -9,10 +9,10 @@
 //     entendiste de verdad y cuál es el hueco.
 // Lo que respondés queda en memoria mientras la página esté abierta (no se guarda: es práctica).
 // ============================================
-import * as d from "../datos.js?v=c366a4baa6";
-import * as ia from "../ia.js?v=c366a4baa6";
-import { COSTOS_IA, TOPES, PERSONAJES } from "../config.js?v=c366a4baa6";
-import { esc, aviso } from "../ui.js?v=c366a4baa6";
+import * as d from "../datos.js?v=7ecc487c43";
+import * as ia from "../ia.js?v=7ecc487c43";
+import { COSTOS_IA, TOPES, PERSONAJES } from "../config.js?v=7ecc487c43";
+import { esc, aviso } from "../ui.js?v=7ecc487c43";
 
 const VEREDICTOS = { bien: "✅ Bien", masomenos: "🟡 Más o menos", mal: "🔴 Todavía no" };
 

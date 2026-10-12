@@ -1,9 +1,9 @@
 // Bienvenida: la primera vez que alguien abre OTIUM. Qué es, cómo se usa, qué pasa con lo que escribe (privacidad)
 // y dónde pega el token que le pasó Esteban. Hasta que no la complete, la app vuelve acá.
-import * as d from "../datos.js?v=c366a4baa6";
-import * as ia from "../ia.js?v=c366a4baa6";
-import { NOMBRE_APP, PREFIJO, TOPES } from "../config.js?v=c366a4baa6";
-import { esc, aviso, intentar } from "../ui.js?v=c366a4baa6";
+import * as d from "../datos.js?v=7ecc487c43";
+import * as ia from "../ia.js?v=7ecc487c43";
+import { NOMBRE_APP, PREFIJO, TOPES } from "../config.js?v=7ecc487c43";
+import { esc, aviso, intentar } from "../ui.js?v=7ecc487c43";
 
 const CLAVE = `${PREFIJO}-bienvenida`;
 
@@ -45,8 +45,8 @@ export function vistaBienvenida(cont, { usuario }) {
                 <h2>Tu privacidad</h2>
                 <ul>
                     <li>Lo que armás y escribís (mapas, fichas, escritos, notas, libros) queda <strong>solo en este navegador</strong>.</li>
-                    <li><strong>Lo que le pedís a la IA va a Google</strong> (Gemini, plan gratis): el tema, tus respuestas y
-                        explicaciones, lo que seleccionás para que te explique, el texto de un capítulo o lo que mandás a reescribir.
+                    <li><strong>Lo que le pedís a la IA va a Google</strong> (Gemini, plan gratis): el tema, lo que escribís en la
+                        charla, tus respuestas y explicaciones, lo que seleccionás para que te explique, el texto de un capítulo o lo que mandás a reescribir.
                         Google lo usa para mejorar sus productos y <strong>lo pueden leer personas que trabajan para Google</strong>.</li>
                     <li><strong>No le mandes a la IA datos personales, de salud, de trabajo, contraseñas ni nada privado</strong>, tuyo o de otros.</li>
                     <li>La IA se puede equivocar: cada ficha marca cuán segura está y tiene "Esto está mal" para avisar.</li>

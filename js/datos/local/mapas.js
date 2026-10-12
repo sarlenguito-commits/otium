@@ -3,15 +3,15 @@
 // Cada función que guarda: quién es, exigir() su permiso, limpiar con reglas.js, guardar, dejar historial.
 // Nada se borra: un mapa se archiva, y queda cuándo y por qué.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=c366a4baa6";
-import { usuarioActual } from "./sesion.js?v=c366a4baa6";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=7ecc487c43";
+import { usuarioActual } from "./sesion.js?v=7ecc487c43";
 import {
     limpiarTema, limpiarModo, limpiarRama, limpiarEstado, limpiarFicha, limpiarMensaje, limpiarHablante, limpiarMotivo, limpiarEscalon,
-} from "../reglas.js?v=c366a4baa6";
-import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=c366a4baa6";
-import { TOPES } from "../../config.js?v=c366a4baa6";
-import { fechaLocalISO } from "../../fechas.js?v=c366a4baa6";
-import { sumarTarjetas, anotarDia } from "./repaso.js?v=c366a4baa6";
+} from "../reglas.js?v=7ecc487c43";
+import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=7ecc487c43";
+import { TOPES } from "../../config.js?v=7ecc487c43";
+import { fechaLocalISO } from "../../fechas.js?v=7ecc487c43";
+import { sumarTarjetas, anotarDia } from "./repaso.js?v=7ecc487c43";
 
 function quien(permiso = puedeEstudiar) {
     const u = usuarioActual();
@@ -283,7 +283,9 @@ export function ponerPrerrequisitos(conceptoId, ids) {
 }
 
 /** Un mensaje del chat del mapa (de la app o tuyo), opcionalmente atado a un concepto. */
-export function agregarMensaje(mapaId, { quien: hablante, texto, concepto = null } = {}, { hoy = fechaLocalISO() } = {}) {
+/** charla: true = el mensaje es de la charla con la IA (solo esos se le mandan después como contexto; los demás son
+ *  notas o avisos de la app y no salen del navegador). */
+export function agregarMensaje(mapaId, { quien: hablante, texto, concepto = null, charla = false } = {}, { hoy = fechaLocalISO() } = {}) {
     quien();
     const datos = leerTodo();
     const mapa = buscarMapa(datos, mapaId);
@@ -293,7 +295,7 @@ export function agregarMensaje(mapaId, { quien: hablante, texto, concepto = null
     exigir(cuantos < TOPES.mensajesPorMapa, `El chat de un mapa guarda hasta ${TOPES.mensajesPorMapa} mensajes.`);
     const ahora = Date.now();
     tocar(mapa, ahora);
-    const mensaje = { id: idNuevo("x"), mapa: mapaId, ...limpio, concepto, cuando: ahora };
+    const mensaje = { id: idNuevo("x"), mapa: mapaId, ...limpio, concepto, cuando: ahora, ...(charla === true ? { charla: true } : {}) };
     datos.mensajes.push(mensaje);
     if (limpio.quien === "vos") anotarDia(datos, hoy); // escribir para aprender también cuenta para la racha
     guardarTodo(datos, "mensajes");

@@ -3,9 +3,20 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=c366a4baa6";
+import { VERSION, PREFIJO } from "./config.js?v=7ecc487c43";
 
 export const NOVEDADES = [
+    {
+        version: "0.13.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "La charla de Estudio ahora habla con la IA: preguntá lo que quieras sobre el tema y te contesta.",
+            "Los conceptos nuevos que aparecen en la charla se cuelgan solos del mapa (⚪), en la rama que corresponde, para abrirlos cuando quieras.",
+            "Modo libre: al crear un mapa podés elegir \"Libre\": arranca solo con el tema y crece con la charla.",
+            "Cada mensaje usa 1 de tu IA del día. Ojo: lo que escribís en la charla va a Google (plan gratis), sin datos personales. Las notas que habías escrito ahí antes no se mandan.",
+            "Arreglo: \"Tus mapas\" en Estudio vuelve a arrancar plegado en el celu.",
+        ],
+    },
     {
         version: "0.12.2",
         fecha: "12/10/2026",

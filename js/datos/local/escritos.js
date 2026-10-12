@@ -5,12 +5,12 @@
 // cambio los resaltados se reubican: si lo que marcaban sigue en el texto, se mueven ahí; si no, quedan "sueltos"
 // (no se pintan, pero no se pierden: la pantalla los muestra aparte con su nota).
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=c366a4baa6";
-import { usuarioActual } from "./sesion.js?v=c366a4baa6";
-import { limpiarEscrito } from "../reglas.js?v=c366a4baa6";
-import { puedeEstudiar } from "../../permisos.js?v=c366a4baa6";
-import { TOPES } from "../../config.js?v=c366a4baa6";
-import { sePisan } from "./resaltados.js?v=c366a4baa6";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=7ecc487c43";
+import { usuarioActual } from "./sesion.js?v=7ecc487c43";
+import { limpiarEscrito } from "../reglas.js?v=7ecc487c43";
+import { puedeEstudiar } from "../../permisos.js?v=7ecc487c43";
+import { TOPES } from "../../config.js?v=7ecc487c43";
+import { sePisan } from "./resaltados.js?v=7ecc487c43";
 
 function quien() {
     const u = usuarioActual();

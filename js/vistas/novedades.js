@@ -1,7 +1,7 @@
 // Novedades: qué cambió en cada versión (la lista está en js/novedades.js).
-import { NOVEDADES, marcarNovedadesVistas } from "../novedades.js?v=c366a4baa6";
-import { VERSION } from "../config.js?v=c366a4baa6";
-import { esc } from "../ui.js?v=c366a4baa6";
+import { NOVEDADES, marcarNovedadesVistas } from "../novedades.js?v=7ecc487c43";
+import { VERSION } from "../config.js?v=7ecc487c43";
+import { esc } from "../ui.js?v=7ecc487c43";
 
 export function vistaNovedades(cont) {
     marcarNovedadesVistas();

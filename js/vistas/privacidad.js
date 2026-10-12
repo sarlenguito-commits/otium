@@ -4,8 +4,8 @@
 // Hechos chequeados el 12/10/2026: servidor (servidor/src/index.js: cupo 3 días, comentarios 180 días, no guarda los
 // pedidos a la IA) y condiciones de Google para el plan gratis (vigentes desde el 23/03/2026).
 // ============================================
-import { NOMBRE_APP } from "../config.js?v=c366a4baa6";
-import { esc } from "../ui.js?v=c366a4baa6";
+import { NOMBRE_APP } from "../config.js?v=7ecc487c43";
+import { esc } from "../ui.js?v=7ecc487c43";
 
 const ACTUALIZADA = "12/10/2026";
 const CONDICIONES_GOOGLE = "https://ai.google.dev/gemini-api/terms";
@@ -51,6 +51,8 @@ export function vistaPrivacidad(cont) {
             <p>Cada vez que usás la IA se manda lo necesario para ese pedido, y Google recibe también la respuesta:</p>
             <ul>
                 <li>el tema y las ramas del mapa (para armar ramas y fichas);</li>
+                <li>lo que escribís en la charla de Estudio, con los últimos mensajes de esa charla para que siga el hilo
+                    (las notas que escribiste ahí antes de que existiera la charla no se mandan);</li>
                 <li>tus respuestas y explicaciones al comprobar (corregir, Contalo, Feynman);</li>
                 <li>lo que seleccionás para que te lo explique, con su párrafo;</li>
                 <li>el texto de un capítulo cuando pedís su ficha (recortado);</li>

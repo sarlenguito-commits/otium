@@ -4,7 +4,7 @@
 // Los pedidos: pedirRamas, pedirFicha y pedirCupo. Cada respuesta trae el cupo del día, que se recuerda para mostrar
 // la barrita sin volver a preguntar.
 // ============================================
-import { PREFIJO, SERVIDOR_IA } from "./config.js?v=c366a4baa6";
+import { PREFIJO, SERVIDOR_IA } from "./config.js?v=7ecc487c43";
 
 let prefijo = PREFIJO;
 let buscar = (...a) => fetch(...a);
@@ -119,6 +119,11 @@ export async function pedirRamas({ tema, camino = [], existentes = [] }) {
 /** Un comentario para Esteban ("comentario" o "error"). No gasta cupo de IA. */
 export async function pedirComentario({ tipo = "comentario", texto, concepto = "", mapa = "" }) {
     await llamar("/comentario", { tipo, texto, concepto, mapa });
+}
+
+/** Charla (modo libre): { respuesta, conceptos: [{ titulo, resumen, padre }] }. turnos: [{ quien: "vos"|"app", texto }]. */
+export async function pedirCharla({ tema, existentes = [], turnos }) {
+    return (await llamar("/charla", { tema, existentes, turnos })).resultado;
 }
 
 /** Corrige tu respuesta a una pregunta: { veredicto: "bien" | "masomenos" | "mal", comentario, pista }. */

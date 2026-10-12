@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.12.2"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.13.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -18,7 +18,7 @@ export const VERSION_DATOS = 4;
 export const SERVIDOR_IA = "https://otium-ia.otium-servidor.workers.dev";
 
 // Cuánto del cupo diario gasta cada pedido (igual que COSTOS en servidor/src/index.js: el que manda es el servidor).
-export const COSTOS_IA = { ramas: 1, ficha: 3, corregir: 1, contalo: 1, previos: 1, feynman: 1, explicar: 1, reescribir: 1 };
+export const COSTOS_IA = { ramas: 1, ficha: 3, corregir: 1, contalo: 1, previos: 1, feynman: 1, explicar: 1, reescribir: 1, charla: 1 };
 // Reescribir cuesta según cuánto: un pedazo o un párrafo, 1; el texto entero, 2
 export const COSTO_REESCRIBIR = { seleccion: 1, parrafo: 1, todo: 2 };
 
@@ -132,6 +132,12 @@ export const TOPES = {
     textoReescribir: 8000, // letras que se mandan a reescribir de una vez (más largo: de a párrafos)
     reescritura: 12000, // letras de lo que devuelve la IA // notas sueltas ("Tu desarrollo" en las fichas)
     respaldoBytes: 20_000_000, // tamaño máximo del archivo de copia que se importa
+    // Charla con la IA (modo libre)
+    respuestaCharla: 1500, // letras de lo que contesta la IA
+    turnosCharla: 6, // mensajes de la charla que se mandan (los últimos, el tuyo nuevo incluido)
+    turnoCharlaContexto: 600, // los mensajes anteriores van recortados a esto (el nuevo va entero)
+    conceptosPorCharla: 3, // conceptos nuevos que la IA puede colgar del mapa en cada respuesta
+    existentesCharla: 60, // títulos del mapa que se le pasan para que no repita y sepa de dónde colgar
     // Cerebro 🧠 (neuronas)
     tituloNeurona: 80,
     descripcionNeurona: 200, // la idea en una línea
@@ -165,5 +171,5 @@ export const TOPES = {
 
 // Funciones que se prenden y apagan: para esconder algo que no se sabe si van a usar, sin borrarlo.
 export const FUNCIONES = {
-    modoLibre: false, // la charla libre con la IA todavía no está hecha (etapa 5)
+    modoLibre: true, // la charla con la IA cuelga conceptos del mapa (etapa 5, 12/10/2026)
 };

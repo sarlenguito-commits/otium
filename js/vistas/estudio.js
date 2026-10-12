@@ -3,17 +3,17 @@
 // Dirección: #estudio?m=<mapa>&c=<concepto>&v=<pestaña del celu>
 // La IA arma ramas y fichas (acciones-ia.js); el chat todavía solo guarda lo que escribís (la charla llega con el
 // modo libre). Arriba, la barrita del cupo de IA del día.
-import * as d from "../datos.js?v=c366a4baa6";
-import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=c366a4baa6";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=c366a4baa6";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=c366a4baa6";
-import * as ia from "../ia.js?v=c366a4baa6";
-import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=c366a4baa6";
-import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=c366a4baa6";
-import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=c366a4baa6";
-import { seccionNeuronas } from "./cerebro.js?v=c366a4baa6";
-import { seccionMapas, manejarMapas, guardarPlegado } from "./mapas-lateral.js?v=c366a4baa6";
-import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=c366a4baa6";
+import * as d from "../datos.js?v=7ecc487c43";
+import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=7ecc487c43";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=7ecc487c43";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=7ecc487c43";
+import * as ia from "../ia.js?v=7ecc487c43";
+import { armarRamas, armarFicha, armarPrevios, charlar } from "../acciones-ia.js?v=7ecc487c43";
+import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=7ecc487c43";
+import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=7ecc487c43";
+import { seccionNeuronas } from "./cerebro.js?v=7ecc487c43";
+import { seccionMapas, manejarMapas, guardarPlegado } from "./mapas-lateral.js?v=7ecc487c43";
+import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=7ecc487c43";
 
 // Fichas con el formulario "Esto está mal" abierto (mientras la página esté abierta)
 const malAbierto = new Set();
@@ -37,7 +37,7 @@ export function vistaEstudio(cont, { redibujar }) {
     if (!mapaId) {
         cont.className = "estudio estudio--vacio";
         cont.innerHTML = `${seccionMapas(null)}<div class="estudio__vacio">${vacio("Todavía no hay mapas", "Creá uno con \"+ Mapa nuevo\" (un tema o un libro EPUB).")}</div>`;
-        montarLateral(cont, redibujar);
+        montarLateral(cont);
         cont.addEventListener("submit", async (e) => {
             e.preventDefault();
             await manejarMapas(e, redibujar);
@@ -72,7 +72,7 @@ export function vistaEstudio(cont, { redibujar }) {
         </section>
         <section class="estudio__ficha" aria-label="Ficha">${panelConcepto(elegido, porId, mapaId)}</section>`;
 
-    montarLateral(cont, redibujar);
+    montarLateral(cont);
 
     // Que el chat arranque mostrando lo último
     const historial = cont.querySelector(".chat__mensajes");
@@ -102,7 +102,22 @@ export function vistaEstudio(cont, { redibujar }) {
         const form = e.target;
         if (form.matches("[data-enviar]")) {
             const texto = form.elements.texto.value;
-            if (intentar(() => d.agregarMensaje(mapaId, { quien: "vos", texto }), "Guardado. La charla con la IA llega con el modo libre.")) redibujar();
+            if (!ia.conectada()) {
+                if (intentar(() => d.agregarMensaje(mapaId, { quien: "vos", texto }), "Guardado como nota (para charlar con la IA, conectala en Ajustes).")) redibujar();
+                return;
+            }
+            if (!ia.alcanza(COSTOS_IA.charla)) return aviso("No alcanza el cupo de IA de hoy. El repaso sigue funcionando; mañana se renueva.", "error");
+            const boton = form.querySelector("[type=submit]");
+            boton.disabled = true;
+            boton.textContent = "Pensando…";
+            form.elements.texto.readOnly = true;
+            try {
+                const { nuevos } = await charlar(mapaId, texto);
+                if (nuevos.length) aviso(`${nuevos.length === 1 ? "Un concepto nuevo" : `${nuevos.length} conceptos nuevos`} en el mapa`);
+            } catch (err) {
+                aviso(err.message, "error");
+            }
+            redibujar();
         } else if (form.matches("[data-rama]")) {
             const titulo = form.elements.titulo.value;
             if (intentar(() => d.agregarRamas(elegido.id, [{ titulo }]), "Rama agregada")) redibujar();
@@ -198,10 +213,12 @@ export function vistaEstudio(cont, { redibujar }) {
     });
 }
 
-/** El lateral "Tus mapas": si la persona lo pliega o lo abre, se recuerda. */
-function montarLateral(cont, redibujar) {
+/** El lateral "Tus mapas": si la PERSONA lo pliega o lo abre, se recuerda. Se escucha el clic en el título y no
+ *  "toggle", porque el navegador también avisa "toggle" cuando el lateral se dibuja abierto (y quedaba guardado
+ *  "abierto" sin que nadie lo tocara: en el celu arrancaba abierto). */
+function montarLateral(cont) {
     const lado = cont.querySelector("[data-mapas-lado]");
-    lado?.addEventListener("toggle", () => guardarPlegado(lado.open));
+    lado?.querySelector("summary")?.addEventListener("click", () => setTimeout(() => guardarPlegado(lado.open)));
 }
 
 // ---------- Chat ----------
@@ -220,9 +237,11 @@ function chat(mensajes, porId, mapaId) {
         </ol>
         <form class="chat__escribir" data-enviar>
             <label class="visualmente-oculto" for="texto-chat">Tu mensaje</label>
-            <textarea id="texto-chat" name="texto" rows="2" maxlength="${TOPES.mensaje}" placeholder="Notas para vos (la charla con la IA llega más adelante)…" required></textarea>
+            <textarea id="texto-chat" name="texto" rows="2" maxlength="${TOPES.mensaje}" required
+                placeholder="${ia.conectada() ? "Preguntá o charlá sobre el tema: los conceptos nuevos se cuelgan solos del mapa…" : "Notas para vos (para charlar con la IA, conectala en Ajustes)…"}"></textarea>
             <button class="boton" type="submit">Enviar</button>
-        </form>`;
+        </form>
+        ${ia.conectada() ? `<p class="ayuda chat__aviso">Lo que escribís acá va a la IA (Google, plan gratis): sin datos personales. Cada mensaje usa ${COSTOS_IA.charla} de tu IA del día.</p>` : ""}`;
 }
 
 // ---------- Mapa (árbol) ----------

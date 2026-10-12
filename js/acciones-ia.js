@@ -2,13 +2,14 @@
 // Lo que la app hace con la IA, en un solo lugar (las pantallas solo llaman a esto):
 //   armarRamas(concepto): pide ramas nuevas, saltea las repetidas y las cuelga del mapa.
 //   armarFicha(concepto): pide la ficha (chequeada con Wikipedia) y la guarda con su fuente.
+//   charlar(mapa, texto): la charla del modo libre. Responde y cuelga del mapa los conceptos nuevos que aparecieron.
 //   armarPrevios(concepto): el "escalón de abajo": qué conceptos previos da por sabidos la ficha. Los que ya existen
 //     se enlazan; los nuevos se cuelgan del concepto como escalones (🪜) con su explicación mínima.
 // Cada una deja una línea en el chat del mapa, para que la charla cuente lo que pasó.
 // ============================================
-import * as d from "./datos.js?v=c366a4baa6";
-import * as ia from "./ia.js?v=c366a4baa6";
-import { TOPES } from "./config.js?v=c366a4baa6";
+import * as d from "./datos.js?v=7ecc487c43";
+import * as ia from "./ia.js?v=7ecc487c43";
+import { TOPES } from "./config.js?v=7ecc487c43";
 
 /** Deja una línea en el chat del mapa; si no se puede (por ejemplo, el chat llegó a su tope), no frena la acción. */
 function contarEnElChat(mapaId, mensaje) {
@@ -82,6 +83,57 @@ export async function armarPrevios(conceptoId) {
         });
     }
     return pendientes;
+}
+
+/** Para comparar títulos sin que importen mayúsculas, tildes ni espacios de más. */
+const igualar = (t) => String(t ?? "").normalize("NFD").replace(/\p{M}/gu, "").toLowerCase().replace(/\s+/g, " ").trim();
+const recortar = (t, n) => (t.length > n ? `${t.slice(0, n - 1).trimEnd()}…` : t);
+
+/** La charla con la IA. Guarda tu mensaje y la respuesta, y cuelga del mapa los conceptos nuevos (⚪) donde van.
+ *  A la IA va SOLO la charla (mensajes marcados "charla"): las notas viejas del chat no salen del navegador.
+ *  Devuelve { respuesta, nuevos } (nuevos: los conceptos que se agregaron al mapa). */
+export async function charlar(mapaId, texto) {
+    const { mapa, conceptos, mensajes } = d.leerMapa(mapaId);
+    // Lugar para tu mensaje, la respuesta y el aviso (así no se gasta cupo en una respuesta que no se puede guardar)
+    if (mensajes.length + 3 > TOPES.mensajesPorMapa) throw new Error(`El chat de este mapa llegó a ${TOPES.mensajesPorMapa} mensajes: seguí la charla en un mapa nuevo.`);
+    const raiz = conceptos.find((c) => !c.padre);
+    // Lo anterior de la charla (recortado) y el mensaje nuevo entero
+    const antes = mensajes.filter((m) => m.charla).slice(-(TOPES.turnosCharla - 1))
+        .map((m) => ({ quien: m.quien, texto: recortar(m.texto, TOPES.turnoCharlaContexto) }));
+    const nuevo = d.agregarMensaje(mapaId, { quien: "vos", texto, charla: true });
+    const nivel = (c) => d.caminoDe(c.id).length;
+    const existentes = conceptos.filter((c) => c.padre).sort((a, b) => nivel(a) - nivel(b) || a.orden - b.orden)
+        .slice(0, TOPES.existentesCharla).map((c) => c.titulo);
+    const { respuesta, conceptos: propuestos } = await ia.pedirCharla({
+        tema: mapa.tema, existentes, turnos: [...antes, { quien: "vos", texto: nuevo.texto }],
+    });
+
+    // Colgar lo nuevo: sin repetir lo que ya está (en cualquier parte del mapa); del padre que dijo la IA o, si no
+    // existe o no tiene lugar (tope de ramas o de niveles), de la raíz
+    const porTitulo = new Map(conceptos.map((c) => [igualar(c.titulo), c]));
+    const nuevos = [];
+    for (const p of propuestos) {
+        if (porTitulo.has(igualar(p.titulo))) continue;
+        const padre = porTitulo.get(igualar(p.padre)) ?? raiz;
+        for (const destino of padre.id === raiz.id ? [raiz] : [padre, raiz]) {
+            try {
+                const [c] = d.agregarRamas(destino.id, [{ titulo: p.titulo, resumen: p.resumen }]);
+                nuevos.push(c);
+                porTitulo.set(igualar(c.titulo), c);
+                break;
+            } catch {
+                // sin lugar ahí: se prueba en la raíz (o se saltea)
+            }
+        }
+    }
+    d.agregarMensaje(mapaId, { quien: "app", texto: respuesta, charla: true, concepto: nuevos[0]?.id ?? null });
+    if (nuevos.length) {
+        contarEnElChat(mapaId, {
+            texto: `Colgué del mapa ${nuevos.length === 1 ? "un concepto nuevo" : `${nuevos.length} conceptos nuevos`}: ${nuevos.map((c) => c.titulo).join(", ")}. Están en ⚪: abrilos cuando quieras.`,
+            concepto: nuevos[0].id,
+        });
+    }
+    return { respuesta, nuevos };
 }
 
 /** Arma y guarda la ficha de un concepto (o la rehace, si viene "correccion": qué estaba mal). */

@@ -607,6 +607,11 @@ textarea {
   color: var(--texto-suave);
 }
 
+.chat__aviso {
+  margin: -0.4rem 0 0;
+  font-size: 0.8rem;
+}
+
 .chat__escribir {
   display: flex;
   gap: 0.5rem;
