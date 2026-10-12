@@ -3,9 +3,18 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=f718b9a529";
+import { VERSION, PREFIJO } from "./config.js?v=db209204dc";
 
 export const NOVEDADES = [
+    {
+        version: "0.9.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "En Estudio, a la izquierda, \"Tus mapas\": todos tus mapas en una lista plegable para cambiar de uno a otro sin pasar por Inicio.",
+            "Desde ahí podés cambiarle el nombre a un mapa (✏️) o archivarlo (🗄️: sale de la lista, no se borra).",
+            "\"+ Mapa nuevo\" ahí mismo, con las dos opciones de Inicio: aprender un tema (arranca vacío; el árbol lo pedís después) o estudiar un libro EPUB.",
+        ],
+    },
     {
         version: "0.8.1",
         fecha: "12/10/2026",

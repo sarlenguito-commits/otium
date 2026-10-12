@@ -390,12 +390,26 @@ textarea {
 }
 @media (min-width: 768px) {
   .estudio {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
-    grid-template-areas: "cabecera cabecera" "chat mapa" "chat ficha";
+    grid-template-columns: max-content minmax(0, 5fr) minmax(0, 6fr);
+    grid-template-areas: "mapas cabecera cabecera" "mapas chat mapa" "mapas chat ficha";
     align-items: start;
   }
   .estudio__cabecera {
     grid-area: cabecera;
+  }
+  .estudio__mapas {
+    grid-area: mapas;
+    position: sticky;
+    top: 0.75rem;
+    max-height: calc(100dvh - 3.5rem - 1.5rem);
+    overflow-y: auto;
+  }
+  .estudio--vacio {
+    grid-template-columns: max-content minmax(0, 1fr);
+    grid-template-areas: "mapas vacio";
+  }
+  .estudio__vacio {
+    grid-area: vacio;
   }
   .estudio__chat, .estudio--chat .estudio__chat {
     grid-area: chat;
@@ -415,6 +429,96 @@ textarea {
   .estudio .pestanas {
     display: none;
   }
+}
+
+.mapas-lado {
+  padding: 0.6rem 0.8rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  min-width: 0;
+}
+@media (min-width: 768px) {
+  .mapas-lado[open] {
+    width: 15rem;
+  }
+}
+.mapas-lado summary {
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.mapas-lado__nuevo {
+  margin: 0.6rem 0;
+}
+.mapas-lado__nuevo-panel {
+  margin: 0.6rem 0;
+  padding: 0.6rem;
+  display: grid;
+  gap: 0.75rem;
+}
+.mapas-lado__nuevo-panel .formulario {
+  gap: 0.4rem;
+}
+.mapas-lado__titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+}
+.mapas-lado__lista {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.3rem;
+}
+.mapas-lado__item {
+  display: flex;
+  align-items: start;
+  gap: 0.2rem;
+  border-radius: 10px;
+}
+.mapas-lado__item--actual {
+  background: var(--fondo);
+  box-shadow: inset 3px 0 0 var(--acento);
+}
+.mapas-lado__link {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  padding: 0.4rem 0.5rem;
+  color: var(--texto);
+  text-decoration: none;
+  overflow-wrap: anywhere;
+}
+.mapas-lado__link:hover {
+  background: var(--fondo);
+  border-radius: 10px;
+}
+.mapas-lado__botones {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  padding-top: 0.3rem;
+}
+.mapas-lado__icono {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0.1rem 0.25rem;
+  line-height: 1;
+  opacity: 0.75;
+}
+.mapas-lado__icono:hover {
+  opacity: 1;
+}
+.mapas-lado__form {
+  flex: 1;
+  padding: 0.4rem 0.5rem;
+  gap: 0.4rem;
 }
 
 .pestanas {

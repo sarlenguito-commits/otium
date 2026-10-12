@@ -3,15 +3,15 @@
 // Cada función que guarda: quién es, exigir() su permiso, limpiar con reglas.js, guardar, dejar historial.
 // Nada se borra: un mapa se archiva, y queda cuándo y por qué.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=f718b9a529";
-import { usuarioActual } from "./sesion.js?v=f718b9a529";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=db209204dc";
+import { usuarioActual } from "./sesion.js?v=db209204dc";
 import {
     limpiarTema, limpiarModo, limpiarRama, limpiarEstado, limpiarFicha, limpiarMensaje, limpiarHablante, limpiarMotivo, limpiarEscalon,
-} from "../reglas.js?v=f718b9a529";
-import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=f718b9a529";
-import { TOPES } from "../../config.js?v=f718b9a529";
-import { fechaLocalISO } from "../../fechas.js?v=f718b9a529";
-import { sumarTarjetas, anotarDia } from "./repaso.js?v=f718b9a529";
+} from "../reglas.js?v=db209204dc";
+import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=db209204dc";
+import { TOPES } from "../../config.js?v=db209204dc";
+import { fechaLocalISO } from "../../fechas.js?v=db209204dc";
+import { sumarTarjetas, anotarDia } from "./repaso.js?v=db209204dc";
 
 function quien(permiso = puedeEstudiar) {
     const u = usuarioActual();
@@ -301,6 +301,22 @@ export function agregarMensaje(mapaId, { quien: hablante, texto, concepto = null
 }
 
 /** Archivar (nunca borrar): el mapa deja de verse, con cuándo y por qué. */
+/** Cambia el tema (el nombre) de un mapa. La raíz se llama igual que el mapa, así que va a la par. */
+export function renombrarMapa(id, tema) {
+    const u = quien();
+    const limpio = limpiarTema(tema);
+    const datos = leerTodo();
+    const m = buscarMapa(datos, id);
+    exigir(!m.archivado, "Ese mapa está archivado.");
+    if (m.tema === limpio) return m;
+    m.tema = limpio;
+    const raiz = datos.conceptos.find((c) => c.mapa === id && !c.padre);
+    if (raiz) raiz.titulo = limpio;
+    m.historial.push({ que: "renombrado", por: u.id, cuando: Date.now() });
+    guardarTodo(datos, "mapas");
+    return m;
+}
+
 export function archivarMapa(id, motivo) {
     const u = quien(puedeArchivar);
     const datos = leerTodo();

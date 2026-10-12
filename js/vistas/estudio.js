@@ -3,16 +3,17 @@
 // Dirección: #estudio?m=<mapa>&c=<concepto>&v=<pestaña del celu>
 // La IA arma ramas y fichas (acciones-ia.js); el chat todavía solo guarda lo que escribís (la charla llega con el
 // modo libre). Arriba, la barrita del cupo de IA del día.
-import * as d from "../datos.js?v=f718b9a529";
-import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=f718b9a529";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=f718b9a529";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=f718b9a529";
-import * as ia from "../ia.js?v=f718b9a529";
-import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=f718b9a529";
-import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=f718b9a529";
-import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=f718b9a529";
-import { seccionNeuronas } from "./cerebro.js?v=f718b9a529";
-import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=f718b9a529";
+import * as d from "../datos.js?v=db209204dc";
+import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=db209204dc";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=db209204dc";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=db209204dc";
+import * as ia from "../ia.js?v=db209204dc";
+import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=db209204dc";
+import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=db209204dc";
+import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=db209204dc";
+import { seccionNeuronas } from "./cerebro.js?v=db209204dc";
+import { seccionMapas, manejarMapas, guardarPlegado } from "./mapas-lateral.js?v=db209204dc";
+import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=db209204dc";
 
 // Fichas con el formulario "Esto está mal" abierto (mientras la página esté abierta)
 const malAbierto = new Set();
@@ -34,7 +35,14 @@ export function vistaEstudio(cont, { redibujar }) {
     const mapas = d.listarMapas();
     const mapaId = mapas.some((x) => x.id === m) ? m : mapas[0]?.id;
     if (!mapaId) {
-        cont.innerHTML = `${vacio("Todavía no hay mapas", "Elegí un tema en Inicio para empezar.")}<p><a class="boton" href="#inicio">Ir a Inicio</a></p>`;
+        cont.className = "estudio estudio--vacio";
+        cont.innerHTML = `${seccionMapas(null)}<div class="estudio__vacio">${vacio("Todavía no hay mapas", "Creá uno con \"+ Mapa nuevo\" (un tema o un libro EPUB).")}</div>`;
+        montarLateral(cont, redibujar);
+        cont.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            await manejarMapas(e, redibujar);
+        });
+        cont.addEventListener("click", (e) => manejarMapas(e, redibujar));
         return;
     }
     const { mapa, conceptos, mensajes } = d.leerMapa(mapaId);
@@ -51,6 +59,7 @@ export function vistaEstudio(cont, { redibujar }) {
             <span class="cupo-ia" data-cupo-ia>${textoCupo()}</span>
             ${temporizadorAndando() ? "" : `<button class="boton boton--chico" data-empezar-temporizador>⏱ Temporizador ${esc(TEMPORIZADORES[d.leerAjustes().temporizador].nombre)}</button>`}
         </header>
+        ${seccionMapas(mapaId)}
         <nav class="pestanas" aria-label="Partes de la pantalla">
             ${Object.entries(PESTANAS).map(([clave, nombre]) =>
                 `<a href="${esc(direccion({ m: mapaId, c: elegido.id, v: clave }))}" ${clave === v ? 'aria-current="page"' : ""}>${esc(nombre)}</a>`).join("")}
@@ -62,6 +71,8 @@ export function vistaEstudio(cont, { redibujar }) {
             ${arbol(raiz, conceptos, elegido.id, mapaId)}
         </section>
         <section class="estudio__ficha" aria-label="Ficha">${panelConcepto(elegido, porId, mapaId)}</section>`;
+
+    montarLateral(cont, redibujar);
 
     // Que el chat arranque mostrando lo último
     const historial = cont.querySelector(".chat__mensajes");
@@ -75,6 +86,7 @@ export function vistaEstudio(cont, { redibujar }) {
 
     cont.addEventListener("submit", async (e) => {
         e.preventDefault(); // antes de cualquier espera: si no, el navegador manda el formulario
+        if (await manejarMapas(e, redibujar)) return;
         if (e.target.matches("[data-buscar]")) {
             const consulta = e.target.elements.consulta.value.trim().slice(0, TOPES.busqueda);
             try {
@@ -98,6 +110,7 @@ export function vistaEstudio(cont, { redibujar }) {
     });
 
     cont.addEventListener("click", async (e) => {
+        if (await manejarMapas(e, redibujar)) return;
         if (manejarNotas(e, elegido, redibujar)) return;
         if (await manejarComprobar(e, elegido, redibujar)) return;
         const botonIA = e.target.closest("[data-ia]");
@@ -183,6 +196,12 @@ export function vistaEstudio(cont, { redibujar }) {
         const estado = e.target.closest("[data-estado]")?.dataset.estado;
         if (estado && intentar(() => d.cambiarEstado(elegido.id, estado), estado === "aprendido" ? "¡Aprendido!" : "Listo")) redibujar();
     });
+}
+
+/** El lateral "Tus mapas": si la persona lo pliega o lo abre, se recuerda. */
+function montarLateral(cont, redibujar) {
+    const lado = cont.querySelector("[data-mapas-lado]");
+    lado?.addEventListener("toggle", () => guardarPlegado(lado.open));
 }
 
 // ---------- Chat ----------

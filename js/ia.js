@@ -4,7 +4,7 @@
 // Los pedidos: pedirRamas, pedirFicha y pedirCupo. Cada respuesta trae el cupo del día, que se recuerda para mostrar
 // la barrita sin volver a preguntar.
 // ============================================
-import { PREFIJO, SERVIDOR_IA } from "./config.js?v=f718b9a529";
+import { PREFIJO, SERVIDOR_IA } from "./config.js?v=db209204dc";
 
 let prefijo = PREFIJO;
 let buscar = (...a) => fetch(...a);
