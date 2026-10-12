@@ -2,21 +2,21 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=b86f2e9674";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=b86f2e9674";
-import { $, esc } from "./ui.js?v=b86f2e9674";
-import { vistaInicio } from "./vistas/inicio.js?v=b86f2e9674";
-import { vistaAcerca } from "./vistas/acerca.js?v=b86f2e9674";
-import { vistaEstudio } from "./vistas/estudio.js?v=b86f2e9674";
-import { vistaRepaso } from "./vistas/repaso.js?v=b86f2e9674";
-import { vistaAjustes } from "./vistas/ajustes.js?v=b86f2e9674";
-import { puedeEstudiar } from "./permisos.js?v=b86f2e9674";
-import { dibujarTemporizador } from "./temporizador.js?v=b86f2e9674";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=b86f2e9674";
-import { vistaGuia } from "./vistas/guia.js?v=b86f2e9674";
-import { vistaContale } from "./vistas/contale.js?v=b86f2e9674";
-import { vistaLeer } from "./vistas/leer.js?v=b86f2e9674";
-import { vistaNovedades } from "./vistas/novedades.js?v=b86f2e9674";
+import * as d from "./datos.js?v=91f4100bf5";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=91f4100bf5";
+import { $, esc } from "./ui.js?v=91f4100bf5";
+import { vistaInicio } from "./vistas/inicio.js?v=91f4100bf5";
+import { vistaAcerca } from "./vistas/acerca.js?v=91f4100bf5";
+import { vistaEstudio } from "./vistas/estudio.js?v=91f4100bf5";
+import { vistaRepaso } from "./vistas/repaso.js?v=91f4100bf5";
+import { vistaAjustes } from "./vistas/ajustes.js?v=91f4100bf5";
+import { puedeEstudiar } from "./permisos.js?v=91f4100bf5";
+import { dibujarTemporizador } from "./temporizador.js?v=91f4100bf5";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=91f4100bf5";
+import { vistaGuia } from "./vistas/guia.js?v=91f4100bf5";
+import { vistaContale } from "./vistas/contale.js?v=91f4100bf5";
+import { vistaLeer } from "./vistas/leer.js?v=91f4100bf5";
+import { vistaNovedades } from "./vistas/novedades.js?v=91f4100bf5";
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));

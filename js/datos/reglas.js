@@ -2,7 +2,7 @@
 // Reglas de los datos: limpian y controlan cada campo con su tope. Si algo no cumple, tiran un Error con un
 // mensaje para mostrarle a la persona. Las usa la capa de datos (y, el día de mañana, la nube).
 // ============================================
-import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO } from "../config.js?v=b86f2e9674";
+import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO } from "../config.js?v=91f4100bf5";
 
 function texto(valor, { nombre, tope, obligatorio = false }) {
     if (valor !== null && valor !== undefined && typeof valor !== "string" && typeof valor !== "number") {
@@ -96,6 +96,16 @@ export function limpiarResaltado(r = {}) {
         explicacion: r.explicacion ? texto(r.explicacion, { nombre: "la explicación", tope: TOPES.explicacionIA }) : null,
         vinculo: r.vinculo ? texto(r.vinculo, { nombre: "el vínculo", tope: 40 }) : null,
     };
+}
+
+/** Una nota suelta de una ficha ("Tu desarrollo"): título y texto (al menos uno de los dos). */
+export function limpiarNota(n = {}) {
+    const limpio = {
+        titulo: texto(n.titulo, { nombre: "el título de la nota", tope: TOPES.tituloNota }),
+        texto: texto(n.texto, { nombre: "la nota", tope: TOPES.nota }),
+    };
+    if (!limpio.titulo && !limpio.texto) throw new Error("La nota está vacía: escribí un título o el texto.");
+    return limpio;
 }
 
 /** Lo que se puede cambiar de un resaltado (solo lo que viene). */

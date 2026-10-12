@@ -3,14 +3,15 @@
 // Dirección: #estudio?m=<mapa>&c=<concepto>&v=<pestaña del celu>
 // La IA arma ramas y fichas (acciones-ia.js); el chat todavía solo guarda lo que escribís (la charla llega con el
 // modo libre). Arriba, la barrita del cupo de IA del día.
-import * as d from "../datos.js?v=b86f2e9674";
-import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=b86f2e9674";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=b86f2e9674";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=b86f2e9674";
-import * as ia from "../ia.js?v=b86f2e9674";
-import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=b86f2e9674";
-import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=b86f2e9674";
-import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=b86f2e9674";
+import * as d from "../datos.js?v=91f4100bf5";
+import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=91f4100bf5";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=91f4100bf5";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=91f4100bf5";
+import * as ia from "../ia.js?v=91f4100bf5";
+import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=91f4100bf5";
+import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=91f4100bf5";
+import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=91f4100bf5";
+import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=91f4100bf5";
 
 // Fichas con el formulario "Esto está mal" abierto (mientras la página esté abierta)
 const malAbierto = new Set();
@@ -83,6 +84,7 @@ export function vistaEstudio(cont, { redibujar }) {
             redibujar();
             return;
         }
+        if (manejarNotas(e, elegido, redibujar)) return;
         if (await manejarComprobar(e, elegido, redibujar)) return;
         const form = e.target;
         if (form.matches("[data-enviar]")) {
@@ -95,6 +97,7 @@ export function vistaEstudio(cont, { redibujar }) {
     });
 
     cont.addEventListener("click", async (e) => {
+        if (manejarNotas(e, elegido, redibujar)) return;
         if (await manejarComprobar(e, elegido, redibujar)) return;
         const botonIA = e.target.closest("[data-ia]");
         if (botonIA) {
@@ -256,6 +259,7 @@ function panelConcepto(x, porId, mapaId) {
             <p class="ayuda">Leelo primero (o mientras tanto) y después pedí la ficha: la IA la arma con el texto del capítulo.</p>` : ""}
             ${x.padre ? vacio("Todavía sin ficha", Number.isInteger(x.capitulo) ? "La ficha resume las ideas de este capítulo, con preguntas para comprobar que lo entendiste." : "Pedile a la IA que la arme: definición, origen, autores, error común, analogías y preguntas.") : ""}
             ${botonesIA(x, ramas)}
+            ${x.padre ? seccionNotas(x, porId) : ""}
             ${listaRamas}
             ${botonesEstado}
             ${agregarRama}`;
@@ -318,6 +322,7 @@ function panelConcepto(x, porId, mapaId) {
             <p>${f.verificar.map((t) => `<a href="${esc(`https://es.wikipedia.org/w/index.php?search=${encodeURIComponent(t)}`)}" target="_blank" rel="noopener noreferrer">${esc(t)} en Wikipedia ↗</a>`).join(" · ")}</p>` : ""}
 
             ${f.preguntas.length ? seccionComprobar(x) : ""}
+            ${seccionNotas(x, porId)}
             ${estoEstaMal(x)}
             ${botonesEstado}
             ${listaRamas}

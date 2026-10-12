@@ -4,11 +4,11 @@
 //     Al seleccionar una palabra u oración aparece un menú: Diccionario (Wikcionario, gratis), resaltar en azul, rojo o
 //     verde, Explicar (la IA lo dice con otras palabras; 1 del cupo) y Nota. Tocar un resaltado abre su panel: la
 //     explicación (si la pediste), el color, tu nota y "Quitar".
-import * as d from "../datos.js?v=b86f2e9674";
-import * as ia from "../ia.js?v=b86f2e9674";
-import { buscarPalabra } from "../diccionario.js?v=b86f2e9674";
-import { COLORES_RESALTADO, COSTOS_IA, PREFIJO, TOPES } from "../config.js?v=b86f2e9674";
-import { esc, vacio, aviso } from "../ui.js?v=b86f2e9674";
+import * as d from "../datos.js?v=91f4100bf5";
+import * as ia from "../ia.js?v=91f4100bf5";
+import { buscarPalabra } from "../diccionario.js?v=91f4100bf5";
+import { COLORES_RESALTADO, COSTOS_IA, PREFIJO, TOPES } from "../config.js?v=91f4100bf5";
+import { esc, vacio, aviso } from "../ui.js?v=91f4100bf5";
 
 const CLAVE_ULTIMO = `${PREFIJO}-ultimo-leido`;
 
@@ -79,6 +79,8 @@ function capitulo(cont, { mapaId, conceptoId, marcado }) {
     const { conceptos } = d.leerMapa(mapaId);
     const capitulos = conceptos.filter((c) => Number.isInteger(c.capitulo)).sort((a, b) => a.capitulo - b.capitulo);
     const pos = capitulos.findIndex((c) => c.id === conceptoId);
+    // Fichas a las que se puede mandar un resaltado: el libro entero (la raíz) y cada capítulo, en orden
+    const fichas = [conceptos.find((c) => !c.padre), ...capitulos].filter(Boolean);
     const anterior = capitulos[pos - 1];
     const siguiente = capitulos[pos + 1];
 
@@ -218,8 +220,17 @@ function capitulo(cont, { mapaId, conceptoId, marcado }) {
                 <label>Tu nota
                     <textarea name="nota" rows="3" maxlength="${TOPES.nota}" placeholder="Una idea, una duda, algo para acordarte…">${esc(r.nota)}</textarea>
                 </label>
-                <button class="boton boton--chico" type="submit">Guardar nota</button>
-            </form>`);
+                <label>Título (así aparece en tus notas)
+                    <input name="titulo" maxlength="${TOPES.tituloNota}" value="${esc(r.titulo)}" placeholder="${esc(r.texto.slice(0, 50))}">
+                </label>
+                <label>Va a las notas de la ficha
+                    <select name="vinculo">
+                        ${fichas.map((c) => `<option value="${c.id === conceptoId ? "" : esc(c.id)}" ${c.id === d.fichaDe(r) ? "selected" : ""}>${c.id === conceptoId ? "Este capítulo" : esc(c.padre ? c.titulo : `${c.titulo} (el libro entero)`)}</option>`).join("")}
+                    </select>
+                </label>
+                <button class="boton boton--chico" type="submit">Guardar</button>
+            </form>
+            <p><a href="${esc(`#estudio?m=${encodeURIComponent(mapaId)}&c=${encodeURIComponent(d.fichaDe(r))}&v=ficha`)}">📝 Ver en las notas de "${esc(fichas.find((c) => c.id === d.fichaDe(r))?.titulo ?? cap.titulo)}" →</a></p>`);
         hoja.dataset.de = id;
     }
 
@@ -329,9 +340,10 @@ function capitulo(cont, { mapaId, conceptoId, marcado }) {
         if (!e.target.matches("[data-r-nota]")) return;
         const id = hoja.dataset.de;
         try {
-            d.editarResaltado(id, { nota: e.target.elements.nota.value });
+            const f = e.target.elements;
+            d.editarResaltado(id, { nota: f.nota.value, titulo: f.titulo.value, vinculo: f.vinculo.value || null });
             pintar();
-            aviso("Nota guardada");
+            aviso("Guardado");
             hojaResaltado(id);
         } catch (err) {
             aviso(err.message, "error");

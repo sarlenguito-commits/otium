@@ -4,11 +4,11 @@
 // personal opcional, la explicación de la IA (si la pidió) y, opcionalmente, un título y un vínculo a una ficha.
 // No se pisan: en un mismo párrafo, dos resaltados no pueden ocupar las mismas letras.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=b86f2e9674";
-import { usuarioActual } from "./sesion.js?v=b86f2e9674";
-import { limpiarResaltado, limpiarEdicionResaltado } from "../reglas.js?v=b86f2e9674";
-import { puedeEstudiar } from "../../permisos.js?v=b86f2e9674";
-import { TOPES } from "../../config.js?v=b86f2e9674";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=91f4100bf5";
+import { usuarioActual } from "./sesion.js?v=91f4100bf5";
+import { limpiarResaltado, limpiarEdicionResaltado } from "../reglas.js?v=91f4100bf5";
+import { puedeEstudiar } from "../../permisos.js?v=91f4100bf5";
+import { TOPES } from "../../config.js?v=91f4100bf5";
 
 function quien() {
     const u = usuarioActual();
@@ -62,7 +62,8 @@ export function editarResaltado(id, cambios) {
     const datos = leerTodo();
     const r = datos.resaltados.find((x) => x.id === id);
     exigir(r, "No existe ese resaltado.");
-    if (limpio.vinculo) exigir(datos.conceptos.some((c) => c.id === limpio.vinculo), "Esa ficha no existe.");
+    // El vínculo: una ficha del mismo mapa (el libro); sin vínculo, el resaltado va a la ficha de su capítulo
+    if (limpio.vinculo) exigir(datos.conceptos.some((c) => c.id === limpio.vinculo && (!r.mapa || c.mapa === r.mapa)), "Esa ficha no existe en este mapa.");
     Object.assign(r, limpio, { editado: Date.now() });
     guardarTodo(datos, "resaltados");
     return r;

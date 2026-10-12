@@ -3,9 +3,18 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=b86f2e9674";
+import { VERSION, PREFIJO } from "./config.js?v=91f4100bf5";
 
 export const NOVEDADES = [
+    {
+        version: "0.5.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "Notas personales en cada ficha de Estudio: ahí aparece lo que resaltaste y anotaste al leer, con su explicación y un link al lugar exacto del texto.",
+            "Al tocar un resaltado en Leer le ponés un título y elegís a qué ficha va (la del capítulo, otra o la del libro entero), con un link directo.",
+            "\"Tu desarrollo\": sumá pasos con tus palabras para armar el capítulo o el tema paso a paso. Se renombran, se editan, se reordenan con ↑ ↓ y se quitan.",
+        ],
+    },
     {
         version: "0.4.0",
         fecha: "12/10/2026",

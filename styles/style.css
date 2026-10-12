@@ -982,6 +982,56 @@ mark {
   margin: 0.4rem 0 0;
 }
 
+.notas {
+  margin: 1.5rem 0;
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--borde);
+}
+.notas h4 {
+  margin: 1rem 0 0.4rem;
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+}
+.notas__lista {
+  margin: 0;
+  padding-left: 1.2rem;
+  display: grid;
+  gap: 0.6rem;
+}
+.notas__lista:not(.notas__lista--pasos) {
+  list-style: none;
+  padding-left: 0;
+}
+.notas__nueva {
+  margin-top: 0.75rem;
+}
+
+.nota {
+  padding: 0.5rem 0.7rem;
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  overflow-wrap: anywhere;
+}
+.nota p {
+  margin: 0.3rem 0;
+}
+.nota__texto {
+  white-space: pre-wrap;
+}
+.nota__explicacion {
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+}
+.nota__acciones {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.4rem;
+  font-size: 0.9rem;
+}
+
 .hoy p {
   margin: 0 0 0.4rem;
 }

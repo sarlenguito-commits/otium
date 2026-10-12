@@ -4,10 +4,10 @@
 // La cuenta está en temporizador-cuenta.js (sin pantalla) para poder probarla con horas fijas.
 // No promete que se aprenda más: es una herramienta para no agotarse.
 // ============================================
-import { PREFIJO, TEMPORIZADORES } from "./config.js?v=b86f2e9674";
-import { esc, aviso } from "./ui.js?v=b86f2e9674";
-import * as d from "./datos.js?v=b86f2e9674";
-import { empezar, calcular, paso, pausar, seguir, minutosAlCortar } from "./temporizador-cuenta.js?v=b86f2e9674";
+import { PREFIJO, TEMPORIZADORES } from "./config.js?v=91f4100bf5";
+import { esc, aviso } from "./ui.js?v=91f4100bf5";
+import * as d from "./datos.js?v=91f4100bf5";
+import { empezar, calcular, paso, pausar, seguir, minutosAlCortar } from "./temporizador-cuenta.js?v=91f4100bf5";
 
 const mmss = (s) => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(s % 60).padStart(2, "0")}`;
 

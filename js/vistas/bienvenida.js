@@ -1,9 +1,9 @@
 // Bienvenida: la primera vez que alguien abre OTIUM. Qué es, cómo se usa, qué pasa con lo que escribe (privacidad)
 // y dónde pega el token que le pasó Esteban. Hasta que no la complete, la app vuelve acá.
-import * as d from "../datos.js?v=b86f2e9674";
-import * as ia from "../ia.js?v=b86f2e9674";
-import { NOMBRE_APP, PREFIJO, TOPES } from "../config.js?v=b86f2e9674";
-import { esc, aviso, intentar } from "../ui.js?v=b86f2e9674";
+import * as d from "../datos.js?v=91f4100bf5";
+import * as ia from "../ia.js?v=91f4100bf5";
+import { NOMBRE_APP, PREFIJO, TOPES } from "../config.js?v=91f4100bf5";
+import { esc, aviso, intentar } from "../ui.js?v=91f4100bf5";
 
 const CLAVE = `${PREFIJO}-bienvenida`;
 
