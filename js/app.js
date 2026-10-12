@@ -2,26 +2,26 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=068461cf66";
-import * as ia from "./ia.js?v=068461cf66";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=068461cf66";
-import { $, esc } from "./ui.js?v=068461cf66";
-import { vistaInicio } from "./vistas/inicio.js?v=068461cf66";
-import { vistaAcerca } from "./vistas/acerca.js?v=068461cf66";
-import { vistaEstudio } from "./vistas/estudio.js?v=068461cf66";
-import { vistaRepaso } from "./vistas/repaso.js?v=068461cf66";
-import { vistaAjustes } from "./vistas/ajustes.js?v=068461cf66";
-import { puedeEstudiar } from "./permisos.js?v=068461cf66";
-import { dibujarTemporizador } from "./temporizador.js?v=068461cf66";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=068461cf66";
-import { vistaGuia } from "./vistas/guia.js?v=068461cf66";
-import { vistaContale } from "./vistas/contale.js?v=068461cf66";
-import { vistaLeer } from "./vistas/leer.js?v=068461cf66";
-import { vistaEscribir } from "./vistas/escribir.js?v=068461cf66";
-import { vistaCerebro } from "./vistas/cerebro.js?v=068461cf66";
-import { vistaNovedades } from "./vistas/novedades.js?v=068461cf66";
-import { vistaPrivacidad } from "./vistas/privacidad.js?v=068461cf66";
-import { prepararInstalacion } from "./instalar.js?v=068461cf66";
+import * as d from "./datos.js?v=ceaa36c8f6";
+import * as ia from "./ia.js?v=ceaa36c8f6";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=ceaa36c8f6";
+import { $, esc } from "./ui.js?v=ceaa36c8f6";
+import { vistaInicio } from "./vistas/inicio.js?v=ceaa36c8f6";
+import { vistaAcerca } from "./vistas/acerca.js?v=ceaa36c8f6";
+import { vistaEstudio } from "./vistas/estudio.js?v=ceaa36c8f6";
+import { vistaRepaso } from "./vistas/repaso.js?v=ceaa36c8f6";
+import { vistaAjustes } from "./vistas/ajustes.js?v=ceaa36c8f6";
+import { puedeEstudiar } from "./permisos.js?v=ceaa36c8f6";
+import { dibujarTemporizador } from "./temporizador.js?v=ceaa36c8f6";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=ceaa36c8f6";
+import { vistaGuia } from "./vistas/guia.js?v=ceaa36c8f6";
+import { vistaContale } from "./vistas/contale.js?v=ceaa36c8f6";
+import { vistaLeer } from "./vistas/leer.js?v=ceaa36c8f6";
+import { vistaEscribir } from "./vistas/escribir.js?v=ceaa36c8f6";
+import { vistaCerebro } from "./vistas/cerebro.js?v=ceaa36c8f6";
+import { vistaNovedades } from "./vistas/novedades.js?v=ceaa36c8f6";
+import { vistaPrivacidad } from "./vistas/privacidad.js?v=ceaa36c8f6";
+import { prepararInstalacion } from "./instalar.js?v=ceaa36c8f6";
 
 // Instalable: service worker y el aviso del navegador (antes que nada: el aviso puede llegar enseguida)
 prepararInstalacion();
@@ -87,7 +87,7 @@ function dibujarCabecera(usuario, nombreRuta) {
     $("#cabecera").innerHTML = `
         <span class="cabecera__nombre">${esc(NOMBRE_APP)}</span>
         <span id="temporizador" class="cabecera__temporizador"></span>
-        <button class="boton boton--chico" data-accion="tema" aria-label="Cambiar entre claro y oscuro">Tema</button>
+        <button class="boton boton--chico" data-accion="tema" aria-label="Tema: cambiar entre claro y oscuro">Tema</button>
         <a class="boton boton--chico cabecera__ajustes" href="#ajustes" aria-label="Ajustes" title="Ajustes" ${nombreRuta === "ajustes" ? 'aria-current="page"' : ""}>⚙</a>`;
     $("#menu").innerHTML = Object.entries(RUTAS)
         .filter(([, r]) => r.menu && (!r.puede || r.puede(usuario)))

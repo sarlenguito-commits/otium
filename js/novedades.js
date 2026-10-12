@@ -3,9 +3,16 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=068461cf66";
+import { VERSION, PREFIJO } from "./config.js?v=ceaa36c8f6";
 
 export const NOVEDADES = [
+    {
+        version: "0.12.1",
+        fecha: "12/10/2026",
+        cambios: [
+            "Arreglo chico de accesibilidad: el botón \"Tema\" ahora se anuncia igual en los lectores de pantalla.",
+        ],
+    },
     {
         version: "0.12.0",
         fecha: "12/10/2026",
