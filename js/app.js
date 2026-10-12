@@ -2,22 +2,23 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=9ce14fd7e0";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=9ce14fd7e0";
-import { $, esc } from "./ui.js?v=9ce14fd7e0";
-import { vistaInicio } from "./vistas/inicio.js?v=9ce14fd7e0";
-import { vistaAcerca } from "./vistas/acerca.js?v=9ce14fd7e0";
-import { vistaEstudio } from "./vistas/estudio.js?v=9ce14fd7e0";
-import { vistaRepaso } from "./vistas/repaso.js?v=9ce14fd7e0";
-import { vistaAjustes } from "./vistas/ajustes.js?v=9ce14fd7e0";
-import { puedeEstudiar } from "./permisos.js?v=9ce14fd7e0";
-import { dibujarTemporizador } from "./temporizador.js?v=9ce14fd7e0";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=9ce14fd7e0";
-import { vistaGuia } from "./vistas/guia.js?v=9ce14fd7e0";
-import { vistaContale } from "./vistas/contale.js?v=9ce14fd7e0";
-import { vistaLeer } from "./vistas/leer.js?v=9ce14fd7e0";
-import { vistaEscribir } from "./vistas/escribir.js?v=9ce14fd7e0";
-import { vistaNovedades } from "./vistas/novedades.js?v=9ce14fd7e0";
+import * as d from "./datos.js?v=9ea66e9344";
+import * as ia from "./ia.js?v=9ea66e9344";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=9ea66e9344";
+import { $, esc } from "./ui.js?v=9ea66e9344";
+import { vistaInicio } from "./vistas/inicio.js?v=9ea66e9344";
+import { vistaAcerca } from "./vistas/acerca.js?v=9ea66e9344";
+import { vistaEstudio } from "./vistas/estudio.js?v=9ea66e9344";
+import { vistaRepaso } from "./vistas/repaso.js?v=9ea66e9344";
+import { vistaAjustes } from "./vistas/ajustes.js?v=9ea66e9344";
+import { puedeEstudiar } from "./permisos.js?v=9ea66e9344";
+import { dibujarTemporizador } from "./temporizador.js?v=9ea66e9344";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=9ea66e9344";
+import { vistaGuia } from "./vistas/guia.js?v=9ea66e9344";
+import { vistaContale } from "./vistas/contale.js?v=9ea66e9344";
+import { vistaLeer } from "./vistas/leer.js?v=9ea66e9344";
+import { vistaEscribir } from "./vistas/escribir.js?v=9ea66e9344";
+import { vistaNovedades } from "./vistas/novedades.js?v=9ea66e9344";
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));
@@ -25,6 +26,18 @@ addEventListener("unhandledrejection", (e) => d.anotarError(e.reason?.message ??
 
 if (document.documentElement.dataset.prefijo !== PREFIJO) {
     console.warn(`data-prefijo del index.html ("${document.documentElement.dataset.prefijo}") no es PREFIJO de config.js ("${PREFIJO}")`);
+}
+
+// Link con el token adentro (?token=...): se guarda solo, así quien lo abre no tiene que pegarlo a mano en
+// Bienvenida o Ajustes. Se borra de la URL enseguida para que no quede pegado ahí (historial, compartir el link).
+const tokenDelLink = new URLSearchParams(location.search).get("token");
+if (tokenDelLink) {
+    try {
+        ia.guardarConexion({ token: tokenDelLink });
+    } catch {
+        // formato raro: se ignora: queda la carga manual de siempre en Bienvenida o Ajustes
+    }
+    history.replaceState(null, "", location.pathname + location.hash);
 }
 
 // puede(usuario): quién la ve (una función de permisos.js). menu: si va en el menú de abajo (máximo 4 o 5).

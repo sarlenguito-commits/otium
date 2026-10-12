@@ -3,9 +3,16 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=9ce14fd7e0";
+import { VERSION, PREFIJO } from "./config.js?v=9ea66e9344";
 
 export const NOVEDADES = [
+    {
+        version: "0.7.1",
+        fecha: "12/10/2026",
+        cambios: [
+            "Si abrís OTIUM desde un link que ya trae el token, queda conectada sola: no hace falta pegarlo a mano en Bienvenida ni en Ajustes.",
+        ],
+    },
     {
         version: "0.7.0",
         fecha: "12/10/2026",

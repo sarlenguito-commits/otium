@@ -2,7 +2,7 @@
 // El cupo de IA del día en palabras: plan, porcentaje y una recomendación de cómo aprovecharlo.
 // La idea pedagógica: aprender más no es abrir más fichas, sino recordar lo que ya abriste (lo mejor probado).
 // ============================================
-import { COSTOS_IA } from "./config.js?v=9ce14fd7e0";
+import { COSTOS_IA } from "./config.js?v=9ea66e9344";
 
 const FICHA_NUEVA = COSTOS_IA.ficha + COSTOS_IA.previos; // una ficha con su escalón de abajo
 
