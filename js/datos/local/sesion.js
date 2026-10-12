@@ -1,8 +1,8 @@
 // ============================================
 // La sesión: la app es de una sola persona, así que se entra directo (sin elegir a nadie ni contraseñas).
 // ============================================
-import { leerTodo, guardarTodo, exigir } from "./nucleo.js?v=cbfbfa8738";
-import { limpiarNombre } from "../reglas.js?v=cbfbfa8738";
+import { leerTodo, guardarTodo, exigir } from "./nucleo.js?v=068461cf66";
+import { limpiarNombre } from "../reglas.js?v=068461cf66";
 
 /** La persona que usa la app: la única activa. */
 export function usuarioActual() {

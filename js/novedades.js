@@ -3,9 +3,18 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=cbfbfa8738";
+import { VERSION, PREFIJO } from "./config.js?v=068461cf66";
 
 export const NOVEDADES = [
+    {
+        version: "0.12.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "OTIUM se puede instalar como app: se abre aparte, con su ícono en la compu o en el celu, y anda sin internet (menos la IA). Mirá Ajustes → \"Instalar la app\".",
+            "Al pasar el link de OTIUM por WhatsApp ahora se ve una tarjeta con el nombre y una imagen.",
+            "Si alguien entra a una dirección que no existe, ve una página que lo lleva de vuelta a OTIUM.",
+        ],
+    },
     {
         version: "0.11.0",
         fecha: "12/10/2026",

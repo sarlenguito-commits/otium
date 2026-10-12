@@ -3,17 +3,17 @@
 // Dirección: #estudio?m=<mapa>&c=<concepto>&v=<pestaña del celu>
 // La IA arma ramas y fichas (acciones-ia.js); el chat todavía solo guarda lo que escribís (la charla llega con el
 // modo libre). Arriba, la barrita del cupo de IA del día.
-import * as d from "../datos.js?v=cbfbfa8738";
-import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=cbfbfa8738";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=cbfbfa8738";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=cbfbfa8738";
-import * as ia from "../ia.js?v=cbfbfa8738";
-import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=cbfbfa8738";
-import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=cbfbfa8738";
-import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=cbfbfa8738";
-import { seccionNeuronas } from "./cerebro.js?v=cbfbfa8738";
-import { seccionMapas, manejarMapas, guardarPlegado } from "./mapas-lateral.js?v=cbfbfa8738";
-import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=cbfbfa8738";
+import * as d from "../datos.js?v=068461cf66";
+import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=068461cf66";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=068461cf66";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=068461cf66";
+import * as ia from "../ia.js?v=068461cf66";
+import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=068461cf66";
+import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=068461cf66";
+import { seccionNotas, manejarNotas } from "./notas-ficha.js?v=068461cf66";
+import { seccionNeuronas } from "./cerebro.js?v=068461cf66";
+import { seccionMapas, manejarMapas, guardarPlegado } from "./mapas-lateral.js?v=068461cf66";
+import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=068461cf66";
 
 // Fichas con el formulario "Esto está mal" abierto (mientras la página esté abierta)
 const malAbierto = new Set();

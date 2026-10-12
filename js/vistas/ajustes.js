@@ -1,10 +1,11 @@
 // Ajustes: la conexión con la IA (dirección del servidor y token), la meta semanal, el tope de repasos y el tipo de
 // temporizador; "Tus datos" (bajar una copia, importarla y pedirle al navegador que no los borre solo). Abajo, "Acerca de".
-import * as d from "../datos.js?v=cbfbfa8738";
-import * as ia from "../ia.js?v=cbfbfa8738";
-import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=cbfbfa8738";
-import { esc, intentar, aviso } from "../ui.js?v=cbfbfa8738";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=cbfbfa8738";
+import * as d from "../datos.js?v=068461cf66";
+import * as ia from "../ia.js?v=068461cf66";
+import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=068461cf66";
+import { esc, intentar, aviso } from "../ui.js?v=068461cf66";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=068461cf66";
+import { instalada, sePuedeInstalar, instalar } from "../instalar.js?v=068461cf66";
 
 export function vistaAjustes(cont, { redibujar }) {
     const a = d.leerAjustes();
@@ -49,6 +50,19 @@ export function vistaAjustes(cont, { redibujar }) {
             <p class="ayuda">El temporizador es opcional: lo prendés desde Estudio. Sirve para no agotarte; no hace aprender más por sí solo.</p>
             <button class="boton" type="submit">Guardar</button>
         </form>
+
+        <h2>Instalar la app</h2>
+        <div class="tarjeta">
+            ${instalada()
+                ? "<p>✅ Estás usando OTIUM instalada. Se abre como una app aparte y anda sin internet (menos la IA).</p>"
+                : `<p>Instalada, OTIUM se abre como una app aparte (con su ícono en el escritorio o en el celu) y anda sin
+                   internet, salvo la IA. Tus datos siguen siendo los de este navegador.</p>
+                   ${sePuedeInstalar()
+                       ? `<button class="boton" type="button" data-instalar>📲 Instalar OTIUM</button>`
+                       : `<p class="ayuda">Si no ves el botón: en la compu (Chrome, Edge o Brave), el ícono de instalar a la
+                          derecha de la barra de direcciones o el menú ⋮ → "Instalar OTIUM"; en Android, menú ⋮ → "Agregar a la
+                          pantalla principal"; en iPhone (Safari), Compartir → "Agregar a inicio".</p>`}`}
+        </div>
 
         <h2>Tus datos</h2>
         <div class="tarjeta formulario tus-datos">
@@ -106,6 +120,12 @@ export function vistaAjustes(cont, { redibujar }) {
         if (e.target.closest("[data-desconectar]")) {
             ia.borrarToken();
             aviso("Token borrado de este navegador.");
+            redibujar();
+            return;
+        }
+        if (e.target.closest("[data-instalar]")) {
+            const ok = await instalar();
+            if (ok) aviso("¡Listo! OTIUM quedó instalada.");
             redibujar();
             return;
         }

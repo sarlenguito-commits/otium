@@ -5,12 +5,12 @@
 // - La racha es semanal y suave: cuenta días con actividad, sin castigo si se corta.
 // Las funciones reciben { hoy } para poder probarlas con días fijos (por defecto, hoy de verdad).
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=cbfbfa8738";
-import { usuarioActual } from "./sesion.js?v=cbfbfa8738";
-import { limpiarResultado, limpiarAjustes, limpiarSesion } from "../reglas.js?v=cbfbfa8738";
-import { puedeEstudiar } from "../../permisos.js?v=cbfbfa8738";
-import { TOPES, INTERVALOS, AJUSTES_INICIALES } from "../../config.js?v=cbfbfa8738";
-import { fechaLocalISO, sumarDias, lunesDe } from "../../fechas.js?v=cbfbfa8738";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=068461cf66";
+import { usuarioActual } from "./sesion.js?v=068461cf66";
+import { limpiarResultado, limpiarAjustes, limpiarSesion } from "../reglas.js?v=068461cf66";
+import { puedeEstudiar } from "../../permisos.js?v=068461cf66";
+import { TOPES, INTERVALOS, AJUSTES_INICIALES } from "../../config.js?v=068461cf66";
+import { fechaLocalISO, sumarDias, lunesDe } from "../../fechas.js?v=068461cf66";
 
 function quien() {
     const u = usuarioActual();
