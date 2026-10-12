@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.13.1"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.13.2"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -30,9 +30,10 @@ export const COLORES_RESALTADO = { azul: "Azul", rojo: "Rojo", verde: "Verde" };
 export const PLANES = {
     dueno: { nombre: "Dueño", cupo: 60 },
     prueba: { nombre: "Prueba gratis", cupo: 30 },
-    // Un solo token para varios probadores (12/10/2026): no se achica por plan, así el límite que se nota de
-    // verdad es el tope general del día (CUPO_TOTAL, protege el cupo gratis de Google para todos).
-    grupo: { nombre: "Grupo de prueba", cupo: 250 },
+    // Un solo token para varios probadores (12/10/2026): sin tope propio (igual al general, CUPO_TOTAL = 400 en
+    // servidor/wrangler.jsonc). El general no puede subir mucho más: cada pedido hace 2 escrituras en KV y el plan
+    // gratis de Cloudflare permite 1000 por día (400 unidades = 800 escrituras como mucho, más comentarios).
+    grupo: { nombre: "Grupo de prueba", cupo: 400 },
 };
 
 // Feynman: a quién se lo explicás.

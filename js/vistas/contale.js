@@ -1,7 +1,7 @@
 // "Contale a Esteban": un comentario libre que le llega a Esteban (no gasta IA; hasta 20 por día).
-import * as ia from "../ia.js?v=ee9afa6f58";
-import { TOPES } from "../config.js?v=ee9afa6f58";
-import { aviso } from "../ui.js?v=ee9afa6f58";
+import * as ia from "../ia.js?v=67446a5e85";
+import { TOPES } from "../config.js?v=67446a5e85";
+import { aviso } from "../ui.js?v=67446a5e85";
 
 export function vistaContale(cont) {
     const conectada = ia.conectada();

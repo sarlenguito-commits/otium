@@ -4,8 +4,8 @@
 // Hechos chequeados el 12/10/2026: servidor (servidor/src/index.js: cupo 3 días, estadísticas solo numéricas 40 días,
 // comentarios 180 días, no guarda los pedidos a la IA) y condiciones de Google para el plan gratis (desde el 23/03/2026).
 // ============================================
-import { NOMBRE_APP } from "../config.js?v=ee9afa6f58";
-import { esc } from "../ui.js?v=ee9afa6f58";
+import { NOMBRE_APP } from "../config.js?v=67446a5e85";
+import { esc } from "../ui.js?v=67446a5e85";
 
 const ACTUALIZADA = "12/10/2026";
 const CONDICIONES_GOOGLE = "https://ai.google.dev/gemini-api/terms";

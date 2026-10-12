@@ -4,12 +4,12 @@
 // Ramas). El vínculo de vuelta (qué neuronas usan un concepto o un mapa) se calcula, no se guarda dos veces.
 // Como el texto cambia al editar, los resaltados se reubican igual que en un escrito (ver escritos.js).
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=ee9afa6f58";
-import { usuarioActual } from "./sesion.js?v=ee9afa6f58";
-import { limpiarNeurona } from "../reglas.js?v=ee9afa6f58";
-import { puedeEstudiar } from "../../permisos.js?v=ee9afa6f58";
-import { TOPES } from "../../config.js?v=ee9afa6f58";
-import { sePisan } from "./resaltados.js?v=ee9afa6f58";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=67446a5e85";
+import { usuarioActual } from "./sesion.js?v=67446a5e85";
+import { limpiarNeurona } from "../reglas.js?v=67446a5e85";
+import { puedeEstudiar } from "../../permisos.js?v=67446a5e85";
+import { TOPES } from "../../config.js?v=67446a5e85";
+import { sePisan } from "./resaltados.js?v=67446a5e85";
 
 function quien() {
     const u = usuarioActual();

@@ -3,9 +3,16 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=ee9afa6f58";
+import { VERSION, PREFIJO } from "./config.js?v=67446a5e85";
 
 export const NOVEDADES = [
+    {
+        version: "0.13.2",
+        fecha: "12/10/2026",
+        cambios: [
+            "Más IA por día para los probadores: el link grupal ya no tiene tope propio y el límite general sube a 400 (unas 130 fichas o 400 mensajes de charla por día, entre todos).",
+        ],
+    },
     {
         version: "0.13.1",
         fecha: "12/10/2026",

@@ -5,9 +5,9 @@
 //   - Tu desarrollo: notas sueltas, numeradas, para armar el capítulo (o el tema) paso a paso con tus palabras.
 // Todo se renombra, se edita y se quita; las del desarrollo también se reordenan (↑ ↓).
 // ============================================
-import * as d from "../datos.js?v=ee9afa6f58";
-import { TOPES } from "../config.js?v=ee9afa6f58";
-import { esc, aviso } from "../ui.js?v=ee9afa6f58";
+import * as d from "../datos.js?v=67446a5e85";
+import { TOPES } from "../config.js?v=67446a5e85";
+import { esc, aviso } from "../ui.js?v=67446a5e85";
 
 // Qué notas tienen el formulario de edición abierto ("r:<id>" o "n:<id>"), mientras la página esté abierta
 const editando = new Set();

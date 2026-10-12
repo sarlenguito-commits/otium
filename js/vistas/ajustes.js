@@ -1,11 +1,11 @@
 // Ajustes: la conexión con la IA (dirección del servidor y token), la meta semanal, el tope de repasos y el tipo de
 // temporizador; "Tus datos" (bajar una copia, importarla y pedirle al navegador que no los borre solo). Abajo, "Acerca de".
-import * as d from "../datos.js?v=ee9afa6f58";
-import * as ia from "../ia.js?v=ee9afa6f58";
-import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=ee9afa6f58";
-import { esc, intentar, aviso } from "../ui.js?v=ee9afa6f58";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=ee9afa6f58";
-import { instalada, sePuedeInstalar, instalar } from "../instalar.js?v=ee9afa6f58";
+import * as d from "../datos.js?v=67446a5e85";
+import * as ia from "../ia.js?v=67446a5e85";
+import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=67446a5e85";
+import { esc, intentar, aviso } from "../ui.js?v=67446a5e85";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=67446a5e85";
+import { instalada, sePuedeInstalar, instalar } from "../instalar.js?v=67446a5e85";
 
 export function vistaAjustes(cont, { redibujar }) {
     const a = d.leerAjustes();

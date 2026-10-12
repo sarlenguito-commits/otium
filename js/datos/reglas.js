@@ -2,7 +2,7 @@
 // Reglas de los datos: limpian y controlan cada campo con su tope. Si algo no cumple, tiran un Error con un
 // mensaje para mostrarle a la persona. Las usa la capa de datos (y, el día de mañana, la nube).
 // ============================================
-import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO, ABARCAMIENTO } from "../config.js?v=ee9afa6f58";
+import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO, ABARCAMIENTO } from "../config.js?v=67446a5e85";
 
 function texto(valor, { nombre, tope, obligatorio = false }) {
     if (valor !== null && valor !== undefined && typeof valor !== "string" && typeof valor !== "number") {
