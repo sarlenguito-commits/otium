@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.2.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.3.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -36,7 +36,7 @@ export const ROLES = {
 };
 
 // Cómo se arma un mapa: el modo guiado propone el árbol; el libre cuelga los conceptos de la charla.
-export const MODOS = { guiado: "Guiado", libre: "Libre" };
+export const MODOS = { guiado: "Guiado", libre: "Libre", libro: "Libro" };
 
 // Estado de cada concepto del mapa (los íconos van en las pantallas).
 export const ESTADOS = { sin_abrir: "Sin abrir", en_curso: "En curso", aprendido: "Aprendido" };
@@ -96,6 +96,16 @@ export const TOPES = {
     comentario: 1000, // lo que le escribís a Esteban ("Contale a Esteban", "Esto está mal")
     comentariosPorDia: 20, // comentarios por persona y por día
     correccionFicha: 300, // qué está mal, cuando se rehace una ficha
+    // Libros (EPUB): el texto queda solo en el navegador; a la IA va un capítulo recortado
+    epubBytes: 15_000_000, // tamaño del archivo
+    libroLetras: 1_500_000, // letras de todo el libro
+    capitulosPorLibro: 80,
+    capituloMinimo: 400, // menos letras que esto: tapa, índice o página en blanco (no cuenta como capítulo)
+    textoCapituloIA: 12_000, // letras del capítulo que van a la IA para la ficha
+    textoPreviosIA: 5_000, // letras del capítulo que van a la IA para el escalón de abajo
+    busqueda: 80, // letras de lo que se busca en el libro
+    resultadosBusqueda: 20,
+    tituloLibro: 120, // "libro" y "capítulo" de dónde salió una ficha
     terminoVerificar: 60,
     terminosVerificar: 3,
     pregunta: 200,

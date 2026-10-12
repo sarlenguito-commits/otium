@@ -3,15 +3,15 @@
 // Cada función que guarda: quién es, exigir() su permiso, limpiar con reglas.js, guardar, dejar historial.
 // Nada se borra: un mapa se archiva, y queda cuándo y por qué.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=0c5d6339d6";
-import { usuarioActual } from "./sesion.js?v=0c5d6339d6";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=367750287f";
+import { usuarioActual } from "./sesion.js?v=367750287f";
 import {
     limpiarTema, limpiarModo, limpiarRama, limpiarEstado, limpiarFicha, limpiarMensaje, limpiarHablante, limpiarMotivo, limpiarEscalon,
-} from "../reglas.js?v=0c5d6339d6";
-import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=0c5d6339d6";
-import { TOPES } from "../../config.js?v=0c5d6339d6";
-import { fechaLocalISO } from "../../fechas.js?v=0c5d6339d6";
-import { sumarTarjetas, anotarDia } from "./repaso.js?v=0c5d6339d6";
+} from "../reglas.js?v=367750287f";
+import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=367750287f";
+import { TOPES } from "../../config.js?v=367750287f";
+import { fechaLocalISO } from "../../fechas.js?v=367750287f";
+import { sumarTarjetas, anotarDia } from "./repaso.js?v=367750287f";
 
 function quien(permiso = puedeEstudiar) {
     const u = usuarioActual();
@@ -156,6 +156,26 @@ function conceptoNuevo({ mapa, padre, titulo, resumen, orden, ahora, escalon = n
         creado: ahora,
         historial: [{ que: "agregado", cuando: ahora }],
     };
+}
+
+/** Mapa de un libro: la raíz es el libro y cada capítulo es una rama (con su número, "capitulo"). Los capítulos no
+ *  tienen el tope de ramas por concepto: un libro puede tener muchos. */
+export function crearMapaConCapitulos({ tema, capitulos }) {
+    quien();
+    exigir(Array.isArray(capitulos) && capitulos.length > 0, "El libro no tiene capítulos.");
+    exigir(capitulos.length <= TOPES.capitulosPorLibro, `Hasta ${TOPES.capitulosPorLibro} capítulos por libro.`);
+    const titulos = capitulos.map((t, i) => limpiarRama({ titulo: String(t ?? "").trim().slice(0, TOPES.tituloConcepto) || `Parte ${i + 1}` }).titulo);
+    const { mapa, raiz } = crearMapa({ tema: String(tema ?? "").trim().slice(0, TOPES.tema) || "Libro sin título", modo: "libro" });
+    const datos = leerTodo();
+    exigir(conceptosDe(datos, mapa.id).length + titulos.length <= TOPES.conceptosPorMapa, `Un mapa tiene hasta ${TOPES.conceptosPorMapa} conceptos.`);
+    const ahora = Date.now();
+    titulos.forEach((titulo, i) => {
+        const c = conceptoNuevo({ mapa: mapa.id, padre: raiz.id, titulo, resumen: "", orden: i, ahora });
+        c.capitulo = i;
+        datos.conceptos.push(c);
+    });
+    guardarTodo(datos, "mapas");
+    return { mapa, raiz };
 }
 
 /** Cuelga ramas nuevas de un concepto (lo que propone la IA, o en el modo libre lo que apareció en la charla).

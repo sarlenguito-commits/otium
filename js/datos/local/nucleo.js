@@ -2,8 +2,8 @@
 // Modo prueba, lo común: guardar y leer en el navegador (localStorage) con el prefijo de la app, la semilla, avisar
 // los cambios y exigir().
 // ============================================
-import { PREFIJO, VERSION_DATOS } from "../../config.js?v=0c5d6339d6";
-import { crearSemilla } from "../../datos-prueba.js?v=0c5d6339d6";
+import { PREFIJO, VERSION_DATOS } from "../../config.js?v=367750287f";
+import { crearSemilla } from "../../datos-prueba.js?v=367750287f";
 
 let prefijo = PREFIJO;
 const oyentes = new Set();
@@ -77,6 +77,10 @@ export function reiniciarDatos() {
 }
 
 export const idNuevo = (letra) => `${letra}${Date.now().toString(36)}${Math.random().toString(36).slice(2, 7)}`;
+
+/** Datos grandes que van aparte de los de siempre (por ejemplo, el texto de un libro). */
+export const leerAparte = (nombre, porDefecto) => leer(nombre, porDefecto);
+export const guardarAparte = (nombre, valor) => guardar(nombre, valor);
 
 export const leerSesion = () => leer("sesion", null);
 export const guardarSesion = (id) => guardar("sesion", id ?? null);

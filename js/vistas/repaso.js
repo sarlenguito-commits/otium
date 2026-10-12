@@ -1,8 +1,8 @@
 // Repaso: las tarjetas que tocan hoy, una por vez. Primero intentás acordarte (active recall), después mirás la
 // respuesta esperada y decís cómo te fue. Hay un tope por día: lo que no entra pasa a mañana, sin mostrar una pila.
-import * as d from "../datos.js?v=0c5d6339d6";
-import { RESULTADOS } from "../config.js?v=0c5d6339d6";
-import { esc, vacio, intentar } from "../ui.js?v=0c5d6339d6";
+import * as d from "../datos.js?v=367750287f";
+import { RESULTADOS } from "../config.js?v=367750287f";
+import { esc, vacio, intentar } from "../ui.js?v=367750287f";
 
 export function vistaRepaso(cont, { redibujar }) {
     const tarjetas = d.repasosDeHoy();

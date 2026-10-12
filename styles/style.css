@@ -775,6 +775,61 @@ textarea {
   gap: 0.5rem;
 }
 
+.buscador {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+.buscador .boton {
+  flex: none;
+}
+
+.resultados {
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px dashed var(--borde);
+  overflow-wrap: anywhere;
+}
+.resultados ol {
+  margin: 0;
+  padding-left: 1.1rem;
+}
+.resultados li {
+  margin-bottom: 0.6rem;
+}
+.resultados p {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+}
+
+mark {
+  background: var(--acento);
+  color: var(--acento-texto);
+  border-radius: 3px;
+  padding: 0 0.1em;
+}
+
+.lectura {
+  max-width: 40rem;
+  margin: 0 auto;
+  font-size: 1.08rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.lectura__libro {
+  color: var(--texto-suave);
+  font-size: 0.9rem;
+}
+.lectura__marcado {
+  padding: 0.4rem 0.6rem;
+  border-left: 4px solid var(--acento);
+  background: var(--superficie);
+}
+.lectura__nav {
+  margin-top: 2rem;
+  justify-content: space-between;
+}
+
 .hoy p {
   margin: 0 0 0.4rem;
 }

@@ -3,17 +3,19 @@
 // Dirección: #estudio?m=<mapa>&c=<concepto>&v=<pestaña del celu>
 // La IA arma ramas y fichas (acciones-ia.js); el chat todavía solo guarda lo que escribís (la charla llega con el
 // modo libre). Arriba, la barrita del cupo de IA del día.
-import * as d from "../datos.js?v=0c5d6339d6";
-import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=0c5d6339d6";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=0c5d6339d6";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=0c5d6339d6";
-import * as ia from "../ia.js?v=0c5d6339d6";
-import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=0c5d6339d6";
-import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=0c5d6339d6";
-import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=0c5d6339d6";
+import * as d from "../datos.js?v=367750287f";
+import { ESTADOS, CERTEZAS, VIGENCIAS, MODOS, TOPES, TEMPORIZADORES, COSTOS_IA } from "../config.js?v=367750287f";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=367750287f";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=367750287f";
+import * as ia from "../ia.js?v=367750287f";
+import { armarRamas, armarFicha, armarPrevios } from "../acciones-ia.js?v=367750287f";
+import { seccionComprobar, panelContalo, contaloAbierto, manejarComprobar } from "./comprobar.js?v=367750287f";
+import { empezarTemporizador, temporizadorAndando } from "../temporizador.js?v=367750287f";
 
 // Fichas con el formulario "Esto está mal" abierto (mientras la página esté abierta)
 const malAbierto = new Set();
+// Última búsqueda en cada libro (mapa → { consulta, resultados })
+const busquedas = new Map();
 
 const ICONOS = { sin_abrir: "⚪", en_curso: "🔵", aprendido: "✅" };
 const PESTANAS = { chat: "Chat", mapa: "Mapa", ficha: "Ficha" };
@@ -54,6 +56,7 @@ export function vistaEstudio(cont, { redibujar }) {
         <section class="estudio__chat" aria-label="Chat">${chat(mensajes, porId, mapaId)}</section>
         <section class="estudio__mapa" aria-label="Mapa de ramas">
             <h2 class="visualmente-oculto">Mapa</h2>
+            ${mapa.modo === "libro" ? buscador(mapaId) : ""}
             ${arbol(raiz, conceptos, elegido.id, mapaId)}
         </section>
         <section class="estudio__ficha" aria-label="Ficha">${panelConcepto(elegido, porId, mapaId)}</section>`;
@@ -70,6 +73,16 @@ export function vistaEstudio(cont, { redibujar }) {
 
     cont.addEventListener("submit", async (e) => {
         e.preventDefault(); // antes de cualquier espera: si no, el navegador manda el formulario
+        if (e.target.matches("[data-buscar]")) {
+            const consulta = e.target.elements.consulta.value.trim().slice(0, TOPES.busqueda);
+            try {
+                busquedas.set(mapaId, { consulta, resultados: d.buscarEnLibro(mapaId, consulta) });
+            } catch (err) {
+                aviso(err.message, "error");
+            }
+            redibujar();
+            return;
+        }
         if (await manejarComprobar(e, elegido, redibujar)) return;
         const form = e.target;
         if (form.matches("[data-enviar]")) {
@@ -239,7 +252,9 @@ function panelConcepto(x, porId, mapaId) {
         return `
             <h2><span aria-hidden="true">${ICONOS[x.estado]}</span> ${esc(x.titulo)}</h2>
             ${x.resumen ? `<p class="ficha__idea">${esc(x.resumen)}</p>` : ""}
-            ${x.padre ? vacio("Todavía sin ficha", "Pedile a la IA que la arme: definición, origen, autores, error común, analogías y preguntas.") : ""}
+            ${Number.isInteger(x.capitulo) ? `<p><a class="boton" href="${esc(dirLeer(mapaId, x.id))}">📖 Leer el capítulo</a></p>
+            <p class="ayuda">Leelo primero (o mientras tanto) y después pedí la ficha: la IA la arma con el texto del capítulo.</p>` : ""}
+            ${x.padre ? vacio("Todavía sin ficha", Number.isInteger(x.capitulo) ? "La ficha resume las ideas de este capítulo, con preguntas para comprobar que lo entendiste." : "Pedile a la IA que la arme: definición, origen, autores, error común, analogías y preguntas.") : ""}
             ${botonesIA(x, ramas)}
             ${listaRamas}
             ${botonesEstado}
@@ -255,6 +270,7 @@ function panelConcepto(x, porId, mapaId) {
             ${f.aviso ? `<p class="ficha__aviso">${esc(f.aviso)}</p>` : ""}
             ${antesDeLeer(previos, mapaId)}
             <p class="ficha__idea">${esc(f.idea)}</p>
+            ${f.deLibro ? `<p class="ficha__fuente">Armada con el texto del libro <em>${esc(f.deLibro.libro)}</em> · <a href="${esc(dirLeer(mapaId, x.id))}">📖 Leer el capítulo</a></p>` : ""}
             ${f.fuente ? `<p class="ficha__fuente">Chequeada con Wikipedia: <a href="${esc(f.fuente.url)}" target="_blank" rel="noopener noreferrer">${esc(f.fuente.titulo)} ↗</a></p>` : ""}
 
             <h3>Definición</h3>
@@ -320,7 +336,7 @@ function botonesIA(x, ramas) {
         const costo = COSTOS_IA.ficha + (necesitaPrevios(x) ? COSTOS_IA.previos : 0);
         botones.push(`<button class="boton ${x.escalon ? "boton--chico" : ""}" data-ia="ficha">✨ ${x.escalon ? "Armar la ficha completa" : "Armar la ficha con IA"}</button><span class="ayuda">usa ${costo} de tu cupo</span>`);
     }
-    if (ramas.length < TOPES.ramasPorConcepto) {
+    if (ramas.length < TOPES.ramasPorConcepto && !Number.isInteger(x.capitulo) && !(x.padre === null && x.mapa && esLibro(x.mapa))) {
         botones.push(`<button class="boton ${ramas.length || x.ficha ? "boton--chico" : ""}" data-ia="ramas">✨ ${ramas.length ? "Más ramas con IA" : "Armar las ramas con IA"}</button><span class="ayuda">usa ${COSTOS_IA.ramas}</span>`);
     }
     return botones.length ? `<div class="acciones acciones--ia">${botones.join("")}</div>` : "";
@@ -396,4 +412,59 @@ function estoEstaMal(x) {
                 <button class="boton boton--chico" type="button" data-mal>Cancelar</button>
             </div>
         </form>`;
+}
+
+// ---------- Libros ----------
+
+const dirLeer = (mapaId, conceptoId, parrafo) =>
+    `#leer?m=${encodeURIComponent(mapaId)}&c=${encodeURIComponent(conceptoId)}${Number.isInteger(parrafo) ? `&p=${parrafo}` : ""}`;
+
+function esLibro(mapaId) {
+    try {
+        return d.leerMapa(mapaId).mapa.modo === "libro";
+    } catch {
+        return false;
+    }
+}
+
+/** Buscar palabras adentro del libro (sin IA): muestra los párrafos donde aparecen, con su capítulo. */
+function buscador(mapaId) {
+    const b = busquedas.get(mapaId);
+    const { conceptos } = d.leerMapa(mapaId);
+    const capitulo = new Map(conceptos.filter((c) => Number.isInteger(c.capitulo)).map((c) => [c.capitulo, c.id]));
+    return htmlBuscador(mapaId, b, capitulo);
+}
+
+// Cada letra sin tilde, con sus variantes con tilde (así "accion" marca "acción")
+const VARIANTES = { a: "aáàâä", e: "eéèêë", i: "iíìîï", o: "oóòôö", u: "uúùûü", n: "nñ", c: "cç" };
+
+/** El párrafo escapado, con las palabras buscadas marcadas. Las palabras solo tienen letras y números (sin símbolos
+ *  de expresiones regulares), y se marca después de escapar: no puede entrar HTML ajeno. */
+export function marcarPalabras(texto, consulta, largo = 320) {
+    const palabras = String(consulta).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").split(/[^a-z0-9]+/).filter((p) => p.length >= 3);
+    const corto = texto.length > largo ? `${texto.slice(0, largo)}…` : texto;
+    let html = esc(corto);
+    for (const p of palabras) {
+        const patron = new RegExp(`(${[...p].map((l) => (VARIANTES[l] ? `[${VARIANTES[l]}]` : l)).join("")})`, "giu");
+        html = html.replace(patron, "<mark>$1</mark>");
+    }
+    return html;
+}
+
+function htmlBuscador(mapaId, b, capitulo) {
+    const marcar = marcarPalabras;
+    return `
+        <form class="buscador" data-buscar role="search">
+            <label class="visualmente-oculto" for="consulta-libro">Buscar en el libro</label>
+            <input id="consulta-libro" name="consulta" maxlength="${TOPES.busqueda}" placeholder="🔎 Buscar en el libro…" value="${esc(b?.consulta ?? "")}">
+            <button class="boton boton--chico" type="submit">Buscar</button>
+        </form>
+        ${b ? `
+        <div class="resultados">
+            <p class="ayuda">${b.resultados.length ? `${b.resultados.length} ${b.resultados.length === 1 ? "párrafo" : "párrafos"} con "${esc(b.consulta)}"` : `Nada con "${esc(b.consulta)}". Probá con otras palabras.`}</p>
+            <ol>${b.resultados.map((r) => `
+                <li><a href="${esc(dirLeer(mapaId, capitulo.get(r.capitulo), r.indice))}"><strong>${esc(r.titulo)}</strong></a>
+                    <p>${marcar(r.parrafo, b.consulta)}</p></li>`).join("")}
+            </ol>
+        </div>` : ""}`;
 }

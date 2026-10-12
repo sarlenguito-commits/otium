@@ -1,7 +1,7 @@
 // Guía de 2 minutos: cómo sacarle el jugo a OTIUM, para alguien que la abre por primera vez.
 // Se basa en lo que está mejor probado para aprender: recordar sin mirar y repasar espaciado.
-import { COSTOS_IA } from "../config.js?v=0c5d6339d6";
-import { PREFIJO } from "../config.js?v=0c5d6339d6";
+import { COSTOS_IA } from "../config.js?v=367750287f";
+import { PREFIJO } from "../config.js?v=367750287f";
 
 const CLAVE = `${PREFIJO}-guia`;
 
@@ -53,6 +53,14 @@ export function vistaGuia(cont) {
                 <li><strong>La IA se puede equivocar.</strong> Fijate las marcas "dudoso" y los links "para verificar".
                     Si algo está mal, tocá "⚠️ Esto está mal": le avisa a Esteban y podés rehacer la ficha.</li>
             </ul>
+        </div>
+
+        <div class="tarjeta guia">
+            <h2>Estudiar un libro (EPUB)</h2>
+            <p>En Inicio, "Estudiar un libro": subís un .epub sin DRM y cada capítulo pasa a ser una rama. Leés el
+               capítulo acá mismo (📖), buscás palabras adentro del libro (🔎) y pedís la ficha del capítulo, que la IA arma
+               con el texto de ese capítulo. Buena rutina: leer un capítulo, pedir su ficha y comprobar sin mirar.
+               Libros gratis y legales: <a href="https://www.gutenberg.org/browse/languages/es" target="_blank" rel="noopener noreferrer">Project Gutenberg ↗</a>.</p>
         </div>
 
         <div class="tarjeta guia">

@@ -2,7 +2,7 @@
 // Reglas de los datos: limpian y controlan cada campo con su tope. Si algo no cumple, tiran un Error con un
 // mensaje para mostrarle a la persona. Las usa la capa de datos (y, el día de mañana, la nube).
 // ============================================
-import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES } from "../config.js?v=0c5d6339d6";
+import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES } from "../config.js?v=367750287f";
 
 function texto(valor, { nombre, tope, obligatorio = false }) {
     if (valor !== null && valor !== undefined && typeof valor !== "string" && typeof valor !== "number") {
@@ -135,6 +135,12 @@ export function limpiarFicha(f = {}) {
         analogiaPropia: analogia(f.analogiaPropia, { obligatoria: false }),
         errorComun: texto(f.errorComun, { nombre: "el error común", tope: TOPES.errorComun }),
         fuente: fuente(f.fuente),
+        deLibro: f.deLibro
+            ? {
+                libro: texto(f.deLibro.libro, { nombre: "el libro", tope: TOPES.tituloLibro, obligatorio: true }),
+                capitulo: texto(f.deLibro.capitulo, { nombre: "el capítulo", tope: TOPES.tituloLibro, obligatorio: true }),
+            }
+            : null,
         aviso: texto(f.aviso, { nombre: "el aviso", tope: TOPES.aviso }),
         verificar: lista(f.verificar, { nombre: "los términos para verificar", tope: TOPES.terminosVerificar }).map((t) =>
             texto(t, { nombre: "el término para verificar", tope: TOPES.terminoVerificar, obligatorio: true })),

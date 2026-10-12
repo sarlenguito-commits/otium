@@ -6,9 +6,9 @@
 //     se enlazan; los nuevos se cuelgan del concepto como escalones (🪜) con su explicación mínima.
 // Cada una deja una línea en el chat del mapa, para que la charla cuente lo que pasó.
 // ============================================
-import * as d from "./datos.js?v=0c5d6339d6";
-import * as ia from "./ia.js?v=0c5d6339d6";
-import { TOPES } from "./config.js?v=0c5d6339d6";
+import * as d from "./datos.js?v=367750287f";
+import * as ia from "./ia.js?v=367750287f";
+import { TOPES } from "./config.js?v=367750287f";
 
 /** Deja una línea en el chat del mapa; si no se puede (por ejemplo, el chat llegó a su tope), no frena la acción. */
 function contarEnElChat(mapaId, mensaje) {
@@ -46,7 +46,9 @@ const recientes = () => d.aprendidos().sort((a, b) => b.aprendido - a.aprendido)
 export async function armarPrevios(conceptoId) {
     const concepto = d.leerConcepto(conceptoId);
     const yaSabidos = recientes();
-    const lista = await ia.pedirPrevios({ concepto: concepto.titulo, camino: d.caminoDe(conceptoId), aprendidos: yaSabidos.map((c) => c.titulo) });
+    // Si es un capítulo de un libro, la IA ve el principio del capítulo para saber qué da por sabido
+    const texto = Number.isInteger(concepto.capitulo) ? d.textoParaIA(conceptoId, TOPES.textoPreviosIA) : "";
+    const lista = await ia.pedirPrevios({ concepto: concepto.titulo, camino: d.caminoDe(conceptoId), aprendidos: yaSabidos.map((c) => c.titulo), texto });
     const { conceptos } = d.leerMapa(concepto.mapa);
     // Lo que está en el camino (el tema, la rama madre) es el contexto, no un concepto previo
     const enElCamino = new Set(d.caminoDe(conceptoId).map((t) => t.toLowerCase()));
@@ -86,11 +88,16 @@ export async function armarPrevios(conceptoId) {
 export async function armarFicha(conceptoId, { correccion = "" } = {}) {
     const concepto = d.leerConcepto(conceptoId);
     const aprendidos = recientes().map((c) => c.titulo);
-    const { ficha, fuente } = await ia.pedirFicha({ concepto: concepto.titulo, camino: d.caminoDe(conceptoId), aprendidos, correccion });
-    const guardado = d.guardarFicha(conceptoId, { ...ficha, fuente });
+    // Capítulo de un libro: la fuente es el texto del capítulo (recortado), no Wikipedia
+    const esCapitulo = Number.isInteger(concepto.capitulo);
+    const libro = esCapitulo ? d.leerLibro(concepto.mapa).titulo : "";
+    const texto = esCapitulo ? d.textoParaIA(conceptoId) : "";
+    const { ficha, fuente } = await ia.pedirFicha({ concepto: concepto.titulo, camino: d.caminoDe(conceptoId), aprendidos, correccion, texto, libro });
+    const deLibro = esCapitulo ? { libro, capitulo: concepto.titulo } : null;
+    const guardado = d.guardarFicha(conceptoId, { ...ficha, fuente, deLibro });
     if (concepto.estado === "sin_abrir") d.cambiarEstado(conceptoId, "en_curso");
     contarEnElChat(concepto.mapa, {
-        texto: `${correccion ? "Rehice" : "Te dejé"} la ficha de "${concepto.titulo}"${fuente ? `, chequeada con el artículo de Wikipedia "${fuente.titulo}"` : ""}. Leela y después probá contestar sus preguntas sin mirar.`,
+        texto: `${correccion ? "Rehice" : "Te dejé"} la ficha de "${concepto.titulo}"${esCapitulo ? `, armada con el texto del capítulo` : fuente ? `, chequeada con el artículo de Wikipedia "${fuente.titulo}"` : ""}. Leela y después probá contestar sus preguntas sin mirar.`,
         concepto: conceptoId,
     });
     return guardado;

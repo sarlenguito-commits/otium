@@ -2,19 +2,20 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=0c5d6339d6";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=0c5d6339d6";
-import { $, esc } from "./ui.js?v=0c5d6339d6";
-import { vistaInicio } from "./vistas/inicio.js?v=0c5d6339d6";
-import { vistaAcerca } from "./vistas/acerca.js?v=0c5d6339d6";
-import { vistaEstudio } from "./vistas/estudio.js?v=0c5d6339d6";
-import { vistaRepaso } from "./vistas/repaso.js?v=0c5d6339d6";
-import { vistaAjustes } from "./vistas/ajustes.js?v=0c5d6339d6";
-import { puedeEstudiar } from "./permisos.js?v=0c5d6339d6";
-import { dibujarTemporizador } from "./temporizador.js?v=0c5d6339d6";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=0c5d6339d6";
-import { vistaGuia } from "./vistas/guia.js?v=0c5d6339d6";
-import { vistaContale } from "./vistas/contale.js?v=0c5d6339d6";
+import * as d from "./datos.js?v=367750287f";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=367750287f";
+import { $, esc } from "./ui.js?v=367750287f";
+import { vistaInicio } from "./vistas/inicio.js?v=367750287f";
+import { vistaAcerca } from "./vistas/acerca.js?v=367750287f";
+import { vistaEstudio } from "./vistas/estudio.js?v=367750287f";
+import { vistaRepaso } from "./vistas/repaso.js?v=367750287f";
+import { vistaAjustes } from "./vistas/ajustes.js?v=367750287f";
+import { puedeEstudiar } from "./permisos.js?v=367750287f";
+import { dibujarTemporizador } from "./temporizador.js?v=367750287f";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=367750287f";
+import { vistaGuia } from "./vistas/guia.js?v=367750287f";
+import { vistaContale } from "./vistas/contale.js?v=367750287f";
+import { vistaLeer } from "./vistas/leer.js?v=367750287f";
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));
@@ -35,6 +36,7 @@ const RUTAS = {
     bienvenida: { titulo: "Bienvenida", vista: vistaBienvenida },
     guia: { titulo: "Guía", vista: vistaGuia },
     contale: { titulo: "Contale a Esteban", vista: vistaContale },
+    leer: { titulo: "Leer", vista: vistaLeer, puede: puedeEstudiar },
 };
 
 const principal = $("#principal");

@@ -4,7 +4,7 @@
 // Los pedidos: pedirRamas, pedirFicha y pedirCupo. Cada respuesta trae el cupo del día, que se recuerda para mostrar
 // la barrita sin volver a preguntar.
 // ============================================
-import { PREFIJO, SERVIDOR_IA } from "./config.js?v=0c5d6339d6";
+import { PREFIJO, SERVIDOR_IA } from "./config.js?v=367750287f";
 
 let prefijo = PREFIJO;
 let buscar = (...a) => fetch(...a);
@@ -137,12 +137,12 @@ export async function pedirFeynman({ concepto, idea, definicion, personaje, turn
 }
 
 /** Conceptos previos que la ficha da por sabidos (0 a 3), cada uno con su explicación mínima. */
-export async function pedirPrevios({ concepto, camino = [], aprendidos = [] }) {
-    return (await llamar("/previos", { concepto, camino, aprendidos })).resultado;
+export async function pedirPrevios({ concepto, camino = [], aprendidos = [], texto = "" }) {
+    return (await llamar("/previos", { concepto, camino, aprendidos, texto })).resultado;
 }
 
 /** La ficha de un concepto (el servidor la chequea con Wikipedia y la valida). Devuelve { ficha, fuente }. */
-export async function pedirFicha({ concepto, camino = [], aprendidos = [], correccion = "" }) {
-    const r = await llamar("/ficha", { concepto, camino, aprendidos, correccion });
+export async function pedirFicha({ concepto, camino = [], aprendidos = [], correccion = "", texto = "", libro = "" }) {
+    const r = await llamar("/ficha", { concepto, camino, aprendidos, correccion, texto, libro });
     return { ficha: r.resultado, fuente: r.fuente };
 }
