@@ -6,11 +6,11 @@
 //     ficha va (sus "Notas personales" en Estudio).
 // montarLector(cont, lugar, opciones) pinta los párrafos en `lugar` y escucha en `cont`. Devuelve { pintar }.
 // ============================================
-import * as d from "../datos.js?v=43661a5cb5";
-import * as ia from "../ia.js?v=43661a5cb5";
-import { buscarPalabra } from "../diccionario.js?v=43661a5cb5";
-import { COLORES_RESALTADO, COSTOS_IA, TOPES } from "../config.js?v=43661a5cb5";
-import { esc, aviso } from "../ui.js?v=43661a5cb5";
+import * as d from "../datos.js?v=f718b9a529";
+import * as ia from "../ia.js?v=f718b9a529";
+import { buscarPalabra } from "../diccionario.js?v=f718b9a529";
+import { COLORES_RESALTADO, COSTOS_IA, TOPES } from "../config.js?v=f718b9a529";
+import { esc, aviso } from "../ui.js?v=f718b9a529";
 
 /**
  * @param {HTMLElement} cont   la pantalla (ahí se agregan el menú y la hoja, y se escuchan los clics)
@@ -49,7 +49,10 @@ export function montarLector(cont, lugar, op) {
         if (!pIni || !lugar.contains(pIni)) return null;
         // Solo dentro de un párrafo (el triple clic termina en el comienzo del siguiente: se toma hasta el final)
         const hastaElFinal = pFin !== pIni && rango.endOffset === 0;
-        if (pFin !== pIni && !hastaElFinal) return null;
+        if (pFin !== pIni && !hastaElFinal) {
+            aviso("Por ahora se resalta de a un párrafo por vez: seleccioná sin cruzar a otro.", "error");
+            return null;
+        }
         const antes = document.createRange();
         antes.selectNodeContents(pIni);
         antes.setEnd(rango.startContainer, rango.startOffset);

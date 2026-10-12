@@ -3,9 +3,16 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=43661a5cb5";
+import { VERSION, PREFIJO } from "./config.js?v=f718b9a529";
 
 export const NOVEDADES = [
+    {
+        version: "0.8.1",
+        fecha: "12/10/2026",
+        cambios: [
+            "Arreglado: si seleccionabas texto que cruzaba de un párrafo a otro (al leer, escribir o en una neurona), no pasaba nada. Ahora avisa que por ahora hay que resaltar de a un párrafo por vez.",
+        ],
+    },
     {
         version: "0.8.0",
         fecha: "12/10/2026",

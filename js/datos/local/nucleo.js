@@ -2,8 +2,8 @@
 // Modo prueba, lo común: guardar y leer en el navegador (localStorage) con el prefijo de la app, la semilla, avisar
 // los cambios y exigir().
 // ============================================
-import { PREFIJO, VERSION_DATOS } from "../../config.js?v=43661a5cb5";
-import { crearSemilla } from "../../datos-prueba.js?v=43661a5cb5";
+import { PREFIJO, VERSION_DATOS } from "../../config.js?v=f718b9a529";
+import { crearSemilla } from "../../datos-prueba.js?v=f718b9a529";
 
 let prefijo = PREFIJO;
 const oyentes = new Set();

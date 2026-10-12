@@ -1,9 +1,9 @@
 // Ajustes: la conexión con la IA (dirección del servidor y token), la meta semanal, el tope de repasos y el tipo de
 // temporizador. Abajo, "Acerca de".
-import * as d from "../datos.js?v=43661a5cb5";
-import * as ia from "../ia.js?v=43661a5cb5";
-import { TOPES, TEMPORIZADORES } from "../config.js?v=43661a5cb5";
-import { esc, intentar, aviso } from "../ui.js?v=43661a5cb5";
+import * as d from "../datos.js?v=f718b9a529";
+import * as ia from "../ia.js?v=f718b9a529";
+import { TOPES, TEMPORIZADORES } from "../config.js?v=f718b9a529";
+import { esc, intentar, aviso } from "../ui.js?v=f718b9a529";
 
 export function vistaAjustes(cont, { redibujar }) {
     const a = d.leerAjustes();

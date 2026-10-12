@@ -2,24 +2,24 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=43661a5cb5";
-import * as ia from "./ia.js?v=43661a5cb5";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=43661a5cb5";
-import { $, esc } from "./ui.js?v=43661a5cb5";
-import { vistaInicio } from "./vistas/inicio.js?v=43661a5cb5";
-import { vistaAcerca } from "./vistas/acerca.js?v=43661a5cb5";
-import { vistaEstudio } from "./vistas/estudio.js?v=43661a5cb5";
-import { vistaRepaso } from "./vistas/repaso.js?v=43661a5cb5";
-import { vistaAjustes } from "./vistas/ajustes.js?v=43661a5cb5";
-import { puedeEstudiar } from "./permisos.js?v=43661a5cb5";
-import { dibujarTemporizador } from "./temporizador.js?v=43661a5cb5";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=43661a5cb5";
-import { vistaGuia } from "./vistas/guia.js?v=43661a5cb5";
-import { vistaContale } from "./vistas/contale.js?v=43661a5cb5";
-import { vistaLeer } from "./vistas/leer.js?v=43661a5cb5";
-import { vistaEscribir } from "./vistas/escribir.js?v=43661a5cb5";
-import { vistaCerebro } from "./vistas/cerebro.js?v=43661a5cb5";
-import { vistaNovedades } from "./vistas/novedades.js?v=43661a5cb5";
+import * as d from "./datos.js?v=f718b9a529";
+import * as ia from "./ia.js?v=f718b9a529";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=f718b9a529";
+import { $, esc } from "./ui.js?v=f718b9a529";
+import { vistaInicio } from "./vistas/inicio.js?v=f718b9a529";
+import { vistaAcerca } from "./vistas/acerca.js?v=f718b9a529";
+import { vistaEstudio } from "./vistas/estudio.js?v=f718b9a529";
+import { vistaRepaso } from "./vistas/repaso.js?v=f718b9a529";
+import { vistaAjustes } from "./vistas/ajustes.js?v=f718b9a529";
+import { puedeEstudiar } from "./permisos.js?v=f718b9a529";
+import { dibujarTemporizador } from "./temporizador.js?v=f718b9a529";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=f718b9a529";
+import { vistaGuia } from "./vistas/guia.js?v=f718b9a529";
+import { vistaContale } from "./vistas/contale.js?v=f718b9a529";
+import { vistaLeer } from "./vistas/leer.js?v=f718b9a529";
+import { vistaEscribir } from "./vistas/escribir.js?v=f718b9a529";
+import { vistaCerebro } from "./vistas/cerebro.js?v=f718b9a529";
+import { vistaNovedades } from "./vistas/novedades.js?v=f718b9a529";
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));

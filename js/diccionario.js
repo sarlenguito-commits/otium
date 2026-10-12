@@ -4,7 +4,7 @@
 // Si la palabra no está (por ejemplo, un verbo conjugado), se prueba en minúscula y en singular; si igual no está,
 // la pantalla ofrece "Explicar con IA".
 // ============================================
-import { TOPES } from "./config.js?v=43661a5cb5";
+import { TOPES } from "./config.js?v=f718b9a529";
 
 const API = "https://es.wiktionary.org/w/api.php";
 // Secciones que no son acepciones (aunque tengan números)
