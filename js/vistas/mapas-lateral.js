@@ -5,11 +5,11 @@
 // celu cerrado; lo que la persona elija se recuerda en este navegador.
 // Mismo patrón que notas-ficha.js: seccionMapas() dibuja y manejarMapas() atiende clics y envíos.
 // ============================================
-import * as d from "../datos.js?v=db209204dc";
-import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=db209204dc";
-import { esc, aviso, intentar } from "../ui.js?v=db209204dc";
-import { cuandoFue } from "../fechas.js?v=db209204dc";
-import { leerEpub } from "../epub.js?v=db209204dc";
+import * as d from "../datos.js?v=b757769159";
+import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=b757769159";
+import { esc, aviso, intentar } from "../ui.js?v=b757769159";
+import { cuandoFue } from "../fechas.js?v=b757769159";
+import { leerEpub } from "../epub.js?v=b757769159";
 
 const CLAVE_PLEGADO = `${PREFIJO}-mapas-lado`;
 // Qué formulario está abierto, mientras la página esté abierta: "renombrar:<id>", "archivar:<id>" o "nuevo"

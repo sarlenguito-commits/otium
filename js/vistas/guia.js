@@ -1,7 +1,7 @@
 // Guía de 2 minutos: cómo sacarle el jugo a OTIUM, para alguien que la abre por primera vez.
 // Se basa en lo que está mejor probado para aprender: recordar sin mirar y repasar espaciado.
-import { COSTOS_IA } from "../config.js?v=db209204dc";
-import { PREFIJO } from "../config.js?v=db209204dc";
+import { COSTOS_IA } from "../config.js?v=b757769159";
+import { PREFIJO } from "../config.js?v=b757769159";
 
 const CLAVE = `${PREFIJO}-guia`;
 

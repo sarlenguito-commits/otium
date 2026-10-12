@@ -2,8 +2,8 @@
 // Modo prueba, lo común: guardar y leer en el navegador (localStorage) con el prefijo de la app, la semilla, avisar
 // los cambios y exigir().
 // ============================================
-import { PREFIJO, VERSION_DATOS } from "../../config.js?v=db209204dc";
-import { crearSemilla } from "../../datos-prueba.js?v=db209204dc";
+import { PREFIJO, VERSION_DATOS } from "../../config.js?v=b757769159";
+import { crearSemilla } from "../../datos-prueba.js?v=b757769159";
 
 let prefijo = PREFIJO;
 const oyentes = new Set();
@@ -85,6 +85,21 @@ export const idNuevo = (letra) => `${letra}${Date.now().toString(36)}${Math.rand
 /** Datos grandes que van aparte de los de siempre (por ejemplo, el texto de un libro). */
 export const leerAparte = (nombre, porDefecto) => leer(nombre, porDefecto);
 export const guardarAparte = (nombre, valor) => guardar(nombre, valor);
+
+/** Los nombres guardados aparte que empiezan con `inicio` (por ejemplo "libro-"), sin el prefijo de la app. */
+export function nombresAparte(inicio) {
+    const desde = clave(inicio);
+    const nombres = [];
+    try {
+        for (let i = 0; i < localStorage.length; i++) {
+            const k = localStorage.key(i);
+            if (k?.startsWith(desde)) nombres.push(k.slice(prefijo.length + 1));
+        }
+    } catch {
+        // navegador sin guardado: no hay nada
+    }
+    return nombres;
+}
 
 export const leerSesion = () => leer("sesion", null);
 export const guardarSesion = (id) => guardar("sesion", id ?? null);

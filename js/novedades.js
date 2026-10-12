@@ -3,9 +3,18 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=db209204dc";
+import { VERSION, PREFIJO } from "./config.js?v=b757769159";
 
 export const NOVEDADES = [
+    {
+        version: "0.10.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "En Ajustes, \"Tus datos\": bajá una copia de todo lo tuyo (mapas, fichas, repasos, escritos, notas, neuronas y libros) en un archivo. Todo vive solo en este navegador: si se borra, con la copia lo recuperás.",
+            "Importar una copia: para pasar tus cosas a otra compu o celu, o volver atrás. Ojo: reemplaza todo lo que haya en ese navegador.",
+            "La copia no lleva tu token de la IA. Y al bajarla, OTIUM le pide al navegador que no borre tus datos solo.",
+        ],
+    },
     {
         version: "0.9.0",
         fecha: "12/10/2026",

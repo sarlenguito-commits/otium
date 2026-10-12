@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.9.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.10.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -131,6 +131,7 @@ export const TOPES = {
     instruccionReescribir: 200, // "Más formal, para mandar por mail"
     textoReescribir: 8000, // letras que se mandan a reescribir de una vez (más largo: de a párrafos)
     reescritura: 12000, // letras de lo que devuelve la IA // notas sueltas ("Tu desarrollo" en las fichas)
+    respaldoBytes: 20_000_000, // tamaño máximo del archivo de copia que se importa
     // Cerebro 🧠 (neuronas)
     tituloNeurona: 80,
     descripcionNeurona: 200, // la idea en una línea
