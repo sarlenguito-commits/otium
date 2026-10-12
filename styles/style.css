@@ -1131,6 +1131,32 @@ mark {
   padding-left: 1.1rem;
 }
 
+.reescribir {
+  margin-top: 1rem;
+}
+.reescribir summary {
+  cursor: pointer;
+  font-weight: 600;
+}
+.reescribir__rapidos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.reescrito {
+  margin-top: 1rem;
+}
+.reescrito__texto {
+  padding: 0.7rem 0.9rem;
+  background: var(--fondo);
+  border-left: 4px solid var(--acento);
+  border-radius: 0 10px 10px 0;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  line-height: 1.6;
+}
+
 .hoy p {
   margin: 0 0 0.4rem;
 }

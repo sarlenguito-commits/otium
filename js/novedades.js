@@ -3,9 +3,19 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=9aef454a4b";
+import { VERSION, PREFIJO } from "./config.js?v=9ce14fd7e0";
 
 export const NOVEDADES = [
+    {
+        version: "0.7.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "Reescribir con IA, en Escribir: elegís lo que seleccionaste, el párrafo donde está el cursor o todo el texto, y cómo (\"formal, para mandar por mail\", \"como un poema\", lo que quieras).",
+            "Tres pedidos rápidos de un toque: al principio los de base y después tus 3 más usados.",
+            "Primero ves la propuesta y decidís: reemplazar, agregar abajo, copiar o descartar. Si reemplazás, podés deshacer.",
+            "Cuesta 1 de tu IA del día (un pedazo o un párrafo) o 2 (el texto entero).",
+        ],
+    },
     {
         version: "0.6.0",
         fecha: "12/10/2026",

@@ -4,7 +4,7 @@
 // Los pedidos: pedirRamas, pedirFicha y pedirCupo. Cada respuesta trae el cupo del día, que se recuerda para mostrar
 // la barrita sin volver a preguntar.
 // ============================================
-import { PREFIJO, SERVIDOR_IA } from "./config.js?v=9aef454a4b";
+import { PREFIJO, SERVIDOR_IA } from "./config.js?v=9ce14fd7e0";
 
 let prefijo = PREFIJO;
 let buscar = (...a) => fetch(...a);
@@ -144,6 +144,11 @@ export async function pedirPrevios({ concepto, camino = [], aprendidos = [], tex
 /** Una parte de un libro dicha con otras palabras (al leer): { explicacion }. */
 export async function pedirExplicacion({ concepto, texto, contexto = "", libro = "" }) {
     return (await llamar("/explicar", { concepto, texto, contexto, libro })).resultado;
+}
+
+/** Reescribe un pedazo, un párrafo o todo un escrito con una instrucción: { texto }. */
+export async function pedirReescritura({ alcance, texto, instruccion, contexto = "" }) {
+    return (await llamar("/reescribir", { alcance, texto, instruccion, contexto })).resultado;
 }
 
 /** La ficha de un concepto (el servidor la chequea con Wikipedia y la valida). Devuelve { ficha, fuente }. */

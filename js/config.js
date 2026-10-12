@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.6.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.7.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -18,7 +18,9 @@ export const VERSION_DATOS = 4;
 export const SERVIDOR_IA = "https://otium-ia.otium-servidor.workers.dev";
 
 // Cuánto del cupo diario gasta cada pedido (igual que COSTOS en servidor/src/index.js: el que manda es el servidor).
-export const COSTOS_IA = { ramas: 1, ficha: 3, corregir: 1, contalo: 1, previos: 1, feynman: 1, explicar: 1 };
+export const COSTOS_IA = { ramas: 1, ficha: 3, corregir: 1, contalo: 1, previos: 1, feynman: 1, explicar: 1, reescribir: 1 };
+// Reescribir cuesta según cuánto: un pedazo o un párrafo, 1; el texto entero, 2
+export const COSTO_REESCRIBIR = { seleccion: 1, parrafo: 1, todo: 2 };
 
 // Colores para resaltar al leer (tonos pastel que se leen bien en el fondo marrón oscuro y en el claro).
 export const COLORES_RESALTADO = { azul: "Azul", rojo: "Rojo", verde: "Verde" };
@@ -119,7 +121,10 @@ export const TOPES = {
     escritosTotal: 300, // escritura libre
     tituloEscrito: 120,
     textoEscrito: 50_000, // letras de un escrito (≈ 25 páginas)
-    notasTotal: 2000, // notas sueltas ("Tu desarrollo" en las fichas)
+    notasTotal: 2000,
+    instruccionReescribir: 200, // "Más formal, para mandar por mail"
+    textoReescribir: 8000, // letras que se mandan a reescribir de una vez (más largo: de a párrafos)
+    reescritura: 12000, // letras de lo que devuelve la IA // notas sueltas ("Tu desarrollo" en las fichas)
     parrafoMaximo: 5000, // número de párrafo más alto que se acepta (un capítulo no tiene más)
     letraMaxima: 100_000, // posición más alta dentro de un párrafo
     terminoVerificar: 60,

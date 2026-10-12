@@ -7,11 +7,13 @@
 //     Si el escrito es de un mapa, un resaltado puede ir a las "Notas personales" de una ficha de ese mapa.
 // Dirección: #escribir?e=<escrito>&modo=marcar[&p=<párrafo>]
 // ============================================
-import * as d from "../datos.js?v=9aef454a4b";
-import { TOPES } from "../config.js?v=9aef454a4b";
-import { esc, vacio, aviso } from "../ui.js?v=9aef454a4b";
-import { cuandoFue } from "../fechas.js?v=9aef454a4b";
-import { montarLector } from "./lector.js?v=9aef454a4b";
+import * as d from "../datos.js?v=9ce14fd7e0";
+import { TOPES, COSTO_REESCRIBIR } from "../config.js?v=9ce14fd7e0";
+import { esc, vacio, aviso } from "../ui.js?v=9ce14fd7e0";
+import { cuandoFue } from "../fechas.js?v=9ce14fd7e0";
+import { montarLector } from "./lector.js?v=9ce14fd7e0";
+import * as ia from "../ia.js?v=9ce14fd7e0";
+import { ALCANCES, MAS_IDEAS, pedidosRapidos, anotarUso, rango, reemplazar, agregarAbajo } from "../reescribir.js?v=9ce14fd7e0";
 
 const MODOS_ESCRITO = { escribir: "✏️ Escribir", marcar: "🖍 Marcar" };
 const dir = (id, modo = "escribir") => `#escribir?e=${encodeURIComponent(id)}${modo === "marcar" ? "&modo=marcar" : ""}`;
@@ -128,6 +130,11 @@ export function vistaEscribir(cont, { redibujar, alSalir }) {
         alSalir(guardar);
         const alCerrar = () => (document.body.contains(area) ? guardar() : removeEventListener("pagehide", alCerrar));
         addEventListener("pagehide", alCerrar);
+        // Un cambio hecho por la app (reemplazar, deshacer): cuenta como tipeado y se guarda en el momento
+        montarReescribir(cont, area, () => {
+            area.dispatchEvent(new Event("input"));
+            guardar();
+        });
         return;
     }
 
@@ -164,7 +171,8 @@ function editor(e, modo, mapas) {
         </nav>
         ${modo === "escribir" ? `
             <textarea class="escrito__texto" data-escrito-texto maxlength="${TOPES.textoEscrito}" aria-label="Texto del escrito" placeholder="Escribí acá. Un renglón nuevo es un párrafo nuevo.">${esc(e.texto)}</textarea>
-            <p class="ayuda" data-estado>Se guarda solo mientras escribís.</p>`
+            <p class="ayuda" data-estado>Se guarda solo mientras escribís.</p>
+            ${panelReescribir()}`
         : e.texto.trim() ? `
             <p class="ayuda">Seleccioná una palabra u oración para buscarla en el diccionario, resaltarla, pedir que te la expliquen o anotar algo.</p>
             <div class="lectura lectura__texto escrito__marcar" data-texto></div>
@@ -177,4 +185,124 @@ function editor(e, modo, mapas) {
         <div class="acciones">
             <button class="boton boton--chico boton--quitar" data-quitar-escrito>Quitar este escrito</button>
         </div>`;
+}
+
+// ---------- Reescribir con IA ----------
+
+function panelReescribir() {
+    if (!ia.conectada()) return `<p class="ayuda">✨ Para reescribir con IA, conectala en <a href="#ajustes">Ajustes</a>.</p>`;
+    return `
+        <details class="tarjeta reescribir" data-reescribir>
+            <summary>✨ Reescribir con IA</summary>
+            <form class="formulario" data-reescribir-form>
+                <fieldset class="opciones">
+                    <legend>¿Qué?</legend>
+                    ${Object.entries(ALCANCES).map(([clave, nombre]) => `
+                        <label class="opcion"><input type="radio" name="alcance" value="${clave}" ${clave === "parrafo" ? "checked" : ""}>
+                            <span>${esc(nombre)} <span class="ayuda">(usa ${COSTO_REESCRIBIR[clave]})</span></span></label>`).join("")}
+                </fieldset>
+                <label>¿Cómo?
+                    <input name="instruccion" maxlength="${TOPES.instruccionReescribir}" list="ideas-reescribir" required
+                           placeholder="Por ejemplo: formal, para mandar por mail">
+                </label>
+                <datalist id="ideas-reescribir">${MAS_IDEAS.map((t) => `<option value="${esc(t)}"></option>`).join("")}</datalist>
+                <div class="reescribir__rapidos" aria-label="Pedidos rápidos">
+                    ${pedidosRapidos().map((t) => `<button class="boton boton--chico" type="button" data-pedido="${esc(t)}">${esc(t)}</button>`).join("")}
+                </div>
+                <button class="boton" type="submit">Reescribir</button>
+            </form>
+            <div data-reescrito></div>
+        </details>`;
+}
+
+/** El panel: arma el pedido con lo elegido, muestra la propuesta y la aplica solo si la persona dice. */
+function montarReescribir(cont, area, cambio) {
+    const panel = cont.querySelector("[data-reescribir]");
+    if (!panel) return;
+    const lugar = panel.querySelector("[data-reescrito]");
+    let propuesta = null; // { r, nuevo, alcance, instruccion }
+    let anterior = null; // el texto antes de aplicar (para "Deshacer")
+
+    function mostrar(extra = "") {
+        if (!propuesta) return (lugar.innerHTML = extra);
+        lugar.innerHTML = `
+            <div class="reescrito">
+                <p class="ayuda">Propuesta para ${esc(ALCANCES[propuesta.alcance].toLowerCase())} · "${esc(propuesta.instruccion)}" (la IA puede equivocarse: revisala)</p>
+                <div class="reescrito__texto">${esc(propuesta.nuevo)}</div>
+                <div class="acciones">
+                    <button class="boton boton--chico" type="button" data-aplicar="reemplazar">Reemplazar</button>
+                    <button class="boton boton--chico" type="button" data-aplicar="abajo">Agregar abajo</button>
+                    <button class="boton boton--chico" type="button" data-aplicar="copiar">Copiar</button>
+                    <button class="boton boton--chico" type="button" data-aplicar="descartar">Descartar</button>
+                </div>
+            </div>${extra}`;
+    }
+
+    panel.addEventListener("click", async (e) => {
+        const pedido = e.target.closest("[data-pedido]")?.dataset.pedido;
+        if (pedido) {
+            panel.querySelector("[name=instruccion]").value = pedido;
+            return;
+        }
+        if (e.target.closest("[data-deshacer]") && anterior !== null) {
+            area.value = anterior;
+            anterior = null;
+            cambio();
+            lugar.innerHTML = "";
+            return aviso("Volvió el texto de antes");
+        }
+        const accion = e.target.closest("[data-aplicar]")?.dataset.aplicar;
+        if (!accion || !propuesta) return;
+        if (accion === "descartar") {
+            propuesta = null;
+            return mostrar();
+        }
+        if (accion === "copiar") {
+            try {
+                await navigator.clipboard.writeText(propuesta.nuevo);
+                aviso("Copiado");
+            } catch {
+                aviso("No se pudo copiar: seleccionalo y copialo a mano.", "error");
+            }
+            return;
+        }
+        const { r, nuevo } = propuesta;
+        if (accion === "reemplazar" && area.value.slice(r.inicio, r.fin) !== r.texto) {
+            return aviso("Esa parte cambió mientras tanto: usá \"Agregar abajo\" o \"Copiar\".", "error");
+        }
+        anterior = area.value;
+        area.value = accion === "reemplazar" ? reemplazar(area.value, r, nuevo) : agregarAbajo(area.value, r, nuevo);
+        cambio();
+        propuesta = null;
+        mostrar(`<p class="ayuda">${accion === "reemplazar" ? "Reemplazado" : "Agregado"}. <button class="boton boton--chico" type="button" data-deshacer>Deshacer</button></p>`);
+    });
+
+    panel.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const alcance = form.elements.alcance.value;
+        const instruccion = form.elements.instruccion.value.trim();
+        let r;
+        try {
+            r = rango(area.value, { inicio: area.selectionStart, fin: area.selectionEnd }, alcance);
+        } catch (err) {
+            return aviso(err.message, "error");
+        }
+        const costo = COSTO_REESCRIBIR[alcance];
+        if (!ia.alcanza(costo)) return aviso("No alcanza el cupo de IA de hoy. Mañana se renueva.", "error");
+        const boton = form.querySelector("[type=submit]");
+        boton.disabled = true;
+        boton.textContent = "Reescribiendo…";
+        try {
+            const { texto: nuevo } = await ia.pedirReescritura({ alcance, texto: r.texto, instruccion, contexto: r.contexto });
+            anotarUso(instruccion);
+            propuesta = { r, nuevo, alcance, instruccion };
+            anterior = null;
+            mostrar();
+        } catch (err) {
+            aviso(err.message, "error");
+        }
+        boton.disabled = false;
+        boton.textContent = "Reescribir";
+    });
 }
