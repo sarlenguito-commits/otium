@@ -1,21 +1,56 @@
 // Pantalla de inicio: repasos de hoy, la racha de la semana, seguir donde quedaste, "aprender algo nuevo" y tus mapas.
-import * as d from "../datos.js?v=4ff97d5a37";
-import { MODOS, TOPES, FUNCIONES } from "../config.js?v=4ff97d5a37";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=4ff97d5a37";
-import * as ia from "../ia.js?v=4ff97d5a37";
-import { armarRamas } from "../acciones-ia.js?v=4ff97d5a37";
-import { resumenCupo } from "../recomendacion.js?v=4ff97d5a37";
-import { guiaVista } from "./guia.js?v=4ff97d5a37";
-import { leerEpub } from "../epub.js?v=4ff97d5a37";
-import { hayNovedades } from "../novedades.js?v=4ff97d5a37";
-import { VERSION } from "../config.js?v=4ff97d5a37";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=4ff97d5a37";
-import { textoRacha } from "./repaso.js?v=4ff97d5a37";
+import * as d from "../datos.js?v=b86f2e9674";
+import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=b86f2e9674";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=b86f2e9674";
+import * as ia from "../ia.js?v=b86f2e9674";
+import { armarRamas } from "../acciones-ia.js?v=b86f2e9674";
+import { resumenCupo } from "../recomendacion.js?v=b86f2e9674";
+import { guiaVista } from "./guia.js?v=b86f2e9674";
+import { leerEpub } from "../epub.js?v=b86f2e9674";
+import { hayNovedades } from "../novedades.js?v=b86f2e9674";
+import { VERSION } from "../config.js?v=b86f2e9674";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=b86f2e9674";
+import { textoRacha } from "./repaso.js?v=b86f2e9674";
 
 const aEstudio = (id) => `#estudio?m=${encodeURIComponent(id)}`;
 
+// "Tus mapas": qué categoría se ve (se recuerda en este navegador)
+const FILTROS = { tema: "🧭 Aprender algo nuevo", libro: "📖 Estudiar un libro", todos: "Todos" };
+const CLAVE_FILTRO = `${PREFIJO}-filtro-mapas`;
+const tipoDe = (m) => (m.modo === "libro" ? "libro" : "tema");
+/** Para buscar sin que importen mayúsculas ni tildes. */
+export const normalizar = (t) => String(t ?? "").normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+
+function filtroGuardado() {
+    try {
+        const f = localStorage.getItem(CLAVE_FILTRO);
+        return Object.hasOwn(FILTROS, f ?? "") ? f : "todos";
+    } catch {
+        return "todos";
+    }
+}
+
+/** Qué mapas se ven: los de la categoría que tengan todas las palabras buscadas en el título o en sus conceptos.
+ *  Devuelve [{ id, coincide }] (coincide: el concepto donde se encontró, si no fue en el título). */
+export function filtrarMapas(mapas, { filtro = "todos", consulta = "" } = {}) {
+    const palabras = normalizar(consulta).split(/\s+/).filter(Boolean);
+    return mapas
+        .filter((m) => filtro === "todos" || tipoDe(m) === filtro)
+        .map((m) => {
+            if (!palabras.length) return { id: m.id, coincide: "" };
+            const titulo = normalizar(m.tema);
+            const conceptos = (m.titulos ?? []).map((t) => [t, normalizar(t)]);
+            const todo = `${titulo} ${conceptos.map(([, n]) => n).join(" ")}`;
+            if (!palabras.every((p) => todo.includes(p))) return null;
+            if (palabras.every((p) => titulo.includes(p))) return { id: m.id, coincide: "" };
+            const donde = conceptos.find(([, n]) => palabras.some((p) => n.includes(p) && !titulo.includes(p)));
+            return { id: m.id, coincide: donde?.[0] ?? "" };
+        })
+        .filter(Boolean);
+}
+
 export function vistaInicio(cont, { usuario }) {
-    const mapas = d.listarMapas();
+    const mapas = d.listarMapas({ conTitulos: true });
     const ultimo = mapas[0];
     const { pendientes } = d.resumenRepaso();
     const racha = d.rachaSemanal();
@@ -64,17 +99,64 @@ export function vistaInicio(cont, { usuario }) {
         </form>
 
         <h2>Tus mapas</h2>
+        ${mapas.length ? `
+            <div class="filtro-mapas">
+                <div class="filtro-mapas__botones" role="group" aria-label="Qué mapas ver">
+                    ${Object.entries(FILTROS).map(([clave, nombre]) => {
+                        const cuantos = clave === "todos" ? mapas.length : mapas.filter((m) => tipoDe(m) === clave).length;
+                        return `<button class="boton boton--chico" data-filtro="${clave}" aria-pressed="false">${esc(nombre)} (${cuantos})</button>`;
+                    }).join("")}
+                </div>
+                <input type="search" data-buscar-mapa maxlength="60" placeholder="Buscar por título o palabra clave" aria-label="Buscar un mapa por título o palabra clave">
+            </div>` : ""}
         ${mapas.length
-            ? `<ul class="lista">${mapas.map((m) => `
-                <li>
+            ? `<ul class="lista" data-lista-mapas>${mapas.map((m) => `
+                <li data-mapa="${esc(m.id)}">
                     <a class="tarjeta mapa-tarjeta" href="${esc(aEstudio(m.id))}">
                         <strong>${esc(m.tema)}</strong>
                         <span class="mapa-tarjeta__meta">${esc(MODOS[m.modo])} · ${m.avance.aprendidos} de ${m.avance.total} conceptos aprendidos · ${esc(cuandoFue(m.usado))}</span>
+                        <span class="mapa-tarjeta__coincide" data-coincide hidden></span>
                         <progress class="progreso" max="${Math.max(m.avance.total, 1)}" value="${m.avance.aprendidos}" aria-hidden="true"></progress>
                     </a>
-                </li>`).join("")}</ul>`
+                </li>`).join("")}</ul>
+               <p class="ayuda" data-sin-mapas hidden></p>`
             : vacio("Primeros pasos", "Todavía no hay mapas. Escribí arriba qué querés aprender.")}
         <p class="pie-inicio"><a href="#guia">Guía de 2 minutos</a> · <a href="#novedades">Novedades</a> · <a href="#contale">💬 Contale a Esteban</a> · versión ${esc(VERSION)}</p>`;
+
+    // "Tus mapas": categoría + buscador (se filtra en el momento, sin volver a dibujar la pantalla)
+    let filtro = filtroGuardado();
+    const buscarMapa = cont.querySelector("[data-buscar-mapa]");
+    function aplicarFiltro() {
+        if (!buscarMapa) return;
+        const consulta = buscarMapa.value;
+        const visibles = new Map(filtrarMapas(mapas, { filtro, consulta }).map((v) => [v.id, v.coincide]));
+        cont.querySelectorAll("[data-filtro]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.filtro === filtro)));
+        cont.querySelectorAll("[data-mapa]").forEach((li) => {
+            li.hidden = !visibles.has(li.dataset.mapa);
+            const coincide = li.querySelector("[data-coincide]");
+            const donde = visibles.get(li.dataset.mapa);
+            coincide.hidden = !donde;
+            coincide.textContent = donde ? `Tiene "${donde}"` : "";
+        });
+        const sinMapas = cont.querySelector("[data-sin-mapas]");
+        sinMapas.hidden = visibles.size > 0;
+        sinMapas.textContent = consulta.trim()
+            ? `Ningún mapa de esta lista tiene "${consulta.trim()}".`
+            : filtro === "libro" ? "Todavía no subiste libros." : "Todavía no hay mapas de temas.";
+    }
+    aplicarFiltro();
+    buscarMapa?.addEventListener("input", aplicarFiltro);
+    cont.addEventListener("click", (e) => {
+        const elegido = e.target.closest("[data-filtro]")?.dataset.filtro;
+        if (!elegido) return;
+        filtro = elegido;
+        try {
+            localStorage.setItem(CLAVE_FILTRO, filtro);
+        } catch {
+            // sin guardado: la próxima vez arranca en "Todos"
+        }
+        aplicarFiltro();
+    });
 
     // El cupo de hoy se pregunta siempre al entrar a Inicio (no gasta nada): así el porcentaje está al día
     if (ia.conectada()) {

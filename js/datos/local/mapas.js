@@ -3,15 +3,15 @@
 // Cada función que guarda: quién es, exigir() su permiso, limpiar con reglas.js, guardar, dejar historial.
 // Nada se borra: un mapa se archiva, y queda cuándo y por qué.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=4ff97d5a37";
-import { usuarioActual } from "./sesion.js?v=4ff97d5a37";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=b86f2e9674";
+import { usuarioActual } from "./sesion.js?v=b86f2e9674";
 import {
     limpiarTema, limpiarModo, limpiarRama, limpiarEstado, limpiarFicha, limpiarMensaje, limpiarHablante, limpiarMotivo, limpiarEscalon,
-} from "../reglas.js?v=4ff97d5a37";
-import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=4ff97d5a37";
-import { TOPES } from "../../config.js?v=4ff97d5a37";
-import { fechaLocalISO } from "../../fechas.js?v=4ff97d5a37";
-import { sumarTarjetas, anotarDia } from "./repaso.js?v=4ff97d5a37";
+} from "../reglas.js?v=b86f2e9674";
+import { puedeEstudiar, puedeArchivar } from "../../permisos.js?v=b86f2e9674";
+import { TOPES } from "../../config.js?v=b86f2e9674";
+import { fechaLocalISO } from "../../fechas.js?v=b86f2e9674";
+import { sumarTarjetas, anotarDia } from "./repaso.js?v=b86f2e9674";
 
 function quien(permiso = puedeEstudiar) {
     const u = usuarioActual();
@@ -54,14 +54,19 @@ function nivel(datos, concepto) {
 
 // ---------- Leer ----------
 
-/** Los mapas sin archivar, el último usado primero, con su avance. */
-export function listarMapas({ conArchivados = false } = {}) {
+/** Los mapas sin archivar, el último usado primero, con su avance. conTitulos: suma los títulos de sus conceptos
+ *  (las "palabras clave" para buscar un mapa). */
+export function listarMapas({ conArchivados = false, conTitulos = false } = {}) {
     quien();
     const datos = leerTodo();
     return datos.mapas
         .filter((m) => conArchivados || !m.archivado)
         .sort((a, b) => b.usado - a.usado)
-        .map((m) => ({ ...m, avance: avanceDe(datos, m.id) }));
+        .map((m) => ({
+            ...m,
+            avance: avanceDe(datos, m.id),
+            ...(conTitulos ? { titulos: conceptosDe(datos, m.id).filter((c) => c.padre).map((c) => c.titulo) } : {}),
+        }));
 }
 
 function avanceDe(datos, mapaId) {

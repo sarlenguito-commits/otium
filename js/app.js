@@ -2,21 +2,21 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=4ff97d5a37";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=4ff97d5a37";
-import { $, esc } from "./ui.js?v=4ff97d5a37";
-import { vistaInicio } from "./vistas/inicio.js?v=4ff97d5a37";
-import { vistaAcerca } from "./vistas/acerca.js?v=4ff97d5a37";
-import { vistaEstudio } from "./vistas/estudio.js?v=4ff97d5a37";
-import { vistaRepaso } from "./vistas/repaso.js?v=4ff97d5a37";
-import { vistaAjustes } from "./vistas/ajustes.js?v=4ff97d5a37";
-import { puedeEstudiar } from "./permisos.js?v=4ff97d5a37";
-import { dibujarTemporizador } from "./temporizador.js?v=4ff97d5a37";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=4ff97d5a37";
-import { vistaGuia } from "./vistas/guia.js?v=4ff97d5a37";
-import { vistaContale } from "./vistas/contale.js?v=4ff97d5a37";
-import { vistaLeer } from "./vistas/leer.js?v=4ff97d5a37";
-import { vistaNovedades } from "./vistas/novedades.js?v=4ff97d5a37";
+import * as d from "./datos.js?v=b86f2e9674";
+import { NOMBRE_APP, PREFIJO } from "./config.js?v=b86f2e9674";
+import { $, esc } from "./ui.js?v=b86f2e9674";
+import { vistaInicio } from "./vistas/inicio.js?v=b86f2e9674";
+import { vistaAcerca } from "./vistas/acerca.js?v=b86f2e9674";
+import { vistaEstudio } from "./vistas/estudio.js?v=b86f2e9674";
+import { vistaRepaso } from "./vistas/repaso.js?v=b86f2e9674";
+import { vistaAjustes } from "./vistas/ajustes.js?v=b86f2e9674";
+import { puedeEstudiar } from "./permisos.js?v=b86f2e9674";
+import { dibujarTemporizador } from "./temporizador.js?v=b86f2e9674";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=b86f2e9674";
+import { vistaGuia } from "./vistas/guia.js?v=b86f2e9674";
+import { vistaContale } from "./vistas/contale.js?v=b86f2e9674";
+import { vistaLeer } from "./vistas/leer.js?v=b86f2e9674";
+import { vistaNovedades } from "./vistas/novedades.js?v=b86f2e9674";
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));
@@ -31,13 +31,14 @@ if (document.documentElement.dataset.prefijo !== PREFIJO) {
 const RUTAS = {
     inicio: { titulo: "Inicio", vista: vistaInicio, menu: true },
     estudio: { titulo: "Estudio", vista: vistaEstudio, menu: true, puede: puedeEstudiar, ancho: "completo" },
+    leer: { titulo: "Leer", vista: vistaLeer, menu: true, puede: puedeEstudiar },
     repaso: { titulo: "Repaso", vista: vistaRepaso, menu: true, puede: puedeEstudiar },
-    ajustes: { titulo: "Ajustes", vista: vistaAjustes, menu: true, puede: puedeEstudiar },
+    // Ajustes: la ruedita de arriba (el menú de abajo queda para lo de todos los días)
+    ajustes: { titulo: "Ajustes", vista: vistaAjustes, puede: puedeEstudiar },
     acerca: { titulo: "Acerca de", vista: vistaAcerca },
     bienvenida: { titulo: "Bienvenida", vista: vistaBienvenida },
     guia: { titulo: "Guía", vista: vistaGuia },
     contale: { titulo: "Contale a Esteban", vista: vistaContale },
-    leer: { titulo: "Leer", vista: vistaLeer, puede: puedeEstudiar },
     novedades: { titulo: "Novedades", vista: vistaNovedades },
 };
 
@@ -60,7 +61,8 @@ function dibujarCabecera(usuario, nombreRuta) {
     $("#cabecera").innerHTML = `
         <span class="cabecera__nombre">${esc(NOMBRE_APP)}</span>
         <span id="temporizador" class="cabecera__temporizador"></span>
-        <button class="boton boton--chico" data-accion="tema" aria-label="Cambiar entre claro y oscuro">Tema</button>`;
+        <button class="boton boton--chico" data-accion="tema" aria-label="Cambiar entre claro y oscuro">Tema</button>
+        <a class="boton boton--chico cabecera__ajustes" href="#ajustes" aria-label="Ajustes" title="Ajustes" ${nombreRuta === "ajustes" ? 'aria-current="page"' : ""}>⚙</a>`;
     $("#menu").innerHTML = Object.entries(RUTAS)
         .filter(([, r]) => r.menu && (!r.puede || r.puede(usuario)))
         .map(([n, r]) => `<a href="#${n}" ${n === nombreRuta ? 'aria-current="page"' : ""}>${esc(r.titulo)}</a>`)

@@ -3,9 +3,20 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=4ff97d5a37";
+import { VERSION, PREFIJO } from "./config.js?v=b86f2e9674";
 
 export const NOVEDADES = [
+    {
+        version: "0.4.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "Leer tiene su pestaña abajo: tus libros, con \"Seguir leyendo\" donde quedaste.",
+            "Al leer, seleccioná una palabra u oración: diccionario (Wikcionario, gratis), resaltar en azul, rojo o verde, \"Explicar\" (la IA lo dice con otras palabras, usa 1) y notas.",
+            "Tocando un resaltado ves su explicación (si la pediste) y tu nota, y le podés cambiar el color o quitarlo.",
+            "En Inicio, \"Tus mapas\" se separa en Aprender algo nuevo, Estudiar un libro y Todos, con un buscador por título o palabra clave.",
+            "Ajustes ahora es la ruedita ⚙ de arriba.",
+        ],
+    },
     {
         version: "0.3.1",
         fecha: "11/10/2026",

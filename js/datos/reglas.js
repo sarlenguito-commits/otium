@@ -2,7 +2,7 @@
 // Reglas de los datos: limpian y controlan cada campo con su tope. Si algo no cumple, tiran un Error con un
 // mensaje para mostrarle a la persona. Las usa la capa de datos (y, el día de mañana, la nube).
 // ============================================
-import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES } from "../config.js?v=4ff97d5a37";
+import { TOPES, MODOS, ESTADOS, CERTEZAS, VIGENCIAS, HABLANTES, RESULTADOS, TEMPORIZADORES, COLORES_RESALTADO } from "../config.js?v=b86f2e9674";
 
 function texto(valor, { nombre, tope, obligatorio = false }) {
     if (valor !== null && valor !== undefined && typeof valor !== "string" && typeof valor !== "number") {
@@ -76,6 +76,37 @@ export function limpiarEscalon(e = {}) {
         pregunta: texto(e.pregunta, { nombre: "la pregunta del escalón", tope: TOPES.pregunta, obligatorio: true }),
         esperada: texto(e.esperada, { nombre: "la respuesta esperada del escalón", tope: TOPES.respuesta, obligatorio: true }),
     };
+}
+
+/** Un resaltado nuevo: dónde (capítulo o escrito, párrafo, desde-hasta), qué texto y de qué color. */
+export function limpiarResaltado(r = {}) {
+    const concepto = r.concepto ? texto(r.concepto, { nombre: "el capítulo", tope: 40 }) : null;
+    const escrito = r.escrito ? texto(r.escrito, { nombre: "el escrito", tope: 40 }) : null;
+    if (!concepto === !escrito) throw new Error("El resaltado tiene que estar en un capítulo o en un escrito.");
+    const parrafo = entero(r.parrafo, { nombre: "El párrafo", min: 0, max: TOPES.parrafoMaximo });
+    const inicio = entero(r.inicio, { nombre: "El comienzo", min: 0, max: TOPES.letraMaxima });
+    const fin = entero(r.fin, { nombre: "El final", min: 1, max: TOPES.letraMaxima });
+    if (fin <= inicio) throw new Error("El resaltado no puede estar vacío.");
+    return {
+        concepto, escrito, parrafo, inicio, fin,
+        texto: texto(r.texto, { nombre: "el texto resaltado", tope: TOPES.resaltadoTexto, obligatorio: true }),
+        color: deLista(r.color ?? "azul", COLORES_RESALTADO, "el color"),
+        nota: texto(r.nota, { nombre: "la nota", tope: TOPES.nota }),
+        titulo: texto(r.titulo, { nombre: "el título de la nota", tope: TOPES.tituloNota }),
+        explicacion: r.explicacion ? texto(r.explicacion, { nombre: "la explicación", tope: TOPES.explicacionIA }) : null,
+        vinculo: r.vinculo ? texto(r.vinculo, { nombre: "el vínculo", tope: 40 }) : null,
+    };
+}
+
+/** Lo que se puede cambiar de un resaltado (solo lo que viene). */
+export function limpiarEdicionResaltado(c = {}) {
+    const limpio = {};
+    if (c.color !== undefined) limpio.color = deLista(c.color, COLORES_RESALTADO, "el color");
+    if (c.nota !== undefined) limpio.nota = texto(c.nota, { nombre: "la nota", tope: TOPES.nota });
+    if (c.titulo !== undefined) limpio.titulo = texto(c.titulo, { nombre: "el título de la nota", tope: TOPES.tituloNota });
+    if (c.explicacion !== undefined) limpio.explicacion = c.explicacion ? texto(c.explicacion, { nombre: "la explicación", tope: TOPES.explicacionIA }) : null;
+    if (c.vinculo !== undefined) limpio.vinculo = c.vinculo ? texto(c.vinculo, { nombre: "el vínculo", tope: 40 }) : null;
+    return limpio;
 }
 
 /** Una rama nueva del mapa: título obligatorio y una línea opcional de qué es. */

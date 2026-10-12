@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root,
 [data-tema=claro] {
   --acento: #9c3d1a;
@@ -335,6 +336,28 @@ textarea {
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 1rem 0;
+}
+
+.filtro-mapas {
+  display: grid;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+.filtro-mapas__botones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.filtro-mapas [aria-pressed=true] {
+  background: var(--acento);
+  color: var(--acento-texto);
+  border-color: var(--acento);
+}
+
+.mapa-tarjeta__coincide {
+  color: var(--texto-suave);
+  font-size: 0.85rem;
+  font-style: italic;
 }
 
 .estudio {
@@ -828,6 +851,135 @@ mark {
 .lectura__nav {
   margin-top: 2rem;
   justify-content: space-between;
+}
+
+.resaltado {
+  border-radius: 3px;
+  padding: 0.05em 0;
+  cursor: pointer;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+.resaltado--azul {
+  background: rgba(110, 160, 255, 0.35);
+}
+.resaltado--rojo {
+  background: rgba(255, 115, 115, 0.35);
+}
+.resaltado--verde {
+  background: rgba(100, 205, 135, 0.35);
+}
+.resaltado:focus-visible {
+  outline: 2px solid var(--acento);
+}
+.resaltado--con-nota::after, .resaltado--explicado::after {
+  font-size: 0.7em;
+  vertical-align: super;
+}
+.resaltado--con-nota::after {
+  content: " 📝";
+}
+.resaltado--explicado::after {
+  content: " 💡";
+}
+.resaltado--con-nota.resaltado--explicado::after {
+  content: " 📝💡";
+}
+
+.punto {
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: 2px solid var(--borde);
+  cursor: pointer;
+}
+.punto--azul {
+  background: rgba(110, 160, 255, 0.8);
+}
+.punto--rojo {
+  background: rgba(255, 115, 115, 0.8);
+}
+.punto--verde {
+  background: rgba(100, 205, 135, 0.8);
+}
+.punto--elegido {
+  border-color: var(--texto);
+  box-shadow: 0 0 0 2px var(--fondo) inset;
+}
+
+.menu-seleccion {
+  position: fixed;
+  z-index: 20;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+  max-width: calc(100vw - 16px);
+  padding: 0.4rem;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+.menu-seleccion[hidden] {
+  display: none;
+}
+
+.hoja {
+  position: fixed;
+  z-index: 15;
+  inset: auto 0 3.5rem;
+  max-width: 40rem;
+  max-height: 60vh;
+  margin: 0 auto;
+  padding: 1rem 1rem 0.5rem;
+  overflow-y: auto;
+  overflow-wrap: anywhere;
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -6px 20px rgba(0, 0, 0, 0.25);
+}
+.hoja[hidden] {
+  display: none;
+}
+.hoja__cerrar {
+  float: right;
+  margin-left: 0.5rem;
+}
+.hoja__titulo {
+  margin-top: 0;
+  font-size: 1.15rem;
+}
+.hoja__cita {
+  margin-top: 0;
+  line-height: 1.6;
+}
+.hoja__explicacion {
+  padding: 0.5rem 0.7rem;
+  border-left: 4px solid var(--acento);
+  background: var(--fondo);
+  border-radius: 0 10px 10px 0;
+}
+.hoja__acepciones li {
+  margin-bottom: 0.5rem;
+}
+
+.boton--quitar {
+  color: var(--peligro);
+  border-color: var(--peligro);
+}
+
+.lectura__ayuda {
+  margin-top: -0.5rem;
+}
+
+.libro-tarjeta {
+  display: grid;
+  gap: 0.25rem;
+}
+.libro-tarjeta p {
+  margin: 0.4rem 0 0;
 }
 
 .hoy p {

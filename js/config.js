@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.3.1"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.4.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -18,7 +18,10 @@ export const VERSION_DATOS = 4;
 export const SERVIDOR_IA = "https://otium-ia.otium-servidor.workers.dev";
 
 // Cuánto del cupo diario gasta cada pedido (igual que COSTOS en servidor/src/index.js: el que manda es el servidor).
-export const COSTOS_IA = { ramas: 1, ficha: 3, corregir: 1, contalo: 1, previos: 1, feynman: 1 };
+export const COSTOS_IA = { ramas: 1, ficha: 3, corregir: 1, contalo: 1, previos: 1, feynman: 1, explicar: 1 };
+
+// Colores para resaltar al leer (tonos pastel que se leen bien en el fondo marrón oscuro y en el claro).
+export const COLORES_RESALTADO = { azul: "Azul", rojo: "Rojo", verde: "Verde" };
 
 // Planes de uso de la IA (por ahora todos gratis): cuánto cupo por día tiene cada uno. Si algún día hay planes
 // pagos, se suman acá; los precios los decide Esteban.
@@ -106,6 +109,15 @@ export const TOPES = {
     busqueda: 80, // letras de lo que se busca en el libro
     resultadosBusqueda: 20,
     tituloLibro: 120, // "libro" y "capítulo" de dónde salió una ficha
+    // Resaltados y notas al leer
+    resaltadoTexto: 600, // letras de lo que se resalta (una oración o un pedazo de párrafo)
+    nota: 2000, // nota personal sobre un resaltado
+    tituloNota: 80,
+    explicacionIA: 500, // la explicación breve de la IA
+    contextoExplicar: 1500, // letras del párrafo que acompañan a la oración que se explica
+    resaltadosTotal: 3000,
+    parrafoMaximo: 5000, // número de párrafo más alto que se acepta (un capítulo no tiene más)
+    letraMaxima: 100_000, // posición más alta dentro de un párrafo
     terminoVerificar: 60,
     terminosVerificar: 3,
     pregunta: 200,

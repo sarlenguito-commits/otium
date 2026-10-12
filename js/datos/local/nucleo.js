@@ -2,8 +2,8 @@
 // Modo prueba, lo común: guardar y leer en el navegador (localStorage) con el prefijo de la app, la semilla, avisar
 // los cambios y exigir().
 // ============================================
-import { PREFIJO, VERSION_DATOS } from "../../config.js?v=4ff97d5a37";
-import { crearSemilla } from "../../datos-prueba.js?v=4ff97d5a37";
+import { PREFIJO, VERSION_DATOS } from "../../config.js?v=b86f2e9674";
+import { crearSemilla } from "../../datos-prueba.js?v=b86f2e9674";
 
 let prefijo = PREFIJO;
 const oyentes = new Set();
@@ -41,7 +41,11 @@ export function exigir(condicion, mensaje) {
 /** Todos los datos. Si no hay, o cambió VERSION_DATOS, arranca con la semilla. Cada llamada trae una copia nueva. */
 export function leerTodo() {
     const datos = leer("datos", null);
-    if (datos?.version === VERSION_DATOS) return datos;
+    if (datos?.version === VERSION_DATOS) {
+        // Listas que se sumaron después: si faltan, se completan vacías (los datos de antes siguen intactos)
+        for (const lista of ["resaltados", "escritos"]) if (!Array.isArray(datos[lista])) datos[lista] = [];
+        return datos;
+    }
     const nuevos = { version: VERSION_DATOS, ...crearSemilla() };
     guardar("datos", nuevos);
     return nuevos;

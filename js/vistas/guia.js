@@ -1,7 +1,7 @@
 // Guía de 2 minutos: cómo sacarle el jugo a OTIUM, para alguien que la abre por primera vez.
 // Se basa en lo que está mejor probado para aprender: recordar sin mirar y repasar espaciado.
-import { COSTOS_IA } from "../config.js?v=4ff97d5a37";
-import { PREFIJO } from "../config.js?v=4ff97d5a37";
+import { COSTOS_IA } from "../config.js?v=b86f2e9674";
+import { PREFIJO } from "../config.js?v=b86f2e9674";
 
 const CLAVE = `${PREFIJO}-guia`;
 
@@ -46,7 +46,7 @@ export function vistaGuia(cont) {
                     intentar y fallar que leer de nuevo.</li>
                 <li><strong>Pocas ramas, bien aprendidas</strong> rinden más que muchas abiertas. No hace falta
                     completar el árbol: abrís lo que te interesa.</li>
-                <li><strong>Constancia antes que maratón:</strong> la meta es de días por semana (Ajustes). Un repaso de 5
+                <li><strong>Constancia antes que maratón:</strong> la meta es de días por semana (Ajustes, la ruedita ⚙ de arriba). Un repaso de 5
                     minutos ya cuenta.</li>
                 <li><strong>El temporizador</strong> (⏱ en Estudio) es opcional: 25 minutos de foco y 5 de descanso, o
                     modo flow si estás enganchado.</li>
@@ -59,7 +59,10 @@ export function vistaGuia(cont) {
             <h2>Estudiar un libro (EPUB)</h2>
             <p>En Inicio, "Estudiar un libro": subís un .epub sin DRM y cada capítulo pasa a ser una rama. Leés el
                capítulo acá mismo (📖), buscás palabras adentro del libro (🔎) y pedís la ficha del capítulo, que la IA arma
-               con el texto de ese capítulo. Buena rutina: leer un capítulo, pedir su ficha y comprobar sin mirar.
+               con el texto de ese capítulo. Buena rutina: leer un capítulo, pedir su ficha y comprobar sin mirar.</p>
+            <p>Mientras leés (pestaña Leer), seleccioná una palabra u oración: la buscás en el diccionario, la resaltás en
+               azul, rojo o verde, pedís que te la expliquen con otras palabras (usa 1) o le dejás una nota. Tocando un
+               resaltado ves su explicación y tu nota.
                Libros gratis y legales: <a href="https://www.gutenberg.org/browse/languages/es" target="_blank" rel="noopener noreferrer">Project Gutenberg ↗</a>.</p>
         </div>
 

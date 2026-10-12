@@ -5,15 +5,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Solo se carga lo propio: nada de otros sitios (letras, íconos, librerías: bajarlas al proyecto).
-         La única excepción es connect-src: los pedidos al servidor de la IA en Cloudflare (*.workers.dev). -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'">
+         La única excepción es connect-src: el servidor de la IA en Cloudflare (*.workers.dev) y el diccionario (Wikcionario). -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' https://*.workers.dev https://es.wiktionary.org; object-src 'none'; base-uri 'self'; form-action 'none'">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#9c3d1a">
     <meta name="description" content="OTIUM: aprendé cualquier tema de a escalones, con fichas, preguntas y repasos espaciados.">
     <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%239c3d1a'/%3E%3Ccircle cx='32' cy='32' r='17' fill='none' stroke='%23fffdf9' stroke-width='7'/%3E%3C/svg%3E">
     <title>OTIUM</title>
-    <script src="js/tema.js?v=4ff97d5a37"></script>
-    <link href="styles/style.css?v=4ff97d5a37" rel="stylesheet">
+    <script src="js/tema.js?v=b86f2e9674"></script>
+    <link href="styles/style.css?v=b86f2e9674" rel="stylesheet">
     <meta name="robots" content="noindex, nofollow">
 </head>
 <body>
@@ -23,6 +23,6 @@
     </main>
     <nav class="menu" id="menu" aria-label="Menú"></nav>
     <div class="avisos" id="avisos" role="status" aria-live="polite"></div>
-    <script type="module" src="js/app.js?v=4ff97d5a37"></script>
+    <script type="module" src="js/app.js?v=b86f2e9674"></script>
 </body>
 </html>
