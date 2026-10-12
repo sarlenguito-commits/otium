@@ -2,8 +2,8 @@
 // Modo prueba, lo común: guardar y leer en el navegador (localStorage) con el prefijo de la app, la semilla, avisar
 // los cambios y exigir().
 // ============================================
-import { PREFIJO, VERSION_DATOS } from "../../config.js?v=b757769159";
-import { crearSemilla } from "../../datos-prueba.js?v=b757769159";
+import { PREFIJO, VERSION_DATOS } from "../../config.js?v=cbfbfa8738";
+import { crearSemilla } from "../../datos-prueba.js?v=cbfbfa8738";
 
 let prefijo = PREFIJO;
 const oyentes = new Set();
@@ -72,10 +72,11 @@ export function alCambiar(fn) {
     return () => oyentes.delete(fn);
 }
 
-/** Vuelve a los datos de ejemplo y sin sesión (solo existe en modo prueba). */
+/** Vuelve a los datos de ejemplo y sin sesión (solo existe en modo prueba). Se van también los libros. */
 export function reiniciarDatos() {
     guardar("datos", null);
     guardar("sesion", null);
+    nombresAparte("libro-").forEach((n) => guardar(n, null));
     leerTodo();
     avisar("todo");
 }

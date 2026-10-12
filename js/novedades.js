@@ -3,9 +3,18 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=b757769159";
+import { VERSION, PREFIJO } from "./config.js?v=cbfbfa8738";
 
 export const NOVEDADES = [
+    {
+        version: "0.11.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "Importante: lo que le pedís a la IA va a Google (Gemini, plan gratis), que lo usa para mejorar sus productos, y lo pueden leer personas que trabajan para Google. No le mandes datos personales, de salud, de trabajo ni nada privado.",
+            "Página nueva \"Privacidad y términos\" (abajo en Inicio y en Ajustes): qué se guarda, dónde, por cuánto tiempo, cómo borrarlo y las reglas de uso.",
+            "\"Borrar todo y volver al ejemplo\" (en Acerca de) ahora borra también los libros.",
+        ],
+    },
     {
         version: "0.10.0",
         fecha: "12/10/2026",

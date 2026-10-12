@@ -1,16 +1,16 @@
 // Pantalla de inicio: repasos de hoy, la racha de la semana, seguir donde quedaste, "aprender algo nuevo" y tus mapas.
-import * as d from "../datos.js?v=b757769159";
-import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=b757769159";
-import { esc, vacio, intentar, aviso } from "../ui.js?v=b757769159";
-import * as ia from "../ia.js?v=b757769159";
-import { armarRamas } from "../acciones-ia.js?v=b757769159";
-import { resumenCupo } from "../recomendacion.js?v=b757769159";
-import { guiaVista } from "./guia.js?v=b757769159";
-import { leerEpub } from "../epub.js?v=b757769159";
-import { hayNovedades } from "../novedades.js?v=b757769159";
-import { VERSION } from "../config.js?v=b757769159";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=b757769159";
-import { textoRacha } from "./repaso.js?v=b757769159";
+import * as d from "../datos.js?v=cbfbfa8738";
+import { MODOS, TOPES, FUNCIONES, PREFIJO } from "../config.js?v=cbfbfa8738";
+import { esc, vacio, intentar, aviso } from "../ui.js?v=cbfbfa8738";
+import * as ia from "../ia.js?v=cbfbfa8738";
+import { armarRamas } from "../acciones-ia.js?v=cbfbfa8738";
+import { resumenCupo } from "../recomendacion.js?v=cbfbfa8738";
+import { guiaVista } from "./guia.js?v=cbfbfa8738";
+import { leerEpub } from "../epub.js?v=cbfbfa8738";
+import { hayNovedades } from "../novedades.js?v=cbfbfa8738";
+import { VERSION } from "../config.js?v=cbfbfa8738";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=cbfbfa8738";
+import { textoRacha } from "./repaso.js?v=cbfbfa8738";
 
 const aEstudio = (id) => `#estudio?m=${encodeURIComponent(id)}`;
 
@@ -121,7 +121,7 @@ export function vistaInicio(cont, { usuario }) {
                 </li>`).join("")}</ul>
                <p class="ayuda" data-sin-mapas hidden></p>`
             : vacio("Primeros pasos", "Todavía no hay mapas. Escribí arriba qué querés aprender.")}
-        <p class="pie-inicio"><a href="#guia">Guía de 2 minutos</a> · <a href="#novedades">Novedades</a> · <a href="#contale">💬 Contale a Esteban</a> · versión ${esc(VERSION)}</p>`;
+        <p class="pie-inicio"><a href="#guia">Guía de 2 minutos</a> · <a href="#novedades">Novedades</a> · <a href="#contale">💬 Contale a Esteban</a> · <a href="#privacidad">Privacidad y términos</a> · versión ${esc(VERSION)}</p>`;
 
     // "Tus mapas": categoría + buscador (se filtra en el momento, sin volver a dibujar la pantalla)
     let filtro = filtroGuardado();

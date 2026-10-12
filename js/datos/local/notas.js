@@ -4,11 +4,11 @@
 //   - "Tu desarrollo": notas sueltas que escribís en la ficha, en orden (para armar el capítulo o el tema paso a paso).
 // Todo se puede renombrar, editar y quitar; las notas sueltas también se reordenan.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=b757769159";
-import { usuarioActual } from "./sesion.js?v=b757769159";
-import { limpiarNota } from "../reglas.js?v=b757769159";
-import { puedeEstudiar } from "../../permisos.js?v=b757769159";
-import { TOPES } from "../../config.js?v=b757769159";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=cbfbfa8738";
+import { usuarioActual } from "./sesion.js?v=cbfbfa8738";
+import { limpiarNota } from "../reglas.js?v=cbfbfa8738";
+import { puedeEstudiar } from "../../permisos.js?v=cbfbfa8738";
+import { TOPES } from "../../config.js?v=cbfbfa8738";
 
 function quien() {
     const u = usuarioActual();

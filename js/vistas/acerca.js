@@ -1,9 +1,9 @@
 // Acerca de: nombre, versión, modo, volver a los datos de ejemplo y los errores que se anotaron solos.
-import * as d from "../datos.js?v=b757769159";
-import { NOMBRE_APP, VERSION } from "../config.js?v=b757769159";
-import { puedeReiniciar } from "../permisos.js?v=b757769159";
-import { esc, aviso } from "../ui.js?v=b757769159";
-import { textoFechaHora } from "../fechas.js?v=b757769159";
+import * as d from "../datos.js?v=cbfbfa8738";
+import { NOMBRE_APP, VERSION } from "../config.js?v=cbfbfa8738";
+import { puedeReiniciar } from "../permisos.js?v=cbfbfa8738";
+import { esc, aviso } from "../ui.js?v=cbfbfa8738";
+import { textoFechaHora } from "../fechas.js?v=cbfbfa8738";
 
 export function vistaAcerca(cont, { usuario, redibujar }) {
     const errores = d.leerErrores();
@@ -11,7 +11,7 @@ export function vistaAcerca(cont, { usuario, redibujar }) {
         <h1>Acerca de</h1>
         <div class="tarjeta">
             <p><strong>${esc(NOMBRE_APP)}</strong> · versión ${esc(VERSION)}</p>
-            <p>Tus mapas, fichas y repasos quedan solo en este navegador.</p>
+            <p>Tus mapas, fichas y repasos quedan solo en este navegador. <a href="#privacidad">Privacidad y términos</a>.</p>
             ${d.modo === "local" && puedeReiniciar(usuario) ? `<button class="boton boton--peligro" data-reiniciar>Borrar todo y volver al ejemplo</button>` : ""}
         </div>
         <div class="tarjeta">
@@ -24,7 +24,7 @@ export function vistaAcerca(cont, { usuario, redibujar }) {
 
     cont.addEventListener("click", (e) => {
         if (e.target.closest("[data-reiniciar]")) {
-            if (!confirm("Se borran todos tus mapas, fichas y repasos de este navegador y vuelve el ejemplo. ¿Seguro?")) return;
+            if (!confirm("Se borran todos tus mapas, fichas, repasos, escritos, neuronas y libros de este navegador y vuelve el ejemplo. Si los querés guardar, cancelá y bajá una copia en Ajustes. ¿Seguro?")) return;
             d.reiniciarDatos(); // app.js redibuja con los datos de ejemplo
             aviso("Listo: volvió el ejemplo");
         } else if (e.target.closest("[data-limpiar]")) {

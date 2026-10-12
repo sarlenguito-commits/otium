@@ -1,9 +1,9 @@
 // Bienvenida: la primera vez que alguien abre OTIUM. Qué es, cómo se usa, qué pasa con lo que escribe (privacidad)
 // y dónde pega el token que le pasó Esteban. Hasta que no la complete, la app vuelve acá.
-import * as d from "../datos.js?v=b757769159";
-import * as ia from "../ia.js?v=b757769159";
-import { NOMBRE_APP, PREFIJO, TOPES } from "../config.js?v=b757769159";
-import { esc, aviso, intentar } from "../ui.js?v=b757769159";
+import * as d from "../datos.js?v=cbfbfa8738";
+import * as ia from "../ia.js?v=cbfbfa8738";
+import { NOMBRE_APP, PREFIJO, TOPES } from "../config.js?v=cbfbfa8738";
+import { esc, aviso, intentar } from "../ui.js?v=cbfbfa8738";
 
 const CLAVE = `${PREFIJO}-bienvenida`;
 
@@ -41,16 +41,18 @@ export function vistaBienvenida(cont, { usuario }) {
                 </ol>
             </div>
 
-            <div class="tarjeta">
+            <div class="tarjeta privacidad__corto">
                 <h2>Tu privacidad</h2>
                 <ul>
-                    <li>Tus mapas, fichas y repasos quedan <strong>solo en este navegador</strong>.</li>
-                    <li>Lo que le pedís a la IA (el tema, tus respuestas y explicaciones) pasa por el servidor de OTIUM y va a
-                        <strong>Google Gemini, en su plan gratis</strong>: Google puede usarlo para mejorar sus productos y lo pueden leer personas.
-                        <strong>No escribas datos personales ni privados.</strong></li>
+                    <li>Lo que armás y escribís (mapas, fichas, escritos, notas, libros) queda <strong>solo en este navegador</strong>.</li>
+                    <li><strong>Lo que le pedís a la IA va a Google</strong> (Gemini, plan gratis): el tema, tus respuestas y
+                        explicaciones, lo que seleccionás para que te explique, el texto de un capítulo o lo que mandás a reescribir.
+                        Google lo usa para mejorar sus productos y <strong>lo pueden leer personas que trabajan para Google</strong>.</li>
+                    <li><strong>No le mandes a la IA datos personales, de salud, de trabajo, contraseñas ni nada privado</strong>, tuyo o de otros.</li>
                     <li>La IA se puede equivocar: cada ficha marca cuán segura está y tiene "Esto está mal" para avisar.</li>
                     <li>Es para mayores de 18.</li>
                 </ul>
+                <p><a href="#privacidad">Leé la privacidad y los términos completos</a> (qué se guarda, dónde, por cuánto tiempo y cómo borrarlo).</p>
             </div>
 
             <form class="tarjeta formulario" data-bienvenida>
@@ -64,7 +66,7 @@ export function vistaBienvenida(cont, { usuario }) {
                 <p class="ayuda">Sin token la app anda igual (mapas, fichas guardadas y repaso), pero la IA no arma nada. Lo podés cargar después en Ajustes.</p>`}
                 <label class="interruptor">
                     <input type="checkbox" name="acepto" required>
-                    <span>Leí lo de la privacidad y soy mayor de 18.</span>
+                    <span>Soy mayor de 18, acepto los términos y entiendo que lo que le mando a la IA lo puede leer gente de Google.</span>
                 </label>
                 <button class="boton" type="submit">Empezar</button>
             </form>

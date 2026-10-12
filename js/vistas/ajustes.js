@@ -1,10 +1,10 @@
 // Ajustes: la conexión con la IA (dirección del servidor y token), la meta semanal, el tope de repasos y el tipo de
 // temporizador; "Tus datos" (bajar una copia, importarla y pedirle al navegador que no los borre solo). Abajo, "Acerca de".
-import * as d from "../datos.js?v=b757769159";
-import * as ia from "../ia.js?v=b757769159";
-import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=b757769159";
-import { esc, intentar, aviso } from "../ui.js?v=b757769159";
-import { cuandoFue, fechaLocalISO } from "../fechas.js?v=b757769159";
+import * as d from "../datos.js?v=cbfbfa8738";
+import * as ia from "../ia.js?v=cbfbfa8738";
+import { TOPES, TEMPORIZADORES, PREFIJO } from "../config.js?v=cbfbfa8738";
+import { esc, intentar, aviso } from "../ui.js?v=cbfbfa8738";
+import { cuandoFue, fechaLocalISO } from "../fechas.js?v=cbfbfa8738";
 
 export function vistaAjustes(cont, { redibujar }) {
     const a = d.leerAjustes();
@@ -70,7 +70,7 @@ export function vistaAjustes(cont, { redibujar }) {
             </form>
             <p class="ayuda" data-proteccion>Protección del navegador: consultando…</p>
         </div>
-        <p><a href="#guia">Guía de 2 minutos</a> · <a href="#novedades">Novedades</a> · <a href="#contale">💬 Contale a Esteban</a> · <a href="#acerca">Acerca de la app y errores anotados</a></p>`;
+        <p><a href="#guia">Guía de 2 minutos</a> · <a href="#novedades">Novedades</a> · <a href="#contale">💬 Contale a Esteban</a> · <a href="#privacidad">Privacidad y términos</a> · <a href="#acerca">Acerca de la app y errores anotados</a></p>`;
 
     mostrarProteccion(cont);
 
