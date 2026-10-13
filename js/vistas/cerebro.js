@@ -6,11 +6,11 @@
 //   - Arriba, la tira de "Abiertas": lo último que viste en esta pestaña del navegador (neuronas y mapas).
 // Dirección: #cerebro?n=<neurona>&modo=marcar
 // ============================================
-import * as d from "../datos.js?v=0e768c4f45";
-import { TOPES, ABARCAMIENTO, PREFIJO } from "../config.js?v=0e768c4f45";
-import { esc, vacio, aviso } from "../ui.js?v=0e768c4f45";
-import { cuandoFue } from "../fechas.js?v=0e768c4f45";
-import { montarLector } from "./lector.js?v=0e768c4f45";
+import * as d from "../datos.js?v=dc7e5675b5";
+import { TOPES, ABARCAMIENTO, PREFIJO } from "../config.js?v=dc7e5675b5";
+import { esc, vacio, aviso } from "../ui.js?v=dc7e5675b5";
+import { cuandoFue } from "../fechas.js?v=dc7e5675b5";
+import { montarLector } from "./lector.js?v=dc7e5675b5";
 
 const MODOS = { escribir: "✏️ Escribir", marcar: "🖍 Marcar" };
 const dir = (id, modo = "escribir") => `#cerebro?n=${encodeURIComponent(id)}${modo === "marcar" ? "&modo=marcar" : ""}`;

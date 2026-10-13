@@ -3,10 +3,10 @@
 //   - Un capítulo (#leer?m=<mapa>&c=<concepto>[&p=<párrafo>]): el texto, con lo que resaltaste pintado.
 //     El menú al seleccionar (diccionario, resaltar, Explicar, nota) y la hoja de cada resaltado están en lector.js
 //     (los comparte con Escribir).
-import * as d from "../datos.js?v=0e768c4f45";
-import { PREFIJO } from "../config.js?v=0e768c4f45";
-import { esc, vacio } from "../ui.js?v=0e768c4f45";
-import { montarLector } from "./lector.js?v=0e768c4f45";
+import * as d from "../datos.js?v=dc7e5675b5";
+import { PREFIJO } from "../config.js?v=dc7e5675b5";
+import { esc, vacio } from "../ui.js?v=dc7e5675b5";
+import { montarLector } from "./lector.js?v=dc7e5675b5";
 
 const CLAVE_ULTIMO = `${PREFIJO}-ultimo-leido`;
 

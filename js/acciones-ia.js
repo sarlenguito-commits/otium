@@ -7,9 +7,9 @@
 //     se enlazan; los nuevos se cuelgan del concepto como escalones (🪜) con su explicación mínima.
 // Cada una deja una línea en el chat del mapa, para que la charla cuente lo que pasó.
 // ============================================
-import * as d from "./datos.js?v=0e768c4f45";
-import * as ia from "./ia.js?v=0e768c4f45";
-import { TOPES } from "./config.js?v=0e768c4f45";
+import * as d from "./datos.js?v=dc7e5675b5";
+import * as ia from "./ia.js?v=dc7e5675b5";
+import { TOPES } from "./config.js?v=dc7e5675b5";
 
 /** Deja una línea en el chat del mapa; si no se puede (por ejemplo, el chat llegó a su tope), no frena la acción. */
 function contarEnElChat(mapaId, mensaje) {

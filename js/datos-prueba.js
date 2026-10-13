@@ -4,8 +4,8 @@
 // Si se cambia la forma de algo, subir VERSION_DATOS en config.js para que el navegador vuelva a empezar.
 // ============================================
 
-import { fechaLocalISO, sumarDias } from "./fechas.js?v=0e768c4f45";
-import { AJUSTES_INICIALES } from "./config.js?v=0e768c4f45";
+import { fechaLocalISO, sumarDias } from "./fechas.js?v=dc7e5675b5";
+import { AJUSTES_INICIALES } from "./config.js?v=dc7e5675b5";
 
 export function crearSemilla(ahora = Date.now()) {
     const hoy = fechaLocalISO(new Date(ahora));

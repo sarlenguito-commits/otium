@@ -4,11 +4,11 @@
 // personal opcional, la explicación de la IA (si la pidió) y, opcionalmente, un título y un vínculo a una ficha.
 // No se pisan: en un mismo párrafo, dos resaltados no pueden ocupar las mismas letras.
 // ============================================
-import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=0e768c4f45";
-import { usuarioActual } from "./sesion.js?v=0e768c4f45";
-import { limpiarResaltado, limpiarEdicionResaltado } from "../reglas.js?v=0e768c4f45";
-import { puedeEstudiar } from "../../permisos.js?v=0e768c4f45";
-import { TOPES } from "../../config.js?v=0e768c4f45";
+import { leerTodo, guardarTodo, idNuevo, exigir } from "./nucleo.js?v=dc7e5675b5";
+import { usuarioActual } from "./sesion.js?v=dc7e5675b5";
+import { limpiarResaltado, limpiarEdicionResaltado } from "../reglas.js?v=dc7e5675b5";
+import { puedeEstudiar } from "../../permisos.js?v=dc7e5675b5";
+import { TOPES } from "../../config.js?v=dc7e5675b5";
 
 function quien() {
     const u = usuarioActual();

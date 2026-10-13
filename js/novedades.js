@@ -3,7 +3,7 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=0e768c4f45";
+import { VERSION, PREFIJO } from "./config.js?v=dc7e5675b5";
 
 export const NOVEDADES = [
     {
