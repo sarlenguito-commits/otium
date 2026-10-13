@@ -1,9 +1,9 @@
 // Acerca de: nombre, versión, modo, volver a los datos de ejemplo y los errores que se anotaron solos.
-import * as d from "../datos.js?v=3f84cb5f35";
-import { NOMBRE_APP, VERSION } from "../config.js?v=3f84cb5f35";
-import { puedeReiniciar } from "../permisos.js?v=3f84cb5f35";
-import { esc, aviso } from "../ui.js?v=3f84cb5f35";
-import { textoFechaHora } from "../fechas.js?v=3f84cb5f35";
+import * as d from "../datos.js?v=0e768c4f45";
+import { NOMBRE_APP, VERSION } from "../config.js?v=0e768c4f45";
+import { puedeReiniciar } from "../permisos.js?v=0e768c4f45";
+import { esc, aviso } from "../ui.js?v=0e768c4f45";
+import { textoFechaHora } from "../fechas.js?v=0e768c4f45";
 
 export function vistaAcerca(cont, { usuario, redibujar }) {
     const errores = d.leerErrores();

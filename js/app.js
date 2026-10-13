@@ -2,30 +2,32 @@
 // Arranque: errores anotados, cabecera, menú y RUTAS (una pantalla por archivo en js/vistas/).
 // Pantalla nueva = un archivo en vistas/ + una línea en RUTAS.
 // ============================================
-import * as d from "./datos.js?v=3f84cb5f35";
-import * as ia from "./ia.js?v=3f84cb5f35";
-import { NOMBRE_APP, PREFIJO } from "./config.js?v=3f84cb5f35";
-import { $, esc } from "./ui.js?v=3f84cb5f35";
-import { vistaInicio } from "./vistas/inicio.js?v=3f84cb5f35";
-import { vistaAcerca } from "./vistas/acerca.js?v=3f84cb5f35";
-import { vistaEstudio } from "./vistas/estudio.js?v=3f84cb5f35";
-import { vistaRepaso } from "./vistas/repaso.js?v=3f84cb5f35";
-import { vistaAjustes } from "./vistas/ajustes.js?v=3f84cb5f35";
-import { puedeEstudiar } from "./permisos.js?v=3f84cb5f35";
-import { dibujarTemporizador } from "./temporizador.js?v=3f84cb5f35";
-import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=3f84cb5f35";
-import { vistaGuia } from "./vistas/guia.js?v=3f84cb5f35";
-import { vistaContale } from "./vistas/contale.js?v=3f84cb5f35";
-import { vistaLeer } from "./vistas/leer.js?v=3f84cb5f35";
-import { vistaEscribir } from "./vistas/escribir.js?v=3f84cb5f35";
-import { vistaCerebro } from "./vistas/cerebro.js?v=3f84cb5f35";
-import { vistaNovedades } from "./vistas/novedades.js?v=3f84cb5f35";
-import { vistaPrivacidad } from "./vistas/privacidad.js?v=3f84cb5f35";
-import { vistaUso } from "./vistas/uso.js?v=3f84cb5f35";
-import { prepararInstalacion } from "./instalar.js?v=3f84cb5f35";
+import * as d from "./datos.js?v=0e768c4f45";
+import * as ia from "./ia.js?v=0e768c4f45";
+import { NOMBRE_APP, PREFIJO, TEMAS } from "./config.js?v=0e768c4f45";
+import { $, esc } from "./ui.js?v=0e768c4f45";
+import { vistaInicio } from "./vistas/inicio.js?v=0e768c4f45";
+import { vistaAcerca } from "./vistas/acerca.js?v=0e768c4f45";
+import { vistaEstudio } from "./vistas/estudio.js?v=0e768c4f45";
+import { vistaRepaso } from "./vistas/repaso.js?v=0e768c4f45";
+import { vistaAjustes } from "./vistas/ajustes.js?v=0e768c4f45";
+import { puedeEstudiar } from "./permisos.js?v=0e768c4f45";
+import { dibujarTemporizador } from "./temporizador.js?v=0e768c4f45";
+import { vistaBienvenida, bienvenidaVista } from "./vistas/bienvenida.js?v=0e768c4f45";
+import { vistaGuia } from "./vistas/guia.js?v=0e768c4f45";
+import { vistaContale } from "./vistas/contale.js?v=0e768c4f45";
+import { vistaLeer } from "./vistas/leer.js?v=0e768c4f45";
+import { vistaEscribir } from "./vistas/escribir.js?v=0e768c4f45";
+import { vistaCerebro } from "./vistas/cerebro.js?v=0e768c4f45";
+import { vistaNovedades } from "./vistas/novedades.js?v=0e768c4f45";
+import { vistaPrivacidad } from "./vistas/privacidad.js?v=0e768c4f45";
+import { vistaUso } from "./vistas/uso.js?v=0e768c4f45";
+import { prepararInstalacion } from "./instalar.js?v=0e768c4f45";
+import { vigilarVersion } from "./actualizacion.js?v=0e768c4f45";
 
 // Instalable: service worker y el aviso del navegador (antes que nada: el aviso puede llegar enseguida)
 prepararInstalacion();
+vigilarVersion();
 
 // Errores que nadie atajó: se anotan solos (se ven en "Acerca de"); si no, nunca nos enteramos.
 addEventListener("error", (e) => e.message && d.anotarError(e.message));
@@ -89,13 +91,37 @@ function dibujarCabecera(usuario, nombreRuta) {
     $("#cabecera").innerHTML = `
         <span class="cabecera__nombre">${esc(NOMBRE_APP)}</span>
         <span id="temporizador" class="cabecera__temporizador"></span>
-        <button class="boton boton--chico" data-accion="tema" aria-label="Tema: cambiar entre claro y oscuro">Tema</button>
+        ${menuTema()}
         <a class="boton boton--chico cabecera__ajustes" href="#ajustes" aria-label="Ajustes" title="Ajustes" ${nombreRuta === "ajustes" ? 'aria-current="page"' : ""}>⚙</a>`;
     $("#menu").innerHTML = Object.entries(RUTAS)
         .filter(([, r]) => r.menu && (!r.puede || r.puede(usuario)))
         .map(([n, r]) => `<a href="#${n}" ${n === nombreRuta ? 'aria-current="page"' : ""}>${esc(r.titulo)}</a>`)
         .join("");
     dibujarTemporizador();
+}
+
+/** "Tema": un menú plegable con los dos claros y los dos oscuros; el que está puesto queda marcado. */
+function menuTema() {
+    const actual = window.temaActual?.();
+    const grupos = Object.entries(TEMAS).map(
+        ([grupo, temas]) => `
+            <div class="menu-tema__grupo" role="group" aria-label="${esc(grupo)}">
+                <span class="menu-tema__titulo">${esc(grupo)}</span>
+                ${Object.entries(temas)
+                    .map(
+                        ([clave, nombre]) => `
+                    <button class="menu-tema__opcion" type="button" data-accion="tema" data-elegir-tema="${esc(clave)}" aria-pressed="${clave === actual}">
+                        <span class="menu-tema__muestra menu-tema__muestra--${esc(clave)}" aria-hidden="true"></span>${esc(nombre)}
+                    </button>`
+                    )
+                    .join("")}
+            </div>`
+    );
+    return `
+        <details class="menu-tema" data-menu-tema>
+            <summary class="boton boton--chico" aria-label="Tema: elegir colores">Tema</summary>
+            <div class="menu-tema__panel">${grupos.join("")}</div>
+        </details>`;
 }
 
 // Lo que la pantalla anterior pidió hacer antes de irse (por ejemplo, Escribir guarda lo último que se tipeó)
@@ -135,8 +161,15 @@ async function dibujar() {
 }
 
 document.addEventListener("click", (e) => {
-    const accion = e.target.closest("[data-accion]")?.dataset.accion;
-    if (accion === "tema") window.cambiarTema?.();
+    const boton = e.target.closest("[data-accion]");
+    if (boton?.dataset.accion === "tema") {
+        const nuevo = window.cambiarTema?.(boton.dataset.elegirTema);
+        document.querySelectorAll("[data-menu-tema] [data-elegir-tema]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.elegirTema === nuevo)));
+        boton.closest("[data-menu-tema]")?.removeAttribute("open");
+    }
+    // Clic afuera del menú "Tema": se cierra
+    const menu = document.querySelector("[data-menu-tema][open]");
+    if (menu && !menu.contains(e.target)) menu.removeAttribute("open");
 });
 
 addEventListener("hashchange", dibujar);

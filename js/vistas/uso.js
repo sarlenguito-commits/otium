@@ -3,11 +3,11 @@
 // salen los límites (medidos el 12/10/2026 en AI Studio y en el servidor). Para que quien usa OTIUM vaya viendo.
 // Los números del día vienen del servidor (/cupo); los "para cuánto alcanza" son estimados (ESTIMADOS).
 // ============================================
-import * as ia from "../ia.js?v=3f84cb5f35";
-import { COSTOS_IA, COSTO_REESCRIBIR, PREFIJO } from "../config.js?v=3f84cb5f35";
-import { esc, aviso } from "../ui.js?v=3f84cb5f35";
-import { fechaLocalISO } from "../fechas.js?v=3f84cb5f35";
-import { calcularUso, ESTIMADOS } from "../recomendacion.js?v=3f84cb5f35";
+import * as ia from "../ia.js?v=0e768c4f45";
+import { COSTOS_IA, COSTO_REESCRIBIR, PREFIJO } from "../config.js?v=0e768c4f45";
+import { esc, aviso } from "../ui.js?v=0e768c4f45";
+import { fechaLocalISO } from "../fechas.js?v=0e768c4f45";
+import { calcularUso, ESTIMADOS } from "../recomendacion.js?v=0e768c4f45";
 
 const QUE_ES = {
     ramas: "Armar las ramas de un tema o de una rama",

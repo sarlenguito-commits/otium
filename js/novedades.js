@@ -3,9 +3,17 @@
 // REGLA: cada vez que se publica, se suma la versión nueva ARRIBA de todo (la misma de VERSION en config.js).
 // El detalle técnico va en CAMBIOS.md.
 // ============================================
-import { VERSION, PREFIJO } from "./config.js?v=3f84cb5f35";
+import { VERSION, PREFIJO } from "./config.js?v=0e768c4f45";
 
 export const NOVEDADES = [
+    {
+        version: "0.15.0",
+        fecha: "12/10/2026",
+        cambios: [
+            "Tema con cuatro opciones: dos claros (Blanco y Sepia) y dos oscuros (Marrón y Azul oscuro). Tocá \"Tema\" arriba a la derecha y elegí; queda guardado.",
+            "Si dejás OTIUM abierta mucho tiempo y sale una versión nueva, ahora te avisa arriba: \"Hay una versión nueva\", con un botón para actualizar (lo que estabas escribiendo queda guardado).",
+        ],
+    },
     {
         version: "0.14.0",
         fecha: "12/10/2026",

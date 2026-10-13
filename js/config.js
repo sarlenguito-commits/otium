@@ -4,7 +4,7 @@
 // ============================================
 
 export const NOMBRE_APP = "OTIUM"; // nombre elegido por Esteban (11/10/2026)
-export const VERSION = "0.14.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
+export const VERSION = "0.15.0"; // subirla con cada entrega y anotarla en CAMBIOS.md
 
 // Prefijo de todo lo que se guarda en el navegador. Único por app: dos apps en el mismo dominio
 // (usuario.github.io/app-1 y /app-2) comparten el guardado. Tiene que ser igual a data-prefijo del index.html.
@@ -22,8 +22,15 @@ export const COSTOS_IA = { ramas: 1, ficha: 3, corregir: 1, contalo: 1, previos:
 // Reescribir cuesta según cuánto: un pedazo o un párrafo, 1; el texto entero, 2
 export const COSTO_REESCRIBIR = { seleccion: 1, parrafo: 1, todo: 2 };
 
-// Colores para resaltar al leer (tonos pastel que se leen bien en el fondo marrón oscuro y en el claro).
+// Colores para resaltar al leer (tonos pastel con transparencia: se leen bien en los cuatro temas).
 export const COLORES_RESALTADO = { azul: "Azul", rojo: "Rojo", verde: "Verde" };
+
+// Temas del botón "Tema" (12/10/2026): dos claros y dos oscuros. La lista de claves se repite en js/tema.js (que
+// corre antes que los módulos) y los colores están en styles/style.css ([data-tema=…]).
+export const TEMAS = {
+    Claro: { claro: "Blanco", sepia: "Sepia" },
+    Oscuro: { oscuro: "Marrón", azul: "Azul oscuro" },
+};
 
 // Planes de uso de la IA (por ahora todos gratis): cuánto cupo por día tiene cada uno. Si algún día hay planes
 // pagos, se suman acá; los precios los decide Esteban.
